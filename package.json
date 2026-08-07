@@ -1,0 +1,9 @@
+{
+  "name": "dvglobalsummits-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "cd frontend && npm install && npm run build",
+    "start": "npm --prefix frontend run start"
+  }
+}
