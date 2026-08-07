@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — D&V Global Summit</title>
+  <!-- Google Fonts with system fallbacks -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" onerror="this.remove()"/>
+  <style>
+    /* System font fallbacks if Google Fonts unavailable */
+    @font-face { font-family:'Space Grotesk'; src:local('Segoe UI Semibold'),local('Helvetica Neue'),local('Arial'); font-weight:700; }
+    @font-face { font-family:'Inter'; src:local('Segoe UI'),local('Helvetica Neue'),local('Arial'); }
+    @font-face { font-family:'JetBrains Mono'; src:local('Consolas'),local('Courier New'),local('monospace'); }
+  </style>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#050816;--surface:#111827;--panel:#0d1526;--primary:#0B1F3A;--secondary:#123A63;--blue:#3B82F6;--cyan:#06B6D4;--gold:#D4AF37;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--text:#e5e7eb;--muted:#6b7280}
+    body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI','Helvetica Neue',Arial,sans-serif;display:flex;height:100vh;overflow:hidden}
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--secondary);border-radius:3px}
+
+    /* ── SIDEBAR ── */
+    .sidebar{width:240px;background:rgba(11,21,38,0.98);border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding:0 0 20px}
+    .sidebar-brand{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:10px}
+    .sidebar-brand-icon{font-size:20px;color:var(--gold)}
+    .sidebar-brand-text{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#fff}
+    .sidebar-brand-text span{color:var(--gold)}
+    .sidebar-user{padding:16px 20px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .user-avatar{width:38px;height:38px;border-radius:50%;background:rgba(212,175,55,0.15);border:1.5px solid rgba(212,175,55,0.3);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--gold);font-size:14px;margin-bottom:8px}
+    .user-name{font-size:13px;font-weight:600;color:#fff}
+    .user-role{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--cyan);text-transform:uppercase;letter-spacing:1px}
+    .sidebar-section{padding:12px 12px 4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:10px 16px;margin:2px 8px;border-radius:10px;cursor:pointer;transition:background 0.15s;color:var(--muted);font-size:13px;font-weight:500}
+    .nav-item:hover{background:rgba(255,255,255,0.04);color:#fff}
+    .nav-item.active{background:rgba(212,175,55,0.1);color:var(--gold);border:1px solid rgba(212,175,55,0.15)}
+    .nav-item-icon{font-size:15px;width:20px;text-align:center}
+    .nav-badge{margin-left:auto;font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(212,175,55,0.15);color:var(--gold);font-weight:700}
+    .sidebar-footer{margin-top:auto;padding:12px 8px 0;border-top:1px solid rgba(255,255,255,0.05)}
+
+    /* ── MAIN ── */
+    .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .topbar{padding:14px 28px;background:rgba(5,8,22,0.95);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    .page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#fff}
+    .page-subtitle{font-size:12px;color:var(--muted);margin-top:2px}
+    .topbar-right{display:flex;align-items:center;gap:12px}
+    .topbar-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background 0.2s}
+    .topbar-icon:hover{background:rgba(255,255,255,0.08)}
+    .topbar-btn{padding:8px 18px;background:linear-gradient(135deg,var(--gold),#b8942e);color:#000;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+
+    /* ── CONTENT ── */
+    .content{flex:1;overflow-y:auto;padding:24px 28px}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    /* ── KPI CARDS ── */
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    .kpi-card{background:rgba(17,24,39,0.8);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:20px}
+    .kpi-label{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+    .kpi-value{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+    .kpi-change{font-size:11px;display:flex;align-items:center;gap:4px}
+    .kpi-up{color:var(--green)}
+    .kpi-icon{font-size:22px;margin-bottom:8px}
+
+    /* ── TABLE ── */
+    .section-card{background:rgba(17,24,39,0.7);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden;margin-bottom:20px}
+    .section-card-header{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.05)}
+    .section-card-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#fff}
+    table{width:100%;border-collapse:collapse}
+    th{padding:12px 20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06)}
+    td{padding:14px 20px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:rgba(255,255,255,0.02)}
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600}
+    .badge-green{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2)}
+    .badge-amber{background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2)}
+    .badge-red{background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2)}
+    .badge-blue{background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.2)}
+    .badge-gold{background:rgba(212,175,55,0.1);color:var(--gold);border:1px solid rgba(212,175,55,0.2)}
+    .badge-muted{background:rgba(255,255,255,0.04);color:var(--muted);border:1px solid rgba(255,255,255,0.08)}
+
+    /* ── ACTION BUTTONS ── */
+    .action-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;border:1px solid;cursor:pointer;transition:opacity 0.2s;background:transparent}
+    .action-btn:hover{opacity:0.8}
+    .action-btn-cyan{color:var(--cyan);border-color:rgba(6,182,212,0.3)}
+    .action-btn-gold{color:var(--gold);border-color:rgba(212,175,55,0.3)}
+    .action-btn-red{color:var(--red);border-color:rgba(239,68,68,0.3)}
+
+    /* ── FORM CARD ── */
+    .form-card{background:rgba(17,24,39,0.7);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;margin-bottom:20px}
+    .form-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-group{margin-bottom:0}
+    .form-group.full{grid-column:1/-1}
+    .form-label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+    .form-input{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+    .form-input:focus{border-color:var(--gold)}
+    .form-input::placeholder{color:var(--muted)}
+    textarea.form-input{min-height:90px;resize:vertical}
+    select.form-input option{background:#111827}
+    .form-footer{margin-top:20px;display:flex;justify-content:flex-end;gap:10px}
+    .btn-cancel{padding:10px 20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer}
+    .btn-submit{padding:10px 24px;background:linear-gradient(135deg,var(--gold),#b8942e);color:#000;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+
+    /* ── REVIEW SCORE ── */
+    .score-row{display:flex;align-items:center;gap:10px;margin:6px 0}
+    .score-label{font-size:11px;color:var(--muted);width:140px;flex-shrink:0}
+    .score-bar{flex:1;height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden}
+    .score-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--blue))}
+    .score-num{font-size:12px;font-weight:700;color:#fff;width:30px;text-align:right}
+
+    /* ── CERT CARD ── */
+    .cert-preview{border:2px solid rgba(212,175,55,0.3);border-radius:12px;padding:28px;background:rgba(11,31,58,0.4);text-align:center;position:relative}
+    .cert-watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.04;font-size:120px;pointer-events:none}
+    .cert-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:var(--gold);margin-bottom:6px}
+    .cert-sub{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px}
+    .cert-name{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:8px}
+    .cert-event{font-size:13px;color:var(--cyan);margin-bottom:20px}
+    .cert-qr{width:70px;height:70px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:8px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:30px}
+    .cert-id{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px}
+
+    /* ── PAYMENT ── */
+    .payment-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start}
+    .payment-summary{background:rgba(11,31,58,0.4);border:1px solid rgba(212,175,55,0.15);border-radius:12px;padding:20px}
+    .payment-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px}
+    .payment-row:last-child{border-bottom:none}
+    .payment-total{font-weight:700;font-size:16px;color:var(--gold)}
+    .payment-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+    .pm-btn{padding:12px;border:1px solid rgba(255,255,255,0.08);border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer;transition:border-color 0.2s;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
+    .pm-btn:hover,.pm-btn.selected{border-color:var(--gold);background:rgba(212,175,55,0.06);color:var(--gold)}
+
+    /* ── ADMIN AUDIT ── */
+    .audit-row{display:flex;gap:14px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .audit-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+    .audit-info{flex:1}
+    .audit-msg{font-size:13px;color:var(--text);margin-bottom:2px}
+    .audit-time{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+    .audit-actor{font-size:11px;color:var(--cyan)}
+
+    @media(max-width:768px){.sidebar{display:none}.kpi-grid{grid-template-columns:1fr 1fr}.payment-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <span class="sidebar-brand-icon">✦</span>
+    <span class="sidebar-brand-text">D&V <span>GLOBAL</span></span>
+  </div>
+  <div class="sidebar-user">
+    <div class="user-avatar">KS</div>
+    <div class="user-name">Kumar Swamy M.</div>
+    <div class="user-role">Author / Researcher</div>
+  </div>
+
+  <div class="sidebar-section">Main</div>
+  <div class="nav-item active" onclick="showTab('overview',this)"><span class="nav-item-icon">🏠</span> Overview</div>
+  <div class="nav-item" onclick="showTab('submissions',this)"><span class="nav-item-icon">📄</span> My Submissions<span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="showTab('reviews',this)"><span class="nav-item-icon">🔍</span> Peer Reviews<span class="nav-badge">2</span></div>
+  <div class="nav-item" onclick="showTab('conferences',this)"><span class="nav-item-icon">🗓️</span> Conferences</div>
+
+  <div class="sidebar-section">Account</div>
+  <div class="nav-item" onclick="showTab('payments',this)"><span class="nav-item-icon">💳</span> Payments</div>
+  <div class="nav-item" onclick="showTab('certificates',this)"><span class="nav-item-icon">🏅</span> Certificates</div>
+  <div class="nav-item" onclick="showTab('admin',this)"><span class="nav-item-icon">⚙️</span> Admin Audit</div>
+
+  <div class="sidebar-footer">
+    <div class="nav-item" onclick="window.location.href='index.html'"><span class="nav-item-icon">🚪</span> Sign Out</div>
+  </div>
+</div>
+
+<!-- MAIN AREA -->
+<div class="main">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div>
+      <div class="page-title" id="page-title">Dashboard Overview</div>
+      <div class="page-subtitle" id="page-subtitle">Welcome back, Kumar Swamy — 3 papers under review</div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-icon" title="Notifications">🔔</div>
+      <div class="topbar-icon" title="Search">🔎</div>
+      <button class="topbar-btn" onclick="showTab('submissions',null);showNewPaperForm()">+ New Submission</button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- ════ OVERVIEW ════ -->
+    <div class="tab-panel active" id="tab-overview">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon">📄</div>
+          <div class="kpi-label">Total Submissions</div>
+          <div class="kpi-value">7</div>
+          <div class="kpi-change kpi-up">↑ 2 this month</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon">✅</div>
+          <div class="kpi-label">Accepted Papers</div>
+          <div class="kpi-value">4</div>
+          <div class="kpi-change kpi-up">↑ 1 this week</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon">🔍</div>
+          <div class="kpi-label">Under Review</div>
+          <div class="kpi-value">2</div>
+          <div class="kpi-change" style="color:var(--amber)">⟳ Awaiting reviewers</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon">🏅</div>
+          <div class="kpi-label">Certificates Issued</div>
+          <div class="kpi-value">5</div>
+          <div class="kpi-change kpi-up">↑ Verified & downloadable</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">📋 Recent Activity</div>
+          <span class="badge badge-gold">Live Feed</span>
+        </div>
+        <table>
+          <thead><tr><th>Event</th><th>Detail</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>📄 Paper Submitted</td><td>Quantum Key Distribution for IoT</td><td>2026-08-01</td><td><span class="badge badge-amber">Under Review</span></td></tr>
+            <tr><td>✅ Paper Accepted</td><td>Federated Learning Security Models</td><td>2026-07-28</td><td><span class="badge badge-green">Accepted</span></td></tr>
+            <tr><td>🏅 Certificate Issued</td><td>DV AI Summit 2025 Presenter</td><td>2026-07-25</td><td><span class="badge badge-blue">Downloaded</span></td></tr>
+            <tr><td>💳 Payment Cleared</td><td>Registration — $299 USD</td><td>2026-07-22</td><td><span class="badge badge-green">Success</span></td></tr>
+            <tr><td>🔍 Review Assigned</td><td>Assigned as Peer Reviewer (Track 3)</td><td>2026-07-18</td><td><span class="badge badge-amber">Pending</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════ SUBMISSIONS ════ -->
+    <div class="tab-panel" id="tab-submissions">
+      <div id="new-paper-form" style="display:none">
+        <div class="form-card">
+          <div class="form-title">📝 New Paper Submission</div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label">Paper Title</label>
+              <input type="text" class="form-input" id="paper-title" placeholder="Quantum Key Distribution for Next-Gen IoT Networks"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Target Conference</label>
+              <select class="form-input" id="paper-conf">
+                <option>DV AI & Quantum Summit 2026</option>
+                <option>International Bio-Medicine Congress</option>
+                <option>World Clean Energy Summit</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Track / Domain</label>
+              <select class="form-input">
+                <option>Quantum Algorithms</option>
+                <option>Machine Learning</option>
+                <option>Cybersecurity</option>
+                <option>Network Systems</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Abstract (300–500 words)</label>
+              <textarea class="form-input" id="paper-abstract" placeholder="Provide a structured abstract: Background, Methods, Results, Conclusions..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Keywords (comma-separated)</label>
+              <input type="text" class="form-input" placeholder="quantum, cryptography, IoT, security"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Upload PDF / Word</label>
+              <input type="file" class="form-input" accept=".pdf,.doc,.docx"/>
+            </div>
+          </div>
+          <div class="form-footer">
+            <button class="btn-cancel" onclick="document.getElementById('new-paper-form').style.display='none'">Cancel</button>
+            <button class="btn-submit" onclick="submitPaper()">Submit Paper ✦</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="submission-success" class="form-card" style="display:none;text-align:center;padding:40px">
+        <div style="font-size:48px;margin-bottom:16px">🎉</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;color:#fff;margin-bottom:8px">Paper Submitted Successfully!</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:20px">Your paper has been assigned Submission ID <span style="color:var(--gold);font-family:'JetBrains Mono',monospace">#DVG-2026-0042</span>. Reviewers will be assigned within 48 hours.</p>
+        <button class="btn-submit" onclick="document.getElementById('submission-success').style.display='none'">Back to Submissions</button>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">📄 My Paper Submissions</div>
+          <button class="btn-submit" onclick="showNewPaperForm()" style="font-size:12px;padding:7px 16px">+ New Paper</button>
+        </div>
+        <table>
+          <thead><tr><th>ID</th><th>Paper Title</th><th>Conference</th><th>Track</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">#DVG-0039</span></td>
+              <td>Federated Learning for Medical Imaging</td>
+              <td>AI &amp; Quantum Summit 2026</td>
+              <td><span class="badge badge-muted">ML Systems</span></td>
+              <td><span class="badge badge-green">Accepted</span></td>
+              <td><button class="action-btn action-btn-cyan">Download</button></td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">#DVG-0040</span></td>
+              <td>Zero-Trust Architecture in Enterprise Clouds</td>
+              <td>AI &amp; Quantum Summit 2026</td>
+              <td><span class="badge badge-muted">Security</span></td>
+              <td><span class="badge badge-amber">Under Review</span></td>
+              <td><button class="action-btn action-btn-gold">Track Status</button></td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">#DVG-0041</span></td>
+              <td>Solar Grid Efficiency via Deep Reinforcement</td>
+              <td>World Clean Energy Summit</td>
+              <td><span class="badge badge-muted">GreenTech</span></td>
+              <td><span class="badge badge-amber">Under Review</span></td>
+              <td><button class="action-btn action-btn-gold">Track Status</button></td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">#DVG-0038</span></td>
+              <td>Genomic Data Privacy via Differential Privacy</td>
+              <td>Bio-Medicine Congress</td>
+              <td><span class="badge badge-muted">Genomics</span></td>
+              <td><span class="badge badge-red">Revision Req.</span></td>
+              <td><button class="action-btn action-btn-red">Revise</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════ PEER REVIEWS ════ -->
+    <div class="tab-panel" id="tab-reviews">
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card"><div class="kpi-icon">📋</div><div class="kpi-label">Assigned to Me</div><div class="kpi-value">2</div></div>
+        <div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-label">Completed</div><div class="kpi-value">8</div></div>
+        <div class="kpi-card"><div class="kpi-icon">⏳</div><div class="kpi-label">Due This Week</div><div class="kpi-value">2</div></div>
+      </div>
+
+      <!-- Active Review -->
+      <div class="form-card">
+        <div class="form-title">🔍 Active Review: "Quantum Key Distribution for IoT" — <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">#DVG-0042</span></div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7">Please evaluate this paper on the following criteria. This is a double-blind review — author information is hidden from you.</p>
+
+        <div style="margin-bottom:20px">
+          <div class="score-row"><span class="score-label">Scientific Novelty</span><div class="score-bar"><div class="score-fill" style="width:80%"></div></div><span class="score-num">8/10</span></div>
+          <div class="score-row"><span class="score-label">Methodology Rigor</span><div class="score-bar"><div class="score-fill" style="width:75%"></div></div><span class="score-num">7.5/10</span></div>
+          <div class="score-row"><span class="score-label">Literature Review</span><div class="score-bar"><div class="score-fill" style="width:70%"></div></div><span class="score-num">7/10</span></div>
+          <div class="score-row"><span class="score-label">Presentation Quality</span><div class="score-bar"><div class="score-fill" style="width:85%"></div></div><span class="score-num">8.5/10</span></div>
+          <div class="score-row"><span class="score-label">Reproducibility</span><div class="score-bar"><div class="score-fill" style="width:65%"></div></div><span class="score-num">6.5/10</span></div>
+        </div>
+
+        <div class="form-group full" style="margin-bottom:16px">
+          <label class="form-label">Review Comments</label>
+          <textarea class="form-input" style="min-height:120px" placeholder="Provide detailed feedback including strengths, weaknesses, and specific revision requests..."></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label class="form-label">Final Recommendation</label>
+          <select class="form-input">
+            <option>Accept</option>
+            <option selected>Minor Revisions Required</option>
+            <option>Major Revisions Required</option>
+            <option>Reject</option>
+          </select>
+        </div>
+        <div class="form-footer" style="margin-top:0">
+          <button class="btn-cancel">Save Draft</button>
+          <button class="btn-submit" onclick="alert('Review submitted successfully!')">Submit Review ✦</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ CONFERENCES ════ -->
+    <div class="tab-panel" id="tab-conferences">
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">🗓️ Upcoming Conferences</div>
+          <span class="badge badge-gold">3 Active</span>
+        </div>
+        <table>
+          <thead><tr><th>Conference</th><th>Date</th><th>Venue</th><th>Deadline</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>DV AI &amp; Quantum Summit 2026</strong></td>
+              <td>Oct 12–14, 2026</td>
+              <td>San Francisco, USA</td>
+              <td><span style="color:var(--amber)">Sep 01, 2026</span></td>
+              <td><span class="badge badge-green">Open</span></td>
+              <td><button class="action-btn action-btn-cyan">Register</button></td>
+            </tr>
+            <tr>
+              <td><strong>International Bio-Medicine Congress</strong></td>
+              <td>Nov 08–11, 2026</td>
+              <td>Geneva, Switzerland</td>
+              <td><span style="color:var(--amber)">Sep 15, 2026</span></td>
+              <td><span class="badge badge-green">Open</span></td>
+              <td><button class="action-btn action-btn-cyan">Register</button></td>
+            </tr>
+            <tr>
+              <td><strong>World Clean Energy Summit</strong></td>
+              <td>Dec 03–05, 2026</td>
+              <td>Tokyo, Japan</td>
+              <td><span style="color:var(--green)">Oct 01, 2026</span></td>
+              <td><span class="badge badge-amber">Soon</span></td>
+              <td><button class="action-btn action-btn-gold">View Info</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════ PAYMENTS ════ -->
+    <div class="tab-panel" id="tab-payments">
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-label">Total Paid</div><div class="kpi-value">$897</div></div>
+        <div class="kpi-card"><div class="kpi-icon">⏳</div><div class="kpi-label">Pending</div><div class="kpi-value">$299</div></div>
+        <div class="kpi-card"><div class="kpi-icon">📃</div><div class="kpi-label">Invoices</div><div class="kpi-value">6</div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start">
+        <div class="section-card">
+          <div class="section-card-header"><div class="section-card-title">💳 Payment History</div></div>
+          <table>
+            <thead><tr><th>Invoice ID</th><th>Description</th><th>Amount</th><th>Date</th><th>Status</th><th>PDF</th></tr></thead>
+            <tbody>
+              <tr><td><span style="font-family:'JetBrains Mono',monospace;font-size:11px">#INV-2026-0018</span></td><td>Registration — AI &amp; Quantum Summit</td><td style="color:var(--gold);font-weight:700">$299.00</td><td>2026-07-22</td><td><span class="badge badge-green">Paid</span></td><td><button class="action-btn action-btn-cyan">↓ PDF</button></td></tr>
+              <tr><td><span style="font-family:'JetBrains Mono',monospace;font-size:11px">#INV-2026-0015</span></td><td>Publication Fee — Journal of IS</td><td style="color:var(--gold);font-weight:700">$350.00</td><td>2026-07-10</td><td><span class="badge badge-green">Paid</span></td><td><button class="action-btn action-btn-cyan">↓ PDF</button></td></tr>
+              <tr><td><span style="font-family:'JetBrains Mono',monospace;font-size:11px">#INV-2026-0011</span></td><td>Conference Visa Support Letter</td><td style="color:var(--gold);font-weight:700">$49.00</td><td>2026-06-30</td><td><span class="badge badge-green">Paid</span></td><td><button class="action-btn action-btn-cyan">↓ PDF</button></td></tr>
+              <tr><td><span style="font-family:'JetBrains Mono',monospace;font-size:11px">#INV-2026-0009</span></td><td>Workshop — Deep Learning Bootcamp</td><td style="color:var(--gold);font-weight:700">$199.00</td><td>2026-06-15</td><td><span class="badge badge-amber">Processing</span></td><td><button class="action-btn action-btn-gold">Pending</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-card" style="margin-bottom:0">
+          <div class="form-title">⚡ Quick Payment</div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Conference Registration — Bio-Medicine Congress 2026</p>
+          <div class="payment-summary">
+            <div class="payment-row"><span>Registration Fee</span><span>$249.00</span></div>
+            <div class="payment-row"><span>GST / Tax (18%)</span><span>$44.82</span></div>
+            <div class="payment-row"><span style="color:var(--muted)">Processing</span><span>$0.00</span></div>
+            <div class="payment-row"><span class="payment-total">Total</span><span class="payment-total">$293.82</span></div>
+          </div>
+          <div style="margin-top:16px">
+            <div class="payment-methods">
+              <div class="pm-btn selected" onclick="selectPM(this)">💳 Card</div>
+              <div class="pm-btn" onclick="selectPM(this)">🏦 NetBanking</div>
+              <div class="pm-btn" onclick="selectPM(this)">📱 UPI</div>
+              <div class="pm-btn" onclick="selectPM(this)">🌐 PayPal</div>
+            </div>
+            <button class="btn-submit" style="width:100%" onclick="alert('Redirecting to secure payment gateway...')">Pay $293.82 → Secure Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ CERTIFICATES ════ -->
+    <div class="tab-panel" id="tab-certificates">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+        <div class="section-card">
+          <div class="section-card-header"><div class="section-card-title">🏅 My Certificates</div></div>
+          <table>
+            <thead><tr><th>Event</th><th>Type</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>DV AI Summit 2025</td><td><span class="badge badge-gold">Presenter</span></td><td>2025-11-18</td><td><button class="action-btn action-btn-cyan" onclick="showCert('Kumar Swamy Mareedu','DV AI & Quantum Summit 2025','DVG-CERT-7841')">↓ Download</button></td></tr>
+              <tr><td>International Bio Conf 2025</td><td><span class="badge badge-blue">Attendee</span></td><td>2025-09-05</td><td><button class="action-btn action-btn-cyan" onclick="showCert('Kumar Swamy Mareedu','International Bio-Medicine Conference 2025','DVG-CERT-6623')">↓ Download</button></td></tr>
+              <tr><td>AI Bootcamp — DV 2026</td><td><span class="badge badge-green">Participant</span></td><td>2026-03-12</td><td><button class="action-btn action-btn-cyan" onclick="showCert('Kumar Swamy Mareedu','DV AI Workshop 2026','DVG-CERT-9210')">↓ Download</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <div class="cert-preview" id="cert-display">
+            <div class="cert-watermark">✦</div>
+            <div style="font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">D&V GLOBAL SUMMIT</div>
+            <div class="cert-title">Certificate of Presentation</div>
+            <div class="cert-sub">This certifies that</div>
+            <div class="cert-name" id="cert-name">Kumar Swamy Mareedu</div>
+            <div class="cert-event" id="cert-event">DV AI & Quantum Summit 2025</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:20px">presented an accepted research paper at the above-mentioned global summit organized by D&V Global Summit Pvt. Ltd.</div>
+            <div class="cert-qr">⬛</div>
+            <div class="cert-id" id="cert-id">Certificate ID: DVG-CERT-7841</div>
+          </div>
+          <button class="btn-submit" style="width:100%;margin-top:12px" onclick="alert('Certificate PDF downloading...')">⬇ Download PDF Certificate</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ ADMIN AUDIT ════ -->
+    <div class="tab-panel" id="tab-admin">
+      <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi-card"><div class="kpi-icon">👥</div><div class="kpi-label">Total Users</div><div class="kpi-value">1,284</div></div>
+        <div class="kpi-card"><div class="kpi-icon">📄</div><div class="kpi-label">Total Papers</div><div class="kpi-value">3,472</div></div>
+        <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-label">Revenue (MTD)</div><div class="kpi-value">$48K</div></div>
+        <div class="kpi-card"><div class="kpi-icon">⚠️</div><div class="kpi-label">Open Flags</div><div class="kpi-value" style="color:var(--amber)">7</div></div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-header">
+          <div class="section-card-title">🔐 System Audit Log</div>
+          <span class="badge badge-amber">Live Stream</span>
+        </div>
+        <div>
+          <div class="audit-row">
+            <div class="audit-dot" style="background:var(--green)"></div>
+            <div class="audit-info">
+              <div class="audit-msg">User <span class="audit-actor">admin@dvglobal.com</span> approved paper #DVG-0039 for Conference AI Summit 2026</div>
+              <div class="audit-time">2026-08-03 16:42:11 UTC</div>
+            </div>
+          </div>
+          <div class="audit-row">
+            <div class="audit-dot" style="background:var(--blue)"></div>
+            <div class="audit-info">
+              <div class="audit-msg">New user registered: <span class="audit-actor">s.rao@iitm.ac.in</span> — Role: AUTHOR</div>
+              <div class="audit-time">2026-08-03 15:18:04 UTC</div>
+            </div>
+          </div>
+          <div class="audit-row">
+            <div class="audit-dot" style="background:var(--amber)"></div>
+            <div class="audit-info">
+              <div class="audit-msg">Payment #INV-2026-0019 failed for <span class="audit-actor">priya.k@nit.edu.in</span> — Retry initiated</div>
+              <div class="audit-time">2026-08-03 14:55:30 UTC</div>
+            </div>
+          </div>
+          <div class="audit-row">
+            <div class="audit-dot" style="background:var(--green)"></div>
+            <div class="audit-info">
+              <div class="audit-msg">Certificate #DVG-CERT-9210 generated and delivered to <span class="audit-actor">kumarswamy@research.in</span></div>
+              <div class="audit-time">2026-08-03 13:30:00 UTC</div>
+            </div>
+          </div>
+          <div class="audit-row">
+            <div class="audit-dot" style="background:var(--red)"></div>
+            <div class="audit-info">
+              <div class="audit-msg">⚠️ Plagiarism flag triggered on paper #DVG-0041 — Similarity index 28% detected</div>
+              <div class="audit-time">2026-08-03 12:10:44 UTC</div>
+            </div>
+          </div>
+          <div class="audit-row">
+            <div class="audit-dot" style="background:var(--cyan)"></div>
+            <div class="audit-info">
+              <div class="audit-msg">System backup completed — 4.2 GB archived to secure storage</div>
+              <div class="audit-time">2026-08-03 04:00:00 UTC</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+  const pageMeta = {
+    overview: ['Dashboard Overview', 'Welcome back, Kumar Swamy — 3 papers under review'],
+    submissions: ['My Paper Submissions', 'Manage and track all your research manuscripts'],
+    reviews: ['Peer Review Assignments', '2 reviews pending your evaluation'],
+    conferences: ['Conference Calendar', 'Upcoming DV Global summits and deadlines'],
+    payments: ['Payments & Invoices', 'Manage registrations, fees and downloadable invoices'],
+    certificates: ['My Certificates', 'Download and verify your digital credentials'],
+    admin: ['Admin System Audit', 'Full platform audit log and admin metrics'],
+  };
+
+  function showTab(tab, el) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+    const [title, sub] = pageMeta[tab] || ['Dashboard', ''];
+    document.getElementById('page-title').textContent = title;
+    document.getElementById('page-subtitle').textContent = sub;
+  }
+
+  function showNewPaperForm() {
+    const f = document.getElementById('new-paper-form');
+    f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function submitPaper() {
+    const title = document.getElementById('paper-title').value;
+    const abstract = document.getElementById('paper-abstract').value;
+    if (!title) { alert('Please enter a paper title.'); return; }
+    if (!abstract) { alert('Please enter an abstract.'); return; }
+    document.getElementById('new-paper-form').style.display = 'none';
+    document.getElementById('submission-success').style.display = 'block';
+  }
+
+  function showCert(name, event, id) {
+    document.getElementById('cert-name').textContent = name;
+    document.getElementById('cert-event').textContent = event;
+    document.getElementById('cert-id').textContent = 'Certificate ID: ' + id;
+  }
+
+  function selectPM(btn) {
+    document.querySelectorAll('.pm-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+</script>
+</body>
+</html>

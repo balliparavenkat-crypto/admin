@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account — D&V Global Summit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#050816;--primary:#0B1F3A;--secondary:#123A63;--cyan:#06B6D4;--gold:#D4AF37;--text:#e5e7eb;--muted:#6b7280}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+    .glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+    .glow-1{top:-80px;right:15%;width:400px;height:400px;background:rgba(6,182,212,0.08)}
+    .glow-2{bottom:0;left:10%;width:500px;height:500px;background:rgba(212,175,55,0.06)}
+    /* Page */
+    .page{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px 24px;position:relative;z-index:1}
+    /* Nav */
+    .top-nav{position:fixed;top:0;left:0;right:0;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,8,22,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05);z-index:10}
+    .brand{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .brand-icon{color:var(--gold);font-size:20px}
+    .brand-text{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;font-size:17px}
+    .brand-text span{color:var(--gold)}
+    .nav-login{color:var(--muted);font-size:13px}
+    .nav-login a{color:var(--cyan);font-weight:600;text-decoration:none}
+    /* Card */
+    .register-card{width:100%;max-width:600px;margin-top:60px}
+    .card-header{text-align:center;margin-bottom:36px}
+    .card-icon{width:56px;height:56px;border-radius:14px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 20px}
+    .card-header h1{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:8px}
+    .card-header p{color:var(--muted);font-size:13px}
+    /* Steps */
+    .step-indicator{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:36px}
+    .step{display:flex;flex-direction:column;align-items:center;gap:6px}
+    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;transition:background 0.3s,color 0.3s}
+    .step.active .step-num{background:var(--gold);color:#000}
+    .step.done .step-num{background:rgba(34,197,94,0.2);color:#22c55e;border:1px solid rgba(34,197,94,0.3)}
+    .step.pending .step-num{background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.1)}
+    .step-name{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px}
+    .step.active .step-name{color:var(--gold)}
+    .step-connector{width:60px;height:1px;background:rgba(255,255,255,0.1);margin-bottom:20px}
+    /* Form */
+    .form-section{background:rgba(17,24,39,0.7);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:32px;display:none}
+    .form-section.active{display:block}
+    .section-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-group{margin-bottom:16px}
+    .form-group.full{grid-column:1/-1}
+    .form-label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+    .form-input{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+    .form-input:focus{border-color:var(--gold)}
+    .form-input::placeholder{color:var(--muted)}
+    select.form-input option{background:#111827;color:#fff}
+    /* Role Cards */
+    .role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+    .role-card{padding:16px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;transition:border-color 0.2s,background 0.2s;background:rgba(255,255,255,0.02)}
+    .role-card:hover{background:rgba(255,255,255,0.04)}
+    .role-card.selected{border-color:var(--gold);background:rgba(212,175,55,0.07)}
+    .role-card input[type=radio]{display:none}
+    .role-icon{font-size:24px;margin-bottom:8px}
+    .role-name{font-weight:700;font-size:13px;color:#fff;margin-bottom:4px}
+    .role-desc{font-size:11px;color:var(--muted)}
+    /* Btn */
+    .btn-row{display:flex;gap:12px;margin-top:24px}
+    .btn-back{flex:1;padding:13px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s}
+    .btn-back:hover{background:rgba(255,255,255,0.06)}
+    .btn-next{flex:2;padding:13px;background:linear-gradient(135deg,var(--gold),#b8942e);color:#000;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+    .btn-next:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(212,175,55,0.2)}
+    /* Password Strength */
+    .pw-strength{height:3px;border-radius:99px;background:rgba(255,255,255,0.05);margin-top:8px;overflow:hidden}
+    .pw-bar{height:100%;border-radius:99px;width:0;transition:width 0.3s,background 0.3s}
+    .pw-label{font-size:10px;color:var(--muted);margin-top:4px;font-family:'JetBrains Mono',monospace}
+    /* Agreement */
+    .agreement-box{background:rgba(212,175,55,0.05);border:1px solid rgba(212,175,55,0.15);border-radius:10px;padding:16px;font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:20px}
+    .agreement-box a{color:var(--cyan);text-decoration:none}
+    .checkbox-row{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted);cursor:pointer;margin-bottom:12px}
+    .checkbox-row input{margin-top:2px;accent-color:var(--gold)}
+    /* Auth Switch */
+    .auth-switch{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
+    .auth-switch a{color:var(--cyan);text-decoration:none;font-weight:600}
+    /* Success */
+    .success-state{text-align:center;padding:40px;display:none}
+    .success-state.show{display:block}
+    .success-icon{font-size:56px;margin-bottom:16px}
+    .success-state h2{font-family:'Space Grotesk',sans-serif;font-size:24px;color:#fff;margin-bottom:8px}
+    .success-state p{color:var(--muted);font-size:13px}
+    @media(max-width:600px){.form-grid{grid-template-columns:1fr}.role-grid{grid-template-columns:1fr}.step-connector{width:30px}}
+  </style>
+</head>
+<body>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<nav class="top-nav">
+  <a href="index.html" class="brand">
+    <span class="brand-icon">✦</span>
+    <span class="brand-text">D&V <span>GLOBAL</span></span>
+  </a>
+  <span class="nav-login">Already registered? <a href="login.html">Sign In</a></span>
+</nav>
+
+<div class="page">
+  <div class="register-card">
+    <div class="card-header">
+      <div class="card-icon">✦</div>
+      <h1>Create Your Account</h1>
+      <p>Join 50,000+ global researchers and delegates on D&V Global Summit</p>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step active" id="step-ind-1">
+        <div class="step-num">1</div>
+        <div class="step-name">Role</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step pending" id="step-ind-2">
+        <div class="step-num">2</div>
+        <div class="step-name">Profile</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step pending" id="step-ind-3">
+        <div class="step-num">3</div>
+        <div class="step-name">Security</div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step pending" id="step-ind-4">
+        <div class="step-num">✓</div>
+        <div class="step-name">Done</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Role Selection -->
+    <div class="form-section active" id="step-1">
+      <div class="section-title">Select Your Primary Role</div>
+      <div class="role-grid">
+        <label class="role-card" onclick="selectRole(this)">
+          <input type="radio" name="role" value="AUTHOR"/>
+          <div class="role-icon">📝</div>
+          <div class="role-name">Author / Researcher</div>
+          <div class="role-desc">Submit papers, track status, receive reviews, download certificates</div>
+        </label>
+        <label class="role-card" onclick="selectRole(this)">
+          <input type="radio" name="role" value="REVIEWER"/>
+          <div class="role-icon">🔍</div>
+          <div class="role-name">Peer Reviewer</div>
+          <div class="role-desc">Evaluate assigned manuscripts, score papers, provide expert commentary</div>
+        </label>
+        <label class="role-card" onclick="selectRole(this)">
+          <input type="radio" name="role" value="CHAIR"/>
+          <div class="role-icon">🎯</div>
+          <div class="role-name">Conference Chair</div>
+          <div class="role-desc">Organize tracks, manage reviewers, issue invitations and decisions</div>
+        </label>
+        <label class="role-card" onclick="selectRole(this)">
+          <input type="radio" name="role" value="ADMIN"/>
+          <div class="role-icon">⚙️</div>
+          <div class="role-name">Platform Admin</div>
+          <div class="role-desc">Full system access — configure conferences, journals, billing and audits</div>
+        </label>
+      </div>
+      <div class="btn-row">
+        <button class="btn-next" onclick="nextStep(1)">Continue → Select Profile</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Profile Details -->
+    <div class="form-section" id="step-2">
+      <div class="section-title">Personal & Academic Information</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" id="first-name" placeholder="Kumar Swamy"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" id="last-name" placeholder="Mareedu"/>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Academic / Professional Email</label>
+          <input type="email" class="form-input" id="reg-email" placeholder="you@university.edu"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Designation</label>
+          <input type="text" class="form-input" placeholder="PhD Research Scholar"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Department / School</label>
+          <input type="text" class="form-input" placeholder="Computer Science & AI"/>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Institution / Organization</label>
+          <input type="text" class="form-input" placeholder="University of Technology, Hyderabad"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Country</label>
+          <select class="form-input">
+            <option>India</option>
+            <option>United States</option>
+            <option>Germany</option>
+            <option>United Kingdom</option>
+            <option>Australia</option>
+            <option>Canada</option>
+            <option>Japan</option>
+            <option>Singapore</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Research Domain</label>
+          <select class="form-input">
+            <option>Artificial Intelligence</option>
+            <option>Quantum Computing</option>
+            <option>Biomedical Sciences</option>
+            <option>Clean Energy Systems</option>
+            <option>Data Science & Analytics</option>
+            <option>Cybersecurity</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevStep(2)">← Back</button>
+        <button class="btn-next" onclick="nextStep(2)">Continue → Security</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Security -->
+    <div class="form-section" id="step-3">
+      <div class="section-title">Account Security</div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="password" placeholder="Create a strong password" oninput="checkPwStrength(this.value)"/>
+        <div class="pw-strength"><div class="pw-bar" id="pw-bar"></div></div>
+        <div class="pw-label" id="pw-label">Enter a password to check strength</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-input" id="confirm-password" placeholder="Repeat your password"/>
+      </div>
+      <div class="agreement-box">
+        By creating an account, you agree to the D&V Global Summit <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and <a href="#">Code of Research Ethics</a>. Your data will be processed in accordance with GDPR and Indian IT Act 2000.
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" id="terms-check"/> I agree to the Terms of Service and Privacy Policy
+      </label>
+      <label class="checkbox-row">
+        <input type="checkbox" id="email-check"/> Send me conference announcements and paper deadlines
+      </label>
+      <div class="btn-row">
+        <button class="btn-back" onclick="prevStep(3)">← Back</button>
+        <button class="btn-next" onclick="submitForm()">Create Account ✦</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Success -->
+    <div class="success-state" id="step-4">
+      <div class="success-icon">🎉</div>
+      <h2>Account Created Successfully!</h2>
+      <p style="margin-bottom:24px">Welcome to the D&V Global Summit network. Check your inbox for a verification email.</p>
+      <button class="btn-next" onclick="window.location.href='dashboard.html'" style="width:100%;display:block">Go to Dashboard →</button>
+    </div>
+
+    <div class="auth-switch" id="login-switch">
+      Already have an account? <a href="login.html">Sign In</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentStep = 1;
+
+  function selectRole(label) {
+    document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+    label.classList.add('selected');
+    label.querySelector('input[type=radio]').checked = true;
+  }
+
+  function nextStep(from) {
+    if (from === 1) {
+      const sel = document.querySelector('input[name=role]:checked');
+      if (!sel) { alert('Please select a role to continue.'); return; }
+    }
+    setStep(from + 1);
+  }
+
+  function prevStep(from) { setStep(from - 1); }
+
+  function setStep(n) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    const section = document.getElementById('step-' + n);
+    if (section) section.classList.add('active');
+    currentStep = n;
+    // Update indicators
+    for (let i = 1; i <= 4; i++) {
+      const ind = document.getElementById('step-ind-' + i);
+      if (!ind) continue;
+      ind.classList.remove('active','done','pending');
+      if (i < n) ind.classList.add('done');
+      else if (i === n) ind.classList.add('active');
+      else ind.classList.add('pending');
+    }
+    if (n === 4) document.getElementById('login-switch').style.display = 'none';
+  }
+
+  function checkPwStrength(pw) {
+    const bar = document.getElementById('pw-bar');
+    const label = document.getElementById('pw-label');
+    let strength = 0;
+    if (pw.length >= 8) strength++;
+    if (/[A-Z]/.test(pw)) strength++;
+    if (/[0-9]/.test(pw)) strength++;
+    if (/[^a-zA-Z0-9]/.test(pw)) strength++;
+    const widths = ['0%','25%','50%','75%','100%'];
+    const colors = ['#ef4444','#ef4444','#f59e0b','#22c55e','#06b6d4'];
+    const labels = ['Too weak','Weak','Fair','Strong','Very strong'];
+    bar.style.width = widths[strength];
+    bar.style.background = colors[strength];
+    label.textContent = labels[strength];
+    label.style.color = colors[strength];
+  }
+
+  function submitForm() {
+    const terms = document.getElementById('terms-check').checked;
+    if (!terms) { alert('Please accept the Terms of Service to continue.'); return; }
+    const p1 = document.getElementById('password').value;
+    const p2 = document.getElementById('confirm-password').value;
+    if (p1 !== p2) { alert('Passwords do not match.'); return; }
+    if (p1.length < 6) { alert('Password must be at least 6 characters.'); return; }
+    setStep(4);
+  }
+</script>
+</body>
+</html>
