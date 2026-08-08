@@ -657,7 +657,7 @@ export default function HomePage() {
               An Enterprise Foundation for Scientific Advancement
             </h2>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              Managing large-scale summits demands high coordination. D&V Global provides an intuitive layout that connects organizers, scientific chairs, blind reviewers, and speakers seamlessly. We manage the pipeline from call-for-abstracts to peer review scores, digital certificates and automated global payouts.
+              D&amp;V Global Summit brings together researchers, professionals, and experts from around the world to share knowledge and ideas. We create meaningful opportunities for learning, collaboration, and networking. Our summits encourage new ideas, valuable connections, and professional growth. Together, we aim to create events that inspire people and help shape the future.
             </p>
             <ul className="space-y-4">
               <li className="flex gap-3 items-start">
