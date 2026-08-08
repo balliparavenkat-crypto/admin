@@ -121,12 +121,12 @@ export default function PoliciesPage() {
         <Link href="/" className="flex items-center group">
           <img src="/images/logo.png" alt="D&V Global Logo" className="h-20 md:h-24 w-auto object-contain transition duration-300" />
         </Link>
-        <div className="flex items-center gap-2 text-xs font-semibold text-gray-400">
-          <Link href="/" className="hover:text-white transition flex items-center gap-1">
-            <Home className="w-3.5 h-3.5" /> Home
+        <div className="flex items-center gap-2 text-xs font-bold text-black">
+          <Link href="/" className="hover:text-black transition flex items-center gap-1">
+            <Home className="w-3.5 h-3.5 text-black" /> Home
           </Link>
-          <ChevronRight className="w-3 h-3 text-gray-600" />
-          <span style={{ color: "#D4AF37" }}>Policies</span>
+          <ChevronRight className="w-3 h-3 text-black" />
+          <span className="text-black font-bold">Policies</span>
         </div>
       </nav>
 

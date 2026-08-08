@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Calendar, Users, Award, BookOpen, ChevronRight, ChevronLeft,
   Lock, MapPin, Sparkles, Send, Shield, DollarSign, Globe, Building, Play,
-  QrCode, Menu, X, ArrowUpRight, HelpCircle, Mail, MessageSquare
+  QrCode, Menu, X, ArrowUpRight, HelpCircle, Mail, MessageSquare, Phone
 } from "lucide-react";
 import Link from "next/link";
 
@@ -350,17 +350,17 @@ export default function HomePage() {
         <HeaderLogo />
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-6 text-xs font-semibold tracking-wider text-gray-700 font-sans">
-          <a href="#" className="text-[#1E40AF] border-b-2 border-[#1E40AF] pb-1 transition-all duration-300">HOME</a>
-          <a href="#about" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">ABOUT US</a>
-          <a href="#conferences" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">SUMMITS</a>
-          <a href="#sponsorship" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">SPONSORSHIP</a>
-          <a href="#journals" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">SCHEDULE</a>
-          <Link href="/indian-registers" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">REGISTER</Link>
-          <Link href="/policies" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">POLICIES</Link>
-          <Link href="/cancellation-policy" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">CANCELLATION POLICY</Link>
-          <Link href="/terms-of-use" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">TERMS OF USE</Link>
-          <a href="#" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">CONTACT</a>
+        <div className="hidden lg:flex items-center gap-6 text-xs font-bold tracking-wider text-black font-sans">
+          <a href="#" className="text-black border-b-2 border-black pb-1 transition-all duration-300">HOME</a>
+          <a href="#about" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">ABOUT US</a>
+          <a href="#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SUMMITS</a>
+          <a href="#sponsorship" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SPONSORSHIP</a>
+          <a href="#journals" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SCHEDULE</a>
+          <Link href="/indian-registers" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">REGISTER</Link>
+          <Link href="/policies" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">POLICIES</Link>
+          <Link href="/cancellation-policy" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">CANCELLATION POLICY</Link>
+          <Link href="/terms-of-use" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">TERMS OF USE</Link>
+          <a href="#contact" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">CONTACT</a>
         </div>
 
         <div className="hidden lg:flex items-center gap-4">
@@ -858,7 +858,7 @@ export default function HomePage() {
               { name: "Dentistry", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=150&h=150&q=80" },
               { name: "Nursing", img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=150&h=150&q=80" },
               { name: "Pharmacy", img: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=150&h=150&q=80" },
-              { name: "Mechanical Eng.", img: "https://images.unsplash.com/photo-1537462715879-360eeb61a0bc?auto=format&fit=crop&w=150&h=150&q=80" },
+              { name: "Mechanical Eng.", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=150&h=150&q=80" },
               { name: "Civil Eng.", img: "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=150&h=150&q=80" },
               { name: "Electrical Eng.", img: "https://images.unsplash.com/photo-1498084393753-b411b2d26b34?auto=format&fit=crop&w=150&h=150&q=80" },
               { name: "Electronics", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=150&h=150&q=80" },
@@ -1071,10 +1071,10 @@ export default function HomePage() {
                   {/* Pricing */}
                   <div className="mb-6 p-3 bg-white/70 rounded-xl border border-[#1E40AF]/15">
                     <div className="text-2xl font-black text-[#1E40AF] tracking-tight">
-                      {tier.priceINR}
+                      {tier.priceUSD} <span className="text-sm font-bold">USD</span>
                     </div>
                     <div className="text-xs text-gray-500 font-mono mt-0.5">
-                      or <span className="text-[#0D1117] font-semibold">{tier.priceUSD}</span> USD
+                      or <span className="text-[#0D1117] font-semibold">{tier.priceINR}</span> INR
                     </div>
                   </div>
 
@@ -1193,26 +1193,126 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-20 px-6 md:px-12 border-t border-[#1E40AF]/10 bg-gradient-to-b from-transparent to-primary/20">
-        <div className="max-w-3xl mx-auto text-center glass-panel p-8 md:p-12 rounded-2xl border border-accent-gold/25">
-          <h3 className="font-display font-bold text-2xl text-[#0D1117] mb-3">Subscribe to DV Global Bulletins</h3>
-          <p className="text-gray-600 text-sm max-w-sm mx-auto mb-8">
-            Get instant announcements regarding abstract deadlines, indexing schedules, and speaker slots.
-          </p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e) => { e.preventDefault(); alert("Subscribed successfully!"); setEmailInput(""); }}>
-            <input
-              type="email"
-              placeholder="Enter your academic email"
-              required
-              value={emailInput}
-              onChange={(e) => setEmailInput(e.target.value)}
-              className="flex-1 px-4 py-3 bg-[#374151]/15 border border-[#1E40AF]/15 rounded-lg text-sm text-[#0D1117] focus:outline-none focus:border-accent-gold transition"
-            />
-            <button className="px-6 py-3 bg-accent-blue text-black font-semibold rounded-lg hover:bg-yellow-600 transition flex items-center justify-center gap-2">
-              Subscribe <Send className="w-4 h-4" />
-            </button>
-          </form>
+      {/* Contact & Mail Section */}
+      <section id="contact" className="py-16 md:py-20 px-6 md:px-12 bg-white border-t border-slate-200 text-[#0D1117]">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs uppercase font-bold tracking-widest text-[#1E40AF] block mb-2 font-mono">
+              Direct Inquiry Desk
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black text-[#0D1117]">
+              Contact Us & Send Mail
+            </h2>
+            <p className="text-sm text-gray-600 mt-2 max-w-xl mx-auto">
+              Have questions about upcoming summits, registration, or sponsorship? Reach out directly to our conference support team.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Direct Mail Cards */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="p-6 rounded-2xl bg-[#0B1E3D] text-white border border-[#D4AF37]/30 shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+                <h3 className="text-xl font-bold text-[#E5C158] mb-2 flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-[#E5C158]" /> Send Direct Email
+                </h3>
+                <p className="text-xs text-slate-300 mb-6 leading-relaxed">
+                  Click below to open your email client or send your inquiry directly to our official inbox.
+                </p>
+                <a
+                  href="mailto:info@dvglobalsummits.com"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl font-bold text-xs bg-gradient-to-r from-amber-400 to-yellow-500 text-black uppercase tracking-wider shadow-lg hover:brightness-110 transition duration-300"
+                >
+                  <Mail className="w-4 h-4" /> info@dvglobalsummits.com
+                </a>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-100/70 text-[#1E40AF] flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-[#0D1117]">Call Support</h4>
+                    <p className="text-xs text-gray-500">+91 (0) 123 456 7890 (Mon - Fri: 9am - 6pm IST)</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 pt-2 border-t border-slate-200">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-100/70 text-cyan-700 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-[#0D1117]">Headquarters</h4>
+                    <p className="text-xs text-gray-500">D&V SUMMITS PVT LTD, World Trade Tower, Tech Hub District</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Mail Form */}
+            <div className="lg:col-span-7 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold text-[#0D1117] mb-2 flex items-center gap-2">
+                <Send className="w-5 h-5 text-[#1E40AF]" /> Quick Inquiry Form
+              </h3>
+              <p className="text-xs text-gray-500 mb-6">
+                Send your query directly to our team and we will respond within 24 hours.
+              </p>
+
+              {sponsorSubmitted ? (
+                <div className="p-6 rounded-xl bg-emerald-50 border border-emerald-200 text-center text-emerald-800">
+                  <h4 className="font-bold text-base mb-1">Thank You! Your message has been sent.</h4>
+                  <p className="text-xs text-emerald-600">Our conference team will contact you shortly.</p>
+                </div>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setSponsorSubmitted(true);
+                  }}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-gray-700 mb-1">Full Name *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Your Name"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-[#1E40AF]/30 bg-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-gray-700 mb-1">Email Address *</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="yourname@domain.com"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-[#1E40AF]/30 bg-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-gray-700 mb-1">Message *</label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="Write your query or request..."
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-[#1E40AF]/30 bg-white"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3 bg-[#1E40AF] text-white font-bold text-xs rounded-xl uppercase tracking-wider hover:bg-[#1D4ED8] transition duration-300 shadow-md flex items-center justify-center gap-2"
+                  >
+                    <Send className="w-4 h-4" /> Send Inquiry
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1303,7 +1403,7 @@ export default function HomePage() {
                               )}
                             </div>
                             <div className="text-[11px] font-mono text-accent-blue mt-1 font-bold">
-                              {tier.priceINR} <span className="text-gray-600 font-normal">({tier.priceUSD})</span>
+                              {tier.priceUSD} USD <span className="text-gray-600 font-normal">({tier.priceINR} INR)</span>
                             </div>
                           </div>
                         ))}
