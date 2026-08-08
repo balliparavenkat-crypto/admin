@@ -29,8 +29,8 @@ export default function HomePage() {
       priceUSD: "$5,999",
       badge: "Exclusive Tier",
       popular: true,
-      border: "border-amber-400/50 hover:border-amber-400",
-      bg: "bg-gradient-to-b from-amber-500/10 via-black/40 to-black/60",
+      border: "border-blue-400/80 hover:border-blue-500",
+      bg: "bg-gradient-to-b from-blue-50 via-white to-white shadow-blue-500/5",
       includes: [
         "Prime booth location and exclusive branding across the event",
         "Keynote speaking opportunity to showcase your expertise",
@@ -45,8 +45,8 @@ export default function HomePage() {
       priceUSD: "$4,999",
       badge: "Premium Tier",
       popular: false,
-      border: "border-amber-500/30 hover:border-amber-400/80",
-      bg: "bg-gradient-to-b from-amber-500/5 via-black/40 to-black/60",
+      border: "border-slate-200 hover:border-blue-400",
+      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
       includes: [
         "Premium booth location and branding throughout the event",
         "Opportunity to participate in a panel discussion or workshop",
@@ -61,8 +61,8 @@ export default function HomePage() {
       priceUSD: "$3,999",
       badge: "High Visibility",
       popular: false,
-      border: "border-amber-500/20 hover:border-amber-500/60",
-      bg: "bg-gradient-to-b from-amber-500/5 via-black/40 to-black/60",
+      border: "border-slate-200 hover:border-blue-400",
+      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
       includes: [
         "High-visibility booth space to engage attendees",
         "Logo placement on event website and conference program",
@@ -71,14 +71,30 @@ export default function HomePage() {
       ]
     },
     {
-      id: "exhibitor",
-      name: "Exhibitor",
+      id: "silver",
+      name: "Silver Sponsor",
       priceINR: "₹2,59,555",
       priceUSD: "$2,999",
+      badge: "Standard Visibility",
+      popular: false,
+      border: "border-slate-200 hover:border-blue-400",
+      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
+      includes: [
+        "Standard booth space in the main exhibit hall",
+        "Logo placement on event website and printed booklet",
+        "Recognition in opening and closing ceremony announcements",
+        "2 complimentary sponsor delegate passes"
+      ]
+    },
+    {
+      id: "exhibitor",
+      name: "Exhibitor",
+      priceINR: "₹1,72,625",
+      priceUSD: "$1,999",
       badge: "Exhibit Space",
       popular: false,
-      border: "border-white/10 hover:border-amber-400/40",
-      bg: "bg-gradient-to-b from-white/5 via-black/40 to-black/60",
+      border: "border-slate-200 hover:border-blue-400/80",
+      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
       includes: [
         "Exhibit booth space in a high-traffic area",
         "Listing on event website and program",
@@ -90,93 +106,129 @@ export default function HomePage() {
 
   const slides = [
     {
-      eyebrow: "🌐 WORLD'S PREMIER RESEARCH SUMMIT PLATFORM",
-      image: "/images/tech_hero_globe.png",
+      summitName: "AI & Quantum Summit",
+      eyebrow: "⚡ ADVANCED COMPUTATION & QUANTUM TRACKS",
+      image: "/images/ai_quantum_summit.png",
+      location: "San Francisco, USA",
+      date: "Oct 12-14, 2026",
       title: (
         <>
           Connecting Researchers.<br />
-          Inspiring <span className="text-accent-gold text-glow-gold">Innovation.</span><br />
-          Impacting the <span className="text-accent-cyan text-glow-cyan">World.</span>
+          Inspiring <span className="text-accent-blue font-extrabold">Innovation.</span><br />
+          Impacting the <span className="text-cyan-400 font-extrabold">World.</span>
         </>
       ),
-      description: "D&V Global Summit brings together brilliant minds, groundbreaking research, and global opportunities to shape a better tomorrow.",
+      description: "D&V Global AI & Quantum Summit brings together physicists, computer scientists, and tech pioneers to solve complex computational limits.",
       stats: [
-        { value: "120+", label: "Countries", icon: Globe, iconColor: "text-amber-400" },
-        { value: "15K+", label: "Researchers", icon: Users, iconColor: "text-amber-400" },
-        { value: "500+", label: "Universities", icon: Building, iconColor: "text-amber-400" },
-        { value: "250+", label: "Global Conferences", icon: Calendar, iconColor: "text-amber-400" },
+        { value: "120+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+        { value: "15K+", label: "Researchers", icon: Users, iconColor: "text-accent-blue" },
+        { value: "500+", label: "Universities", icon: Building, iconColor: "text-accent-blue" },
+        { value: "250+", label: "Conferences", icon: Calendar, iconColor: "text-accent-blue" },
       ]
     },
     {
-      eyebrow: "⚡ ADVANCED COMPUTATION & INTELLECTUAL TRACKS",
-      image: "/images/ai_quantum_summit.png",
-      title: (
-        <>
-          Pioneering Intelligence.<br />
-          Quantum <span className="text-accent-gold text-glow-gold">Leads.</span><br />
-          Transforming the <span className="text-amber-300 drop-shadow-[0_0_12px_rgba(245,158,11,0.65)]">Future.</span>
-        </>
-      ),
-      description: "DV Global AI & Quantum Summit joins physicists, computer scientists, and global tech pioneers to address next-generation processing limits.",
-      stats: [
-        { value: "60+", label: "Countries", icon: Globe, iconColor: "text-amber-400" },
-        { value: "4K+", label: "AI Experts", icon: Users, iconColor: "text-amber-400" },
-        { value: "150+", label: "Universities", icon: Building, iconColor: "text-amber-400" },
-        { value: "45+", label: "Active Tracks", icon: Calendar, iconColor: "text-amber-400" },
-      ]
-    },
-    {
+      summitName: "Bio-Medicine Congress",
       eyebrow: "🧬 DECIPHERING GENOMICS & MOLECULAR PATHWAYS",
       image: "/images/biomedicine_congress.png",
+      location: "Geneva, Switzerland",
+      date: "Nov 08-11, 2026",
       title: (
         <>
           Decoding Genomes.<br />
-          Advanced <span className="text-accent-gold text-glow-gold">Care.</span><br />
-          Healing <span className="text-amber-300 drop-shadow-[0_0_12px_rgba(245,158,11,0.65)]">Humanity.</span>
+          Advanced <span className="text-accent-blue font-extrabold">Care.</span><br />
+          Healing <span className="text-yellow-300 font-extrabold">Humanity.</span>
         </>
       ),
       description: "Explore breakthroughs in gene splicing, double-blind clinical trials, molecular pathology, and fast-track Scopus indexations.",
       stats: [
-        { value: "80+", label: "Countries", icon: Globe, iconColor: "text-amber-400" },
-        { value: "6K+", label: "MD Specialists", icon: Users, iconColor: "text-amber-400" },
-        { value: "220+", label: "Research Labs", icon: Building, iconColor: "text-amber-400" },
-        { value: "80+", label: "Tracks Registered", icon: Calendar, iconColor: "text-amber-400" },
+        { value: "80+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+        { value: "6K+", label: "MD Specialists", icon: Users, iconColor: "text-accent-blue" },
+        { value: "220+", label: "Research Labs", icon: Building, iconColor: "text-accent-blue" },
+        { value: "80+", label: "Tracks Registered", icon: Calendar, iconColor: "text-accent-blue" },
       ]
     },
     {
+      summitName: "Clean Energy Summit",
       eyebrow: "🍃 CLEAN ENERGY & SUSTAINABLE CLIMATE SOLUTIONS",
       image: "/images/clean_energy_summit.png",
+      location: "Tokyo, Japan",
+      date: "Dec 03-05, 2026",
       title: (
         <>
           Accelerating Net-Zero.<br />
-          Clean <span className="text-accent-gold text-glow-gold">Energy.</span><br />
-          Green <span className="text-amber-300 drop-shadow-[0_0_12px_rgba(245,158,11,0.65)]">Innovation.</span>
+          Clean <span className="text-accent-blue font-extrabold">Energy.</span><br />
+          Green <span className="text-emerald-400 font-extrabold">Innovation.</span>
         </>
       ),
       description: "Uniting environmental scientists, policy makers, and renewable tech developers to build scalable carbon-neutral infrastructures.",
       stats: [
-        { value: "95+", label: "Countries", icon: Globe, iconColor: "text-amber-400" },
-        { value: "8K+", label: "Delegates", icon: Users, iconColor: "text-amber-400" },
-        { value: "310+", label: "CleanTech Labs", icon: Building, iconColor: "text-amber-400" },
-        { value: "60+", label: "Green Tracks", icon: Calendar, iconColor: "text-amber-400" },
+        { value: "95+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+        { value: "8K+", label: "Delegates", icon: Users, iconColor: "text-accent-blue" },
+        { value: "310+", label: "CleanTech Labs", icon: Building, iconColor: "text-accent-blue" },
+        { value: "60+", label: "Green Tracks", icon: Calendar, iconColor: "text-accent-blue" },
       ]
     },
     {
+      summitName: "Robotics & IoT Summit",
       eyebrow: "🤖 ROBOTICS, AUTONOMOUS SYSTEMS & NEXT-GEN IOT",
       image: "/images/robotics_summit.png",
+      location: "Munich, Germany",
+      date: "Apr 18-20, 2027",
       title: (
         <>
           Empowering Automation.<br />
-          Robotics <span className="text-accent-gold text-glow-gold">Leads.</span><br />
-          Smart <span className="text-amber-300 drop-shadow-[0_0_12px_rgba(245,158,11,0.65)]">Cities.</span>
+          Robotics <span className="text-accent-blue font-extrabold">Leads.</span><br />
+          Smart <span className="text-cyan-400 font-extrabold">Cities.</span>
         </>
       ),
       description: "Gathering cybernetic engineers and IoT architects to demonstrate autonomous drone fleets and industrial automation.",
       stats: [
-        { value: "75+", label: "Countries", icon: Globe, iconColor: "text-amber-400" },
-        { value: "5K+", label: "Robotics Chairs", icon: Users, iconColor: "text-amber-400" },
-        { value: "180+", label: "Tech Hubs", icon: Building, iconColor: "text-amber-400" },
-        { value: "50+", label: "Live Demos", icon: Calendar, iconColor: "text-amber-400" },
+        { value: "75+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+        { value: "5K+", label: "Robotics Chairs", icon: Users, iconColor: "text-accent-blue" },
+        { value: "180+", label: "Tech Hubs", icon: Building, iconColor: "text-accent-blue" },
+        { value: "50+", label: "Live Demos", icon: Calendar, iconColor: "text-accent-blue" },
+      ]
+    },
+    {
+      summitName: "Brain Genomics Congress",
+      eyebrow: "🧠 NEURO-ONCOLOGY & BRAIN GENOMICS DISCOVERIES",
+      image: "/images/brain_genomics.png",
+      location: "Boston, USA",
+      date: "May 22-25, 2027",
+      title: (
+        <>
+          Mapping Neural Pathways.<br />
+          Brain <span className="text-accent-blue font-extrabold">Genomics.</span><br />
+          Precision <span className="text-purple-400 font-extrabold">Therapy.</span>
+        </>
+      ),
+      description: "Bringing together neuroscientists and computational oncologists to revolutionize brain tumor targeting and neural mapping.",
+      stats: [
+        { value: "70+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+        { value: "4.5K+", label: "Neuro Specialists", icon: Users, iconColor: "text-accent-blue" },
+        { value: "160+", label: "Medical Labs", icon: Building, iconColor: "text-accent-blue" },
+        { value: "40+", label: "Specialist Tracks", icon: Calendar, iconColor: "text-accent-blue" },
+      ]
+    },
+    {
+      summitName: "Smart Cities Forum",
+      eyebrow: "🏙️ SUSTAINABLE INFRASTRUCTURE & SMART CITIES",
+      image: "/images/smart_cities.png",
+      location: "Singapore",
+      date: "Sep 14-16, 2027",
+      title: (
+        <>
+          Building Future Cities.<br />
+          Resilient <span className="text-accent-blue font-extrabold">Urban Grids.</span><br />
+          Green <span className="text-emerald-400 font-extrabold">Infrastructure.</span>
+        </>
+      ),
+      description: "Designing next-generation sustainable urban environments, resilient power networks, and zero-emission transportation systems.",
+      stats: [
+        { value: "85+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+        { value: "7K+", label: "Urban Planners", icon: Users, iconColor: "text-accent-blue" },
+        { value: "240+", label: "Smart Hubs", icon: Building, iconColor: "text-accent-blue" },
+        { value: "55+", label: "Future Tracks", icon: Calendar, iconColor: "text-accent-blue" },
       ]
     }
   ];
@@ -260,12 +312,6 @@ export default function HomePage() {
     }
   ];
 
-  const speakers = [
-    { name: "Dr. Elena Rostova", title: "Quantum AI Chair, ETH Zürich", role: "Keynote Speaker", image: "/images/speaker_elena.png" },
-    { name: "Prof. Marcus Vance", title: "Director of Genomics, MIT", role: "Plenary Panelist", image: "/images/speaker_marcus.png" },
-    { name: "Sarah Jenkins", title: "VP of Renewable Tech, SolarCorp", role: "Featured Speaker", image: "/images/speaker_sarah.png" },
-  ];
-
   const journals = [
     { name: "DV Global Journal of Intelligent Systems", impact: "8.4 IF", scope: "Machine Learning & Soft Computing" },
     { name: "International Review of Clinical Bio-Medicine", impact: "6.9 IF", scope: "Genomics, Pathology & Clinical Care" },
@@ -281,7 +327,7 @@ export default function HomePage() {
   const faqs = [
     { q: "How can I submit my research paper?", a: "Register for an Author account, select your target conference and track, and upload your abstract or full PDF via the Paper Submission module." },
     { q: "What is the review process for submitted papers?", a: "We utilize a strict double-blind peer-review system managed by our Conference Chair and Review Committee." },
-    { q: "Can I download an invoice for my payment?", a: "Yes, immediately after payment, you can download formal PDF invoices and payment receipts from your user dashboard." },
+    { q: "Can I download an invoice for my payment?", a: "Yes, immediately after payment, formal PDF invoices and payment receipts will be sent directly to your registered email address." },
   ];
 
   return (
@@ -290,7 +336,7 @@ export default function HomePage() {
       {/* Background Glows */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent-cyan/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-accent-blue/10 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-10 left-1/3 w-[450px] h-[450px] bg-accent-gold/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-10 left-1/3 w-[450px] h-[450px] bg-accent-blue/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Navigation Header */}
       <nav className="sticky top-0 z-50 w-full glass-panel border-b border-white/5 py-4 px-6 md:px-12 flex justify-between items-center bg-[#050b1a]/80 backdrop-blur-md">
@@ -298,23 +344,23 @@ export default function HomePage() {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center gap-6 text-xs font-semibold tracking-wider text-gray-300 font-sans">
-          <a href="#" className="text-amber-400 border-b-2 border-amber-400 pb-1 transition-all duration-300">HOME</a>
-          <a href="#about" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">ABOUT US</a>
-          <a href="#conferences" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">SUMMITS</a>
-          <a href="#sponsorship" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">SPONSORSHIP</a>
-          <a href="#journals" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">SCHEDULE</a>
-          <Link href="/indian-registers" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">INDIAN REGISTERS</Link>
-          <Link href="/policies" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">POLICIES</Link>
-          <Link href="/cancellation-policy" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">CANCELLATION POLICY</Link>
-          <Link href="/terms-of-use" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">TERMS OF USE</Link>
-          <a href="#" className="hover:text-amber-400 border-b-2 border-transparent hover:border-amber-400 pb-1 transition-all duration-300">CONTACT</a>
+          <a href="#" className="text-accent-blue border-b-2 border-accent-blue pb-1 transition-all duration-300">HOME</a>
+          <a href="#about" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">ABOUT US</a>
+          <a href="#conferences" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">SUMMITS</a>
+          <a href="#sponsorship" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">SPONSORSHIP</a>
+          <a href="#journals" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">SCHEDULE</a>
+          <Link href="/indian-registers" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">REGISTER</Link>
+          <Link href="/policies" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">POLICIES</Link>
+          <Link href="/cancellation-policy" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">CANCELLATION POLICY</Link>
+          <Link href="/terms-of-use" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">TERMS OF USE</Link>
+          <a href="#" className="hover:text-accent-blue border-b-2 border-transparent hover:border-accent-blue pb-1 transition-all duration-300">CONTACT</a>
         </div>
 
         <div className="hidden lg:flex items-center gap-4">
           <button 
             type="button" 
             onClick={() => setSponsorshipModalOpen(true)}
-            className="px-6 py-2.5 bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-black text-xs font-extrabold rounded-full hover:shadow-lg hover:shadow-accent-gold/25 hover:scale-[1.02] transition duration-300 uppercase tracking-wider shadow-md"
+            className="px-6 py-2.5 bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-black text-xs font-extrabold rounded-full hover:shadow-lg hover:shadow-accent-blue/25 hover:scale-[1.02] transition duration-300 uppercase tracking-wider shadow-md"
           >
             Sponsorship
           </button>
@@ -335,18 +381,18 @@ export default function HomePage() {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-16 left-0 w-full glass-panel z-40 p-6 flex flex-col gap-4 border-b border-white/10 bg-[#050b1a]"
           >
-            <a href="#" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-amber-400 font-semibold text-xs tracking-wider">HOME</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-amber-400 hover:border-amber-400/50 font-semibold text-xs tracking-wider transition-colors">ABOUT US</a>
-            <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-amber-400 hover:border-amber-400/50 font-semibold text-xs tracking-wider transition-colors">SUMMITS</a>
-            <a href="#sponsorship" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-amber-400 hover:border-amber-400/50 font-semibold text-xs tracking-wider transition-colors">SPONSORSHIP</a>
-            <a href="#journals" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-amber-400 hover:border-amber-400/50 font-semibold text-xs tracking-wider transition-colors">SCHEDULE</a>
-            <Link href="/indian-registers" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-amber-400 hover:border-amber-400/50 font-semibold text-xs tracking-wider transition-colors">INDIAN REGISTERS</Link>
-            <Link href="/policies" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-amber-400 hover:border-amber-400/50 font-semibold text-xs tracking-wider transition-colors">POLICIES</Link>
-            <Link href="/cancellation-policy" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-amber-400 hover:border-amber-400/50 font-semibold text-xs tracking-wider transition-colors">CANCELLATION POLICY</Link>
+            <a href="#" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-accent-blue font-semibold text-xs tracking-wider">HOME</a>
+            <a href="#about" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">ABOUT US</a>
+            <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SUMMITS</a>
+            <a href="#sponsorship" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SPONSORSHIP</a>
+            <a href="#journals" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SCHEDULE</a>
+            <Link href="/indian-registers" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">REGISTER</Link>
+            <Link href="/policies" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">POLICIES</Link>
+            <Link href="/cancellation-policy" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-white/5 text-gray-300 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">CANCELLATION POLICY</Link>
             <div className="flex flex-col gap-3 mt-4">
               <button 
                 onClick={() => { setMobileMenuOpen(false); setSponsorshipModalOpen(true); }}
-                className="w-full text-center py-2.5 bg-accent-gold text-black font-extrabold rounded-lg text-xs uppercase tracking-wider shadow-md"
+                className="w-full text-center py-2.5 bg-accent-blue text-black font-extrabold rounded-lg text-xs uppercase tracking-wider shadow-md"
               >
                 Sponsorship
               </button>
@@ -355,618 +401,268 @@ export default function HomePage() {
         )}
       </AnimatePresence>
 
-            {/* ===================== PREMIUM TECH HERO — HEMISPHERE CAROUSEL ===================== */}
-      <section
-        className="relative w-full overflow-hidden flex items-center min-h-screen"
-        style={{
-          background: `
-            radial-gradient(ellipse 90% 70% at 100% 50%, rgba(20,45,80,0.5) 0%, rgba(5,10,22,0) 62%),
-            radial-gradient(ellipse 120% 90% at 10% 100%, rgba(10,18,38,0.85) 0%, rgba(0,0,0,0) 55%),
-            linear-gradient(180deg, #050A16 0%, #030509 65%, #000000 100%)
-          `
-        }}
-      >
+      {/* ===================== CIRCLE SHAPE SLIDING HERO SHOWCASE ===================== */}
+      <section className="relative w-full overflow-hidden bg-[#050A16] text-white py-6 md:py-10 border-b border-white/10">
+        
         <style>{`
-          :root {
-            --navy-950: #050A16;
-            --gold: #d9b25e;
-            --gold-bright: #f3d98a;
-            --gold-dim: #8a713a;
-            --cyan: #3fd0ff;
-            --ink-100: #eef2fb;
-            --ink-300: #a9b4cc;
-            --ink-500: #5f6c8a;
-            --d: min(66vw, 1040px);
+          .portal-ring-spin {
+            animation: spinPortal 24s linear infinite;
           }
-
-          .hero-content {
-            position: relative;
-            z-index: 5;
-            width: 56%;
-            padding: 0 6vw;
-            max-width: 760px;
-          }
-
-          .hero-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: var(--gold);
-            font-size: 12.5px;
-            letter-spacing: .32em;
-            text-transform: uppercase;
-            font-weight: 500;
-            margin-bottom: 28px;
-            opacity: 0;
-            animation: heroFadeUp 1s ease forwards .15s;
-          }
-          .hero-eyebrow::before {
-            content: "";
-            width: 34px;
-            height: 1px;
-            background: linear-gradient(90deg, var(--gold), transparent);
-          }
-
-          .hero-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 600;
-            font-size: clamp(40px, 4.6vw, 76px);
-            line-height: 1.06;
-            color: var(--ink-100);
-            margin: 0 0 26px;
-            opacity: 0;
-            animation: heroFadeUp 1s ease forwards .3s;
-          }
-          .hero-title em {
-            font-style: normal;
-            background: linear-gradient(120deg, var(--gold-bright), var(--gold) 45%, var(--cyan));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-          }
-
-          .hero-lead {
-            font-weight: 300;
-            font-size: 17px;
-            line-height: 1.7;
-            color: var(--ink-300);
-            max-width: 480px;
-            margin: 0 0 42px;
-            opacity: 0;
-            animation: heroFadeUp 1s ease forwards .45s;
-          }
-
-          .hero-cta-row {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            opacity: 0;
-            animation: heroFadeUp 1s ease forwards .6s;
-          }
-          .btn-primary-custom {
-            padding: 15px 32px;
-            background: linear-gradient(135deg, #f3d98a 0%, #d9b25e 60%, #b88e36 100%);
-            color: #050a16;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            border-radius: 12px;
-            text-decoration: none;
-            white-space: nowrap;
-            box-shadow: 0 0 25px rgba(217,178,94,.45);
-            transition: all .35s cubic-bezier(0.22, 1, 0.36, 1);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-          }
-          .btn-primary-custom:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 0 35px rgba(217,178,94,.75);
-            color: #000000;
-          }
-          .btn-secondary-custom {
-            padding: 14px 28px;
-            background: rgba(255,255,255, 0.04);
-            border: 1px solid rgba(255,255,255, 0.16);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .05em;
-            border-radius: 12px;
-            text-decoration: none;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            backdrop-filter: blur(12px);
-            transition: all .35s cubic-bezier(0.22, 1, 0.36, 1);
-          }
-          .btn-secondary-custom:hover {
-            background: rgba(217,178,94, 0.14);
-            border-color: rgba(217,178,94, 0.65);
-            color: #f3d98a;
-            transform: translateY(-2px);
-          }
-
-          .hero-stats {
-            display: flex;
-            gap: 52px;
-            margin-top: 72px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(255,255,255,.08);
-            opacity: 0;
-            animation: heroFadeUp 1s ease forwards .75s;
-          }
-          .hero-stat b {
-            display: block;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            font-weight: 600;
-            color: var(--ink-100);
-          }
-          .hero-stat span {
-            display: block;
-            font-size: 11.5px;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            color: var(--ink-500);
-            margin-top: 4px;
-          }
-
-          @keyframes heroFadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-
-          /* ================= THE HEMISPHERE ================= */
-          .globe-sphere {
-            position: absolute;
-            top: 50%;
-            left: 100%;
-            width: var(--d);
-            height: var(--d);
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            overflow: hidden;
-            z-index: 3;
-            background: radial-gradient(circle at 34% 30%, rgba(191,233,255,.28) 0%, rgba(63,168,221,.16) 26%, rgba(15,60,102,.22) 52%, rgba(8,29,56,.5) 78%, rgba(3,10,22,.82) 100%);
-            box-shadow: inset 0 0 90px rgba(217,178,94,.22), inset 60px 0 140px rgba(0,0,0,.55), 0 0 120px rgba(217,178,94,.25);
-            animation: breathe 9s ease-in-out infinite;
-          }
-          @keyframes breathe {
-            0%,100% { transform: translate(-50%, -50%) scale(1); }
-            50%     { transform: translate(-50%, -50%) scale(1.012); }
-          }
-
-          .globe-sphere::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            box-shadow: inset 0 0 0 2px rgba(217,178,94,.55), inset 0 0 40px rgba(217,178,94,.18);
-            pointer-events: none;
-          }
-
-          .rim-sweep {
-            position: absolute;
-            inset: -2%;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg,
-              rgba(243,217,138,0) 0deg, rgba(243,217,138,.9) 8deg, rgba(243,217,138,0) 30deg,
-              rgba(217,178,94,0) 170deg, rgba(243,217,138,.75) 190deg, rgba(217,178,94,0) 220deg,
-              rgba(243,217,138,0) 360deg);
-            mix-blend-mode: screen;
-            opacity: .6;
-            animation: spinRim 14s linear infinite;
-            -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
-                    mask: radial-gradient(circle, transparent 62%, #000 63%, #000 66%, transparent 67%);
-          }
-          @keyframes spinRim {
+          @keyframes spinPortal {
             from { transform: rotate(0deg); }
             to   { transform: rotate(360deg); }
           }
-
-          .sphere-inner-decor {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-          }
-          .sphere-grid {
-            transform-origin: 50% 50%;
-            animation: spinRim 220s linear infinite;
-          }
-
-          .glass-sheen {
-            position: absolute;
-            top: 8%;
-            left: 14%;
-            width: 46%;
-            height: 34%;
-            background: radial-gradient(ellipse at center, rgba(255,255,255,.16), rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-            pointer-events: none;
-          }
-
-          /* ================= PHOTO CAROUSEL ================= */
-          .photo-chip {
-            position: absolute;
-            top: 50%;
-            width: 78px;
-            height: 78px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1.5px solid rgba(217,178,94,.75);
-            box-shadow: 0 0 22px rgba(63,208,255,.35), 0 0 0 1px rgba(255,255,255,.04);
-            background-size: cover;
-            background-position: center;
-            animation-name: flowToCenter;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
-          }
-          .photo-chip::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(160deg, rgba(63,208,255,.18), rgba(5,10,22,.35) 70%);
-          }
-
-          @keyframes flowToCenter {
-            0%   { left: 48%; transform: translateY(-50%) scale(.55); opacity: 0; }
-            12%  { opacity: 1; }
-            58%  { opacity: 1; }
-            85%  { opacity: .55; }
-            100% { left: 16%; transform: translateY(-50%) scale(.32); opacity: 0; }
-          }
-
-          /* ================= CENTER EMBLEM (TRANSPARENT CONTAINER WITH DEEP BLACK SHADOW) ================= */
-          .badge-custom {
-            position: absolute;
-            top: 50%;
-            right: calc(var(--d) / 4);
-            transform: translate(50%, -50%);
-            z-index: 4;
-            width: calc(var(--d) * 0.35);
-            height: calc(var(--d) * 0.35);
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: auto;
-          }
-          .badge-custom b {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(22px, calc(var(--d) * 0.052), 40px);
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: var(--gold-bright);
-            line-height: 1;
-          }
-          .badge-custom span {
-            font-size: 9px;
-            letter-spacing: 3px;
-            color: #8fb6d8;
-            margin-top: 8px;
-            font-weight: 500;
-          }
-          .badge-custom .rule {
-            width: 56%;
-            height: 1px;
-            background: rgba(217,178,94,.7);
-            margin: 8px 0;
-          }
-
-          @media (max-width: 900px) {
-            .hero-content { width: 100%; padding: 0 24px; }
-            .hero-stats { gap: 32px; }
-            :root { --d: 92vw; }
-            .globe-sphere { opacity: .6; }
-          }
-
-          @media (prefers-reduced-motion: reduce) {
-            .globe-sphere, .sphere-grid, .rim-sweep, .photo-chip, .badge-custom { animation: none !important; }
-            .photo-chip { opacity: .8; left: 30% !important; }
-          }
         `}</style>
 
-        {/* ============ Background Decorative SVG Layer ============ */}
-        <div className="absolute inset-0 z-[1] pointer-events-none">
-          <svg viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" className="w-full h-full block">
-            <defs>
-              <radialGradient id="ambientBlue" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#2fb9ff" stopOpacity="0.4"/>
-                <stop offset="100%" stopColor="#2fb9ff" stopOpacity="0"/>
-              </radialGradient>
-              <radialGradient id="floorGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#d9b25e" stopOpacity="0.3"/>
-                <stop offset="100%" stopColor="#d9b25e" stopOpacity="0"/>
-              </radialGradient>
-              <linearGradient id="rimGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#fbe7a8"/>
-                <stop offset="50%" stopColor="#d9b25e"/>
-                <stop offset="100%" stopColor="#7a5f2c"/>
-              </linearGradient>
-              <filter id="glowSoft" x="-100%" y="-100%" width="300%" height="300%">
-                <feGaussianBlur stdDeviation="8" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-              <filter id="glowNode" x="-300%" y="-300%" width="700%" height="700%">
-                <feGaussianBlur stdDeviation="3" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-              <filter id="blurBig" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter>
-              <filter id="blurFloor" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
-            </defs>
-
-            {/* Stars */}
-            <g fill="#cfe4ff">
-              <circle cx="120" cy="90" r="1.3" opacity="0.6"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="4s" repeatCount="indefinite"/></circle>
-              <circle cx="300" cy="220" r="1" opacity="0.4"><animate attributeName="opacity" values="0.5;0.1;0.5" dur="6s" repeatCount="indefinite"/></circle>
-              <circle cx="640" cy="60" r="1.2" opacity="0.5"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="5s" repeatCount="indefinite"/></circle>
-              <circle cx="220" cy="480" r="1" opacity="0.35"><animate attributeName="opacity" values="0.5;0.1;0.5" dur="7s" repeatCount="indefinite"/></circle>
-              <circle cx="470" cy="700" r="1.3" opacity="0.5"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="4.5s" repeatCount="indefinite"/></circle>
-              <circle cx="60" cy="640" r="1" opacity="0.4"/>
-              <circle cx="820" cy="150" r="1.1" opacity="0.45"><animate attributeName="opacity" values="0.5;0.1;0.5" dur="6.5s" repeatCount="indefinite"/></circle>
-              <circle cx="950" cy="850" r="1" opacity="0.3"/>
-              <circle cx="180" cy="920" r="1.2" opacity="0.4"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="5.5s" repeatCount="indefinite"/></circle>
-              <circle cx="1030" cy="380" r="1" opacity="0.3"/>
-              <circle cx="1300" cy="150" r="1.1" opacity="0.4"><animate attributeName="opacity" values="0.5;0.1;0.5" dur="5s" repeatCount="indefinite"/></circle>
-              <circle cx="1550" cy="820" r="1" opacity="0.35"/>
-            </g>
-
-            {/* Floor Reflection */}
-            <ellipse cx="1600" cy="1010" rx="480" ry="60" fill="url(#floorGlow)" filter="url(#blurFloor)"/>
-
-            {/* Ambient Glow behind Globe */}
-            <circle cx="1920" cy="540" r="560" fill="url(#ambientBlue)" filter="url(#blurBig)" opacity="0.55"/>
-
-            {/* Orbital Rings */}
-            <g fill="none" strokeLinecap="round">
-              <g style={{ transformOrigin: '1920px 540px', animation: 'spinRim 90s linear infinite' }} opacity="0.55">
-                <ellipse cx="1920" cy="540" rx="900" ry="330" stroke="url(#rimGold)" strokeWidth="1.1" strokeDasharray="2 14"/>
-              </g>
-              <g style={{ transformOrigin: '1920px 540px', animation: 'spinRim 130s linear infinite' }} opacity="0.4">
-                <ellipse cx="1920" cy="540" rx="840" ry="640" stroke="#3fd0ff" strokeWidth="1" strokeDasharray="1 10"/>
-              </g>
-              <g style={{ transformOrigin: '1920px 540px', animation: 'spinRim 220s linear infinite' }} opacity="0.5">
-                <ellipse cx="1920" cy="540" rx="1000" ry="500" stroke="url(#rimGold)" strokeWidth="0.8" strokeDasharray="0.5 8"/>
-              </g>
-              <g style={{ transformOrigin: '1920px 540px', animation: 'spinRim 300s linear infinite' }} opacity="0.3">
-                <ellipse cx="1920" cy="540" rx="1080" ry="1080" stroke="#3fd0ff" strokeWidth="0.6" strokeDasharray="1 22"/>
-              </g>
-            </g>
-
-            {/* Floating Light Points */}
-            <g style={{ transformOrigin: '1920px 540px', animation: 'spinRim 90s linear infinite' }}>
-              <circle cx="1020" cy="540" r="4" fill="#f3d98a" filter="url(#glowNode)"/>
-            </g>
-            <g style={{ transformOrigin: '1920px 540px', animation: 'spinRim 130s linear infinite' }}>
-              <circle cx="1920" cy="-100" r="3" fill="#3fd0ff" filter="url(#glowNode)"/>
-            </g>
-            <g style={{ transformOrigin: '1920px 540px', animation: 'spinRim 220s linear infinite' }}>
-              <circle cx="920" cy="540" r="3.4" fill="#f3d98a" filter="url(#glowNode)"/>
-            </g>
-
-            {/* Thin Gold Accent Arcs */}
-            <path d="M 1000 200 A 760 760 0 0 1 1300 100" fill="none" stroke="url(#rimGold)" strokeWidth="1.4" opacity="0.5" strokeLinecap="round" filter="url(#glowSoft)"/>
-            <path d="M 960 900 A 800 800 0 0 0 1260 990" fill="none" stroke="url(#rimGold)" strokeWidth="1.2" opacity="0.4" strokeLinecap="round" filter="url(#glowSoft)"/>
-
-            {/* Drifting Free Particles */}
-            <g fill="#3fd0ff">
-              <circle cx="1050" cy="260" r="2.5" opacity="0.8" filter="url(#glowNode)">
-                <animate attributeName="cy" values="260;246;260" dur="8s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="1150" cy="820" r="2" fill="#f3d98a" opacity="0.7" filter="url(#glowNode)">
-                <animate attributeName="cy" values="820;806;820" dur="9s" repeatCount="indefinite"/>
-              </circle>
-              <circle cx="990" cy="680" r="1.8" opacity="0.6" filter="url(#glowNode)">
-                <animate attributeName="cy" values="680;668;680" dur="7s" repeatCount="indefinite"/>
-              </circle>
-            </g>
-          </svg>
+        {/* Ambient Radial Background Glow */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[140px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[160px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/50 via-slate-950 to-black" />
         </div>
 
-                {/* Left / Right Carousel Navigation Controls */}
-        <button
-          type="button"
-          onClick={handlePrevSlide}
-          className="absolute left-3 md:left-6 z-30 w-11 h-11 border border-white/10 hover:border-amber-500/60 bg-black/40 hover:bg-amber-500/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:text-amber-400 transition-all duration-300 shadow-xl group"
-          aria-label="Previous Slide"
-        >
-          <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
-        </button>
-
-        <button
-          type="button"
-          onClick={handleNextSlide}
-          className="absolute right-3 md:right-6 z-30 w-11 h-11 border border-white/10 hover:border-amber-500/60 bg-black/40 hover:bg-amber-500/20 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:text-amber-400 transition-all duration-300 shadow-xl group"
-          aria-label="Next Slide"
-        >
-          <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-        </button>
-
-        {/* ============ Text Content Column with Sliding Framer Motion & New Font Styles ============ */}
-        <div className="hero-content relative z-10 w-full md:w-[54%] px-6 md:px-[5vw] max-w-3xl">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, y: 22, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -22, filter: "blur(4px)" }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-6"
-            >
-              {/* Title with Cormorant Garamond display font style */}
-              <h1 className="font-display font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-[68px] leading-[1.08] text-[#eef2fb] tracking-tight">
-                {slides[currentSlide].title}
-              </h1>
-
-              {/* Lead Description with Inter font style */}
-              <p className="font-sans font-normal text-gray-300 text-base md:text-lg leading-[1.75] max-w-xl">
-                {slides[currentSlide].description}
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-5 pt-3">
-                <a 
-                  href="#conferences" 
-                  className="btn-primary-custom flex items-center gap-2.5"
-                >
-                  Explore Conferences <ChevronRight className="w-4 h-4 stroke-[3]" />
-                </a>
-                <a 
-                  href="#journals" 
-                  className="btn-secondary-custom flex items-center gap-2"
-                >
-                  <Play className="w-3.5 h-3.5 text-amber-400 fill-current" /> Watch Video Presentation
-                </a>
+        {/* Main Showcase Container */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full z-10 relative flex flex-col gap-10">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* LEFT COLUMN — DYNAMIC SLIDING TYPOGRAPHY & STATS */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Official Logo & Eyebrow Badge */}
+              <div className="flex items-center gap-3">
+                <img 
+                  src="/images/dv_global_summits_logo_clean.png" 
+                  alt="D&V Global Summits" 
+                  className="h-10 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(245,158,11,0.4)]"
+                />
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/15 border border-accent-blue/40 rounded-full">
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                  <span className="text-[#93C5FD] text-[11px] font-bold tracking-[0.18em] uppercase font-mono">
+                    {slides[currentSlide].eyebrow}
+                  </span>
+                </div>
               </div>
 
-              {/* Stats Card Grid with animated counters & icons */}
-              <div className="w-full rounded-2xl p-5 grid grid-cols-2 sm:grid-cols-4 gap-5 bg-[#070e1e]/85 border border-amber-500/30 hover:border-amber-400/60 transition-all duration-300 backdrop-blur-xl mt-8 shadow-[0_0_30px_rgba(217,178,94,0.15)]">
-                {slides[currentSlide].stats.map((stat, i) => {
-                  const Icon = stat.icon;
-                  return (
-                    <div 
-                      key={i} 
-                      className={`flex flex-col items-start ${
-                        i < 3 ? "sm:border-r sm:border-amber-500/20 sm:pr-4" : ""
-                      }`}
+              {/* Dynamic Sliding Text Group */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 30 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="space-y-4"
+                >
+                  {/* Dynamic Headline */}
+                  <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] text-white tracking-tight">
+                    {slides[currentSlide].title}
+                  </h1>
+
+                  {/* Dynamic Lead Description */}
+                  <p className="font-sans text-gray-300 text-base sm:text-lg leading-[1.7] max-w-2xl font-normal">
+                    {slides[currentSlide].description}
+                  </p>
+
+                  {/* CTA Buttons */}
+                  <div className="flex flex-wrap items-center gap-4 pt-2">
+                    <a 
+                      href="#conferences" 
+                      className="px-8 py-3.5 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:shadow-[0_0_35px_rgba(245,158,11,0.7)] hover:scale-[1.02] transition duration-300 flex items-center gap-2"
                     >
-                      <div className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/30 mb-2 flex items-center justify-center">
-                        <Icon className={`w-4.5 h-4.5 ${stat.iconColor}`} />
-                      </div>
-                      <span className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-display">
-                        <AnimatedCounter value={stat.value} />
+                      Explore Conferences <ChevronRight className="w-4 h-4 stroke-[3]" />
+                    </a>
+                    <a 
+                      href="#journals" 
+                      className="px-7 py-3.5 bg-black/50 border border-white/30 text-white font-semibold text-xs tracking-wider rounded-xl backdrop-blur-xl hover:bg-amber-500/20 hover:border-accent-blue/80 hover:text-[#93C5FD] transition duration-300 flex items-center gap-2 shadow-lg"
+                    >
+                      Download Brochure
+                    </a>
+                  </div>
+
+                  {/* Compact Animated Stats Grid */}
+                  <div className="w-full rounded-2xl p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 bg-slate-900/80 border border-accent-blue/30 backdrop-blur-xl mt-6 shadow-[0_0_30px_rgba(0,0,0,0.6)]">
+                    {slides[currentSlide].stats.map((stat, i) => {
+                      const Icon = stat.icon;
+                      return (
+                        <div 
+                          key={i} 
+                          className={`flex flex-col items-start ${
+                            i < 3 ? "sm:border-r sm:border-accent-blue/20 sm:pr-3" : ""
+                          }`}
+                        >
+                          <div className="p-1.5 bg-amber-500/15 rounded-lg border border-accent-blue/40 mb-1 flex items-center justify-center">
+                            <Icon className={`w-4 h-4 ${stat.iconColor}`} />
+                          </div>
+                          <span className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-display">
+                            <AnimatedCounter value={stat.value} />
+                          </span>
+                          <span className="text-[10px] text-gray-300 font-semibold tracking-wider uppercase mt-0.5 font-mono">
+                            {stat.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+            </div>
+
+            {/* RIGHT COLUMN — CIRCLE SHAPE SLIDING PORTAL SHOWCASE */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
+              
+              {/* Outer Decorative Ambient Glow Ring */}
+              <div className="absolute w-[360px] h-[360px] sm:w-[440px] sm:h-[440px] rounded-full bg-gradient-to-tr from-amber-500/30 via-cyan-500/20 to-yellow-400/30 blur-2xl pointer-events-none" />
+
+              {/* Circle Portal Outer Frame */}
+              <div className="relative w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] rounded-full border-4 border-accent-blue/60 p-3 bg-slate-950 shadow-[0_0_60px_rgba(245,158,11,0.35)] flex items-center justify-center">
+                
+                {/* Rotating Accent Ring Around Circle */}
+                <div className="absolute inset-[-8px] rounded-full border border-dashed border-cyan-400/50 portal-ring-spin pointer-events-none" />
+                
+                {/* Inner Sliding Circle Image Container */}
+                <div className="w-full h-full rounded-full overflow-hidden relative shadow-inner">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentSlide}
+                      initial={{ opacity: 0, scale: 0.85, rotate: -5 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      exit={{ opacity: 0, scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      className="w-full h-full relative"
+                    >
+                      <img 
+                        src={slides[currentSlide].image} 
+                        alt={slides[currentSlide].summitName} 
+                        className="w-full h-full object-cover object-center filter brightness-[1.08] contrast-[1.05]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Badge floating inside top of Circle */}
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 px-3.5 py-1 bg-amber-500 text-black font-extrabold text-[10px] uppercase tracking-wider rounded-full shadow-lg z-10 whitespace-nowrap">
+                    ★ FEATURED SUMMIT
+                  </div>
+                </div>
+
+                {/* Left Slide Button */}
+                <button
+                  type="button"
+                  onClick={handlePrevSlide}
+                  className="absolute left-[-18px] top-1/2 -translate-y-1/2 z-20 w-11 h-11 border border-accent-blue/80 bg-black/80 hover:bg-amber-500 hover:text-black rounded-full flex items-center justify-center text-white transition-all shadow-xl backdrop-blur-md group"
+                  aria-label="Previous Summit"
+                >
+                  <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+                </button>
+
+                {/* Right Slide Button */}
+                <button
+                  type="button"
+                  onClick={handleNextSlide}
+                  className="absolute right-[-18px] top-1/2 -translate-y-1/2 z-20 w-11 h-11 border border-accent-blue/80 bg-black/80 hover:bg-amber-500 hover:text-black rounded-full flex items-center justify-center text-white transition-all shadow-xl backdrop-blur-md group"
+                  aria-label="Next Summit"
+                >
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+
+              </div>
+
+              {/* Floating Summit Info Glass Card Attached Below Circle */}
+              <div className="w-full max-w-sm bg-slate-900/90 border border-accent-blue/40 rounded-2xl p-4 shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-xl mt-[-24px] z-20 text-center space-y-2">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-2"
+                  >
+                    <h3 className="text-lg font-bold text-white tracking-tight font-display">
+                      {slides[currentSlide].summitName}
+                    </h3>
+                    
+                    <div className="flex items-center justify-center gap-4 text-xs text-gray-300 font-mono">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-3.5 h-3.5 text-accent-blue" /> {slides[currentSlide].date}
                       </span>
-                      <span className="text-[10px] text-gray-400 font-semibold tracking-wider uppercase mt-1 leading-snug font-mono">
-                        {stat.label}
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-3.5 h-3.5 text-accent-blue" /> {slides[currentSlide].location}
                       </span>
                     </div>
-                  );
-                })}
+
+                    <div className="pt-1 flex items-center justify-center gap-3">
+                      <a 
+                        href="#conferences"
+                        className="px-4 py-1.5 bg-amber-400 text-black font-extrabold text-[11px] uppercase tracking-wider rounded-lg hover:bg-amber-300 transition"
+                      >
+                        Submit Paper
+                      </a>
+                      <a 
+                        href="#about"
+                        className="px-4 py-1.5 bg-black/50 border border-white/20 text-white font-semibold text-[11px] uppercase tracking-wider rounded-lg hover:bg-white/10 transition"
+                      >
+                        View Tracks
+                      </a>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
-            </motion.div>
-          </AnimatePresence>
 
-          {/* Slide Indicator Dots */}
-          <div className="flex items-center gap-3 pt-6">
-            {slides.map((_, index) => (
-              <button
-                type="button"
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`transition-all duration-500 rounded-full ${
-                  currentSlide === index
-                    ? "w-9 h-2 bg-amber-400 shadow-[0_0_14px_#f59e0b]"
-                    : "w-2 h-2 bg-white/30 hover:bg-white/60"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+            </div>
+
           </div>
-        </div>
 
-        {/* ============ The Hemisphere Globe ============ */}
-        <div className="globe-sphere">
-          {/* Inner Circuitry / Neural Network SVG */}
-          <svg className="sphere-inner-decor" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <filter id="gN" x="-300%" y="-300%" width="700%" height="700%">
-                <feGaussianBlur stdDeviation="3" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
+          {/* BOTTOM 6-THUMBNAIL PHOTO CAROUSEL SELECTOR STRIP */}
+          <div className="w-full pt-4 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            {/* Slide Pagination Indicator Dots */}
+            <div className="flex items-center gap-2">
+              {slides.map((_, index) => (
+                <button
+                  type="button"
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`transition-all duration-300 rounded-full ${
+                    currentSlide === index
+                      ? "w-8 h-2.5 bg-amber-400 shadow-[0_0_12px_#f59e0b]"
+                      : "w-2.5 h-2.5 bg-white/30 hover:bg-white/70"
+                  }`}
+                  aria-label={`Go to summit ${index + 1}`}
+                />
+              ))}
+            </div>
 
-            {/* Rotating Holographic Grid */}
-            <g className="sphere-grid" stroke="#3fd0ff" strokeWidth="0.6" fill="none" opacity="0.2">
-              <ellipse cx="500" cy="500" rx="440" ry="80"/>
-              <ellipse cx="500" cy="500" rx="440" ry="180"/>
-              <ellipse cx="500" cy="500" rx="440" ry="280"/>
-              <ellipse cx="500" cy="500" rx="440" ry="380"/>
-              <ellipse cx="500" cy="500" rx="80" ry="440"/>
-              <ellipse cx="500" cy="500" rx="200" ry="440"/>
-              <ellipse cx="500" cy="500" rx="320" ry="440"/>
-            </g>
+            {/* 6 Circular Photo Selector Thumbnails */}
+            <div className="flex items-center gap-3 overflow-x-auto max-w-full py-1">
+              {slides.map((s, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`relative w-12 h-12 rounded-full overflow-hidden border-2 transition-all duration-300 shrink-0 group ${
+                    currentSlide === idx
+                      ? "border-accent-blue shadow-[0_0_14px_rgba(245,158,11,0.8)] scale-110 z-10"
+                      : "border-white/20 opacity-60 hover:opacity-100 hover:border-accent-blue/60"
+                  }`}
+                  title={s.summitName}
+                >
+                  <img
+                    src={s.image}
+                    alt={s.summitName}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className={`absolute inset-0 transition-opacity ${
+                    currentSlide === idx ? "bg-amber-400/10" : "bg-black/40 group-hover:bg-transparent"
+                  }`} />
+                </button>
+              ))}
+            </div>
 
-            {/* Circuit Traces */}
-            <g fill="none" stroke="#5fc9ff" strokeWidth="1.3" opacity="0.45" strokeLinecap="round">
-              <path d="M 160 260 h 60 v 40 h 50 v -80 h 70"/>
-              <path d="M 200 620 h -60 v -50 h -70 v 90"/>
-              <path d="M 320 180 v 60 h 90 v 40 h 60"/>
-              <path d="M 260 740 v -50 h 100 v -30 h 80"/>
-              <path d="M 120 440 h 90 v -30"/>
-            </g>
-            <g fill="#5fc9ff" opacity="0.6">
-              <circle cx="220" cy="260" r="3"/><circle cx="270" cy="300" r="2.5"/>
-              <circle cx="140" cy="570" r="3"/><circle cx="200" cy="620" r="2.5"/>
-              <circle cx="410" cy="220" r="2.5"/><circle cx="470" cy="750" r="3"/>
-            </g>
+          </div>
 
-            {/* Neural Network */}
-            <g stroke="#8fd8ff" strokeWidth="0.9" opacity="0.5">
-              <line x1="260" y1="340" x2="400" y2="280"/>
-              <line x1="260" y1="340" x2="370" y2="420"/>
-              <line x1="400" y1="280" x2="540" y2="330"/>
-              <line x1="370" y1="420" x2="540" y2="330"/>
-              <line x1="370" y1="420" x2="420" y2="540"/>
-              <line x1="540" y1="330" x2="660" y2="300"/>
-              <line x1="540" y1="330" x2="620" y2="440"/>
-              <line x1="420" y1="540" x2="620" y2="440"/>
-              <line x1="420" y1="540" x2="300" y2="600"/>
-              <line x1="620" y1="440" x2="720" y2="520"/>
-              <line x1="260" y1="340" x2="180" y2="420"/>
-              <line x1="300" y1="600" x2="180" y2="540"/>
-              <line x1="180" y1="420" x2="180" y2="540"/>
-            </g>
-            <g fill="#bfe9ff">
-              <circle cx="260" cy="340" r="4.5" filter="url(#gN)"/>
-              <circle cx="400" cy="280" r="3.5" filter="url(#gN)"/>
-              <circle cx="370" cy="420" r="5" filter="url(#gN)"/>
-              <circle cx="540" cy="330" r="4" filter="url(#gN)"/>
-              <circle cx="420" cy="540" r="4.5" filter="url(#gN)"/>
-              <circle cx="620" cy="440" r="4" filter="url(#gN)"/>
-              <circle cx="660" cy="300" r="3.5" filter="url(#gN)"/>
-              <circle cx="720" cy="520" r="3.5" filter="url(#gN)"/>
-              <circle cx="300" cy="600" r="3.5" filter="url(#gN)"/>
-              <circle cx="180" cy="420" r="3" filter="url(#gN)"/>
-              <circle cx="180" cy="540" r="3" filter="url(#gN)"/>
-            </g>
-
-            {/* Energy Pulses */}
-            <circle r="3.4" fill="#fff6d8" filter="url(#gN)">
-              <animateMotion dur="3.2s" repeatCount="indefinite" path="M260,340 L400,280 L540,330 L660,300"/>
-            </circle>
-            <circle r="3" fill="#d9f2ff" filter="url(#gN)">
-              <animateMotion dur="4s" repeatCount="indefinite" path="M180,420 L260,340 L370,420 L420,540 L620,440"/>
-            </circle>
-            <circle r="2.8" fill="#fbe7a8" filter="url(#gN)">
-              <animateMotion dur="2.6s" repeatCount="indefinite" path="M300,600 L420,540 L620,440 L720,520"/>
-            </circle>
-          </svg>
-
-          {/* Photo Carousel Chips flowing towards center */}
-          <div className="photo-chip" style={{ top: '24%', animationDuration: '7s', animationDelay: '0s', backgroundImage: "url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=200&q=60&auto=format&fit=crop')" }} />
-          <div className="photo-chip" style={{ top: '38%', animationDuration: '8s', animationDelay: '1.3s', backgroundImage: "url('https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=200&q=60&auto=format&fit=crop')" }} />
-          <div className="photo-chip" style={{ top: '52%', animationDuration: '6.5s', animationDelay: '2.6s', backgroundImage: "url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=200&q=60&auto=format&fit=crop')" }} />
-          <div className="photo-chip" style={{ top: '66%', animationDuration: '7.5s', animationDelay: '4s', backgroundImage: "url('https://images.unsplash.com/photo-1526378722484-bd91ca387e72?w=200&q=60&auto=format&fit=crop')" }} />
-          <div className="photo-chip" style={{ top: '32%', animationDuration: '9s', animationDelay: '5.3s', backgroundImage: "url('https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=200&q=60&auto=format&fit=crop')" }} />
-          <div className="photo-chip" style={{ top: '58%', animationDuration: '8.2s', animationDelay: '6.6s', backgroundImage: "url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=200&q=60&auto=format&fit=crop')" }} />
-
-          <div className="rim-sweep" />
-          <div className="glass-sheen" />
-        </div>
-
-        {/* ============ Center Official D&V Global Summits Logo Emblem (Transparent Style with Black Shadow) ============ */}
-        <div className="badge-custom flex items-center justify-center pointer-events-auto">
-          <img 
-            src="/images/dv_global_summits_logo_clean.png" 
-            alt="D&amp;V Global Summits Pvt. Ltd." 
-            className="w-full h-auto object-contain filter drop-shadow-[0_0_15px_rgba(0,0,0,0.98)] drop-shadow-[0_0_35px_rgba(0,0,0,0.9)] hover:scale-105 transition-all duration-500"
-          />
         </div>
       </section>
 
@@ -1038,7 +734,7 @@ export default function HomePage() {
                 </div>
               </li>
               <li className="flex gap-3 items-start">
-                <div className="p-1.5 bg-accent-gold/15 rounded-lg border border-accent-gold/20 mt-1">
+                <div className="p-1.5 bg-accent-blue/15 rounded-lg border border-accent-gold/20 mt-1">
                   <Award className="w-4 h-4 text-accent-gold" />
                 </div>
                 <div>
@@ -1049,7 +745,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div className="glass-panel p-8 rounded-2xl border border-white/10 relative overflow-hidden flex flex-col justify-center items-center text-center">
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-gold/10 rounded-full blur-2xl" />
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-blue/10 rounded-full blur-2xl" />
             <BookOpen className="w-16 h-16 text-accent-cyan mb-6" />
             <h3 className="text-xl font-bold text-white mb-2">Publishing & Journal Ties</h3>
             <p className="text-sm text-gray-400 max-w-xs mb-8">
@@ -1065,63 +761,6 @@ export default function HomePage() {
                 <span className="block font-bold text-white text-lg">24h</span>
                 <span className="text-[10px] text-gray-500 uppercase font-mono">Response SLAs</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The Process Section */}
-      <section className="py-24 px-6 md:px-12 bg-[#050b1a] border-t border-white/5 relative overflow-hidden">
-        {/* Background decorative glows */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-accent-cyan/5 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto relative z-10">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <span className="text-xs uppercase font-bold font-mono tracking-widest text-accent-cyan mb-2 block">
-              THE PROCESS
-            </span>
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-4">
-              From Abstract To Publication
-            </h2>
-            <p className="text-gray-400 text-sm max-w-lg mx-auto">
-              A clear six-step path, the same for every researcher, every conference.
-            </p>
-          </div>
-
-          <div className="relative">
-            {/* Connecting Line (Desktop only) */}
-            <div className="absolute top-10 left-[8%] right-[8%] h-0.5 bg-gradient-to-r from-accent-cyan via-accent-gold to-accent-blue/20 hidden md:block z-0" />
-
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-8 relative z-10">
-              {[
-                { number: "01", title: "Register", desc: "Create your researcher profile in minutes." },
-                { number: "02", title: "Peer Review", desc: "Evaluated by field experts worldwide." },
-                { number: "03", title: "Acceptance", desc: "Receive your decision and presentation slot." },
-                { number: "04", title: "Conference", desc: "Present and connect on the summit floor." },
-                { number: "05", title: "Publication", desc: "Published with our journal partners." },
-                { number: "06", title: "Submit Abstract", desc: "Upload your research for committee review." },
-              ].map((step, i) => (
-                <div key={i} className="flex flex-col items-center text-center group">
-                  {/* Circle container */}
-                  <div className={`w-20 h-20 rounded-full flex items-center justify-center font-mono text-sm transition-all duration-300 mb-5 relative bg-[#071329] border-2 ${
-                    i === 0 
-                      ? "border-accent-cyan shadow-[0_0_15px_rgba(6,182,212,0.3)]" 
-                      : "border-white/5 group-hover:border-accent-gold group-hover:shadow-[0_0_15px_rgba(212,175,55,0.2)]"
-                  }`}>
-                    {i === 0 && (
-                      <div className="absolute inset-[-4px] rounded-full border border-accent-cyan/30 animate-ping pointer-events-none" />
-                    )}
-                    <span className={i === 0 ? "text-accent-cyan font-bold" : "text-gray-400 group-hover:text-accent-gold font-bold transition-colors"}>
-                      {step.number}
-                    </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <h3 className="font-bold text-white text-base mb-2 group-hover:text-accent-gold transition-colors duration-200">{step.title}</h3>
-                  <p className="text-gray-400 text-xs leading-relaxed max-w-[160px]">{step.desc}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -1148,7 +787,7 @@ export default function HomePage() {
                 onClick={() => setSelectedYear(2026)}
                 className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition duration-300 ${
                   selectedYear === 2026
-                    ? "bg-gradient-to-r from-accent-gold to-yellow-600 text-black shadow-md shadow-accent-gold/15"
+                    ? "bg-gradient-to-r from-accent-gold to-yellow-600 text-black shadow-md shadow-accent-blue/15"
                     : "text-gray-400 hover:text-white"
                 }`}
               >
@@ -1159,17 +798,13 @@ export default function HomePage() {
                 onClick={() => setSelectedYear(2027)}
                 className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition duration-300 ${
                   selectedYear === 2027
-                    ? "bg-gradient-to-r from-accent-gold to-yellow-600 text-black shadow-md shadow-accent-gold/15"
+                    ? "bg-gradient-to-r from-accent-gold to-yellow-600 text-black shadow-md shadow-accent-blue/15"
                     : "text-gray-400 hover:text-white"
                 }`}
               >
                 2027 Summits
               </button>
             </div>
-
-            <Link href="/auth/register" className="text-accent-cyan text-sm font-semibold flex items-center hover:underline shrink-0">
-              Submit a paper proposal <ChevronRight className="w-4 h-4 ml-1" />
-            </Link>
           </div>
 
           {/* Conference Category Filter Pills */}
@@ -1181,7 +816,7 @@ export default function HomePage() {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition-all duration-300 whitespace-nowrap border ${
                   selectedCategory === cat
-                    ? "bg-accent-gold/20 border-accent-gold text-accent-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+                    ? "bg-accent-blue/20 border-accent-gold text-accent-gold shadow-[0_0_15px_rgba(212,175,55,0.2)]"
                     : "bg-white/[0.03] border-white/10 text-gray-400 hover:text-white hover:border-white/30"
                 }`}
               >
@@ -1240,11 +875,11 @@ export default function HomePage() {
                           </div>
                         </div>
                         <div className="flex justify-between items-center border-t border-white/5 pt-4">
-                          <span className="text-xs font-semibold text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-lg">
+                          <span className="text-xs font-semibold text-[#93C5FD] bg-blue-500/10 border border-accent-blue/30 px-2.5 py-1 rounded-lg">
                             {conf.status}
                           </span>
-                          <Link href={`/auth/login`} className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 hover:underline">
-                            Apply Now <ChevronRight className="w-3.5 h-3.5" />
+                          <Link href={`/auth/login`} className="text-xs font-bold text-accent-blue hover:text-[#93C5FD] flex items-center gap-1 hover:underline">
+                            Click Here <ChevronRight className="w-3.5 h-3.5" />
                           </Link>
                         </div>
                       </div>
@@ -1323,7 +958,7 @@ export default function HomePage() {
       <section className="py-24 px-6 md:px-12 bg-[#050b1a] border-y border-white/5 relative overflow-hidden">
         {/* Background decorative blobs */}
         <div className="absolute -top-20 left-1/4 w-96 h-96 bg-accent-cyan/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-accent-gold/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-accent-blue/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Section Header */}
@@ -1357,7 +992,7 @@ export default function HomePage() {
 
             {/* Card 2 */}
             <div className="group glass-panel rounded-2xl p-7 border border-white/5 hover:border-accent-gold/30 transition duration-300 flex flex-col items-center text-center hover:scale-[1.03]">
-              <div className="w-16 h-16 rounded-2xl bg-accent-gold/10 border border-accent-gold/20 flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition duration-300">
+              <div className="w-16 h-16 rounded-2xl bg-accent-blue/10 border border-accent-gold/20 flex items-center justify-center mb-5 group-hover:bg-accent-blue/20 transition duration-300">
                 <span className="text-3xl">💡</span>
               </div>
               <h3 className="font-bold text-white text-base mb-2">Stand Out from the Crowd</h3>
@@ -1381,7 +1016,7 @@ export default function HomePage() {
 
             {/* Card 4 */}
             <div className="group glass-panel rounded-2xl p-7 border border-white/5 hover:border-accent-gold/30 transition duration-300 flex flex-col items-center text-center hover:scale-[1.03]">
-              <div className="w-16 h-16 rounded-2xl bg-accent-gold/10 border border-accent-gold/20 flex items-center justify-center mb-5 group-hover:bg-accent-gold/20 transition duration-300">
+              <div className="w-16 h-16 rounded-2xl bg-accent-blue/10 border border-accent-gold/20 flex items-center justify-center mb-5 group-hover:bg-accent-blue/20 transition duration-300">
                 <span className="text-3xl">💰</span>
               </div>
               <h3 className="font-bold text-white text-base mb-2">Get Noticed by Funders</h3>
@@ -1413,49 +1048,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Speakers Grid */}
-      <section id="speakers" className="py-24 px-6 md:px-12 max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="text-xs uppercase font-bold font-mono tracking-wider text-accent-gold mb-2 block">
-            Academic Leaders
-          </span>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-white">
-            Renowned Keynote Presenters
-          </h2>
-          <p className="text-gray-400 text-sm max-w-md mx-auto mt-3">
-            Interact with leading researchers and industry pioneers chairing tracks globally.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {speakers.map((sp, idx) => (
-            <div key={idx} className="glass-panel p-6 rounded-xl text-center flex flex-col justify-between items-center hover:scale-[1.02] transition duration-300">
-              <div className="w-20 h-20 rounded-full overflow-hidden border border-accent-gold/30 mb-4 relative flex items-center justify-center bg-black/40">
-                {sp.image ? (
-                  <img 
-                    src={sp.image} 
-                    alt={sp.name} 
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span className="text-accent-gold text-2xl font-bold font-mono">
-                    {sp.name.split(" ").pop()?.charAt(0)}
-                  </span>
-                )}
-              </div>
-              <h3 className="font-bold text-white text-lg mb-1">{sp.name}</h3>
-              <p className="text-xs text-accent-cyan font-mono mb-2">{sp.role}</p>
-              <p className="text-xs text-gray-500 leading-relaxed mb-6">{sp.title}</p>
-              <div className="w-full border-t border-white/5 pt-4 flex justify-center gap-4 text-xs text-gray-400">
-                <span>50+ Papers</span>
-                <span>•</span>
-                <span>H-Index: 42</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Journal Indexing Panel */}
       <section id="journals" className="py-24 px-6 md:px-12 bg-primary/10 border-y border-white/5">
         <div className="max-w-6xl mx-auto">
@@ -1481,7 +1073,7 @@ export default function HomePage() {
                 <div key={i} className="glass-panel p-5 rounded-xl border border-white/5 hover:border-accent-cyan/35 transition">
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="font-bold text-white text-base leading-snug">{j.name}</h3>
-                    <span className="bg-accent-gold/10 text-accent-gold text-[10px] px-2 py-0.5 rounded border border-accent-gold/25 font-bold whitespace-nowrap">
+                    <span className="bg-accent-blue/10 text-accent-gold text-[10px] px-2 py-0.5 rounded border border-accent-gold/25 font-bold whitespace-nowrap">
                       {j.impact}
                     </span>
                   </div>
@@ -1497,15 +1089,15 @@ export default function HomePage() {
       </section>
 
       {/* Sponsorship Opportunities Section */}
-      <section id="sponsorship" className="py-24 px-6 md:px-12 bg-gradient-to-b from-[#070e24] via-[#050b1a] to-[#081028] border-y border-amber-500/20 relative overflow-hidden">
+      <section id="sponsorship" className="py-24 px-6 md:px-12 bg-gradient-to-b from-[#070e24] via-[#050b1a] to-[#081028] border-y border-accent-blue/20 relative overflow-hidden">
         {/* Background glow graphics */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -top-32 right-10 w-96 h-96 bg-accent-gold/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 right-10 w-96 h-96 bg-accent-blue/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full text-xs font-mono font-bold tracking-widest text-amber-400 uppercase mb-4 shadow-sm">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 bg-blue-500/10 border border-accent-blue/30 rounded-full text-xs font-mono font-bold tracking-widest text-accent-blue uppercase mb-4 shadow-sm">
               <Sparkles className="w-3.5 h-3.5" /> Corporate & Event Partnerships
             </span>
             <h2 className="font-display font-extrabold text-3xl md:text-5xl text-white tracking-tight leading-tight">
@@ -1520,7 +1112,7 @@ export default function HomePage() {
           </div>
 
           {/* Tiers Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-16">
             {sponsorshipTiers.map((tier) => (
               <div 
                 key={tier.id}
@@ -1533,16 +1125,16 @@ export default function HomePage() {
                 )}
 
                 <div>
-                  <span className="text-[11px] font-mono font-bold tracking-wider text-amber-400/90 uppercase block mb-1">
+                  <span className="text-[11px] font-mono font-bold tracking-wider text-accent-blue/90 uppercase block mb-1">
                     {tier.badge}
                   </span>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-amber-300 transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#93C5FD] transition-colors">
                     {tier.name}
                   </h3>
 
                   {/* Pricing */}
-                  <div className="mb-6 p-3 bg-black/50 rounded-xl border border-amber-500/20">
-                    <div className="text-2xl font-black text-amber-400 tracking-tight">
+                  <div className="mb-6 p-3 bg-black/50 rounded-xl border border-accent-blue/20">
+                    <div className="text-2xl font-black text-accent-blue tracking-tight">
                       {tier.priceINR}
                     </div>
                     <div className="text-xs text-gray-400 font-mono mt-0.5">
@@ -1552,10 +1144,10 @@ export default function HomePage() {
 
                   {/* Features List */}
                   <div className="space-y-3 mb-6">
-                    <div className="text-[11px] font-bold text-amber-300 uppercase tracking-wider font-mono">Includes:</div>
+                    <div className="text-[11px] font-bold text-[#93C5FD] uppercase tracking-wider font-mono">Includes:</div>
                     {tier.includes.map((inc, i) => (
                       <div key={i} className="flex items-start gap-2 text-xs text-gray-300 leading-snug">
-                        <span className="w-4 h-4 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+                        <span className="w-4 h-4 rounded-full bg-amber-400/20 text-accent-blue flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
                           ✓
                         </span>
                         <span>{inc}</span>
@@ -1573,7 +1165,7 @@ export default function HomePage() {
                   className={`w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all duration-300 ${
                     tier.popular 
                       ? "bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black shadow-lg shadow-amber-500/20 hover:brightness-110"
-                      : "bg-white/10 text-amber-300 hover:bg-amber-400 hover:text-black border border-amber-400/30"
+                      : "bg-white/10 text-[#93C5FD] hover:bg-amber-400 hover:text-black border border-accent-blue/30"
                   }`}
                 >
                   Reserve {tier.name.split(" ")[0]} Tier
@@ -1583,12 +1175,12 @@ export default function HomePage() {
           </div>
 
           {/* Why Sponsor Banner */}
-          <div className="glass-panel p-8 md:p-10 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-[#0d1631] via-[#050b1a] to-[#121c3b] shadow-2xl relative overflow-hidden">
+          <div className="glass-panel p-8 md:p-10 rounded-2xl border border-accent-blue/30 bg-gradient-to-r from-[#0d1631] via-[#050b1a] to-[#121c3b] shadow-2xl relative overflow-hidden">
             <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-amber-500/10 to-transparent pointer-events-none" />
             <div className="relative z-10 max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="space-y-3 text-left">
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-amber-400 flex items-center gap-2">
-                  <Building className="w-4 h-4 text-amber-400" /> Strategic Value
+                <span className="text-xs font-mono font-bold uppercase tracking-widest text-accent-blue flex items-center gap-2">
+                  <Building className="w-4 h-4 text-accent-blue" /> Strategic Value
                 </span>
                 <h3 className="text-2xl font-bold text-white">Why Sponsor?</h3>
                 <p className="text-gray-300 text-xs md:text-sm leading-relaxed">
@@ -1604,7 +1196,7 @@ export default function HomePage() {
                   Reserve Sponsorship Tier
                 </button>
                 <span className="text-[11px] text-gray-400 font-mono text-center md:text-right">
-                  To reserve your tier, contact our team at <a href="mailto:sponsorships@dvglobalsummits.org" className="text-amber-400 underline">sponsorships@dvglobalsummits.org</a>
+                  To reserve your tier, contact our team at <a href="mailto:info@dvglobalsummits.org" className="text-accent-blue underline">info@dvglobalsummits.org</a>
                 </span>
               </div>
             </div>
@@ -1628,7 +1220,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {awards.map((aw, idx) => (
-            <div key={idx} className="glass-panel p-6 rounded-xl border-t border-accent-gold/30 hover:shadow-lg hover:shadow-accent-gold/5 transition duration-300">
+            <div key={idx} className="glass-panel p-6 rounded-xl border-t border-accent-gold/30 hover:shadow-lg hover:shadow-accent-blue/5 transition duration-300">
               <Award className="w-8 h-8 text-accent-gold mb-4" />
               <h3 className="font-bold text-white text-lg mb-2">{aw.title}</h3>
               <p className="text-xs text-gray-400 leading-relaxed">{aw.desc}</p>
@@ -1681,7 +1273,7 @@ export default function HomePage() {
               onChange={(e) => setEmailInput(e.target.value)}
               className="flex-1 px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-accent-gold transition"
             />
-            <button className="px-6 py-3 bg-accent-gold text-black font-semibold rounded-lg hover:bg-yellow-600 transition flex items-center justify-center gap-2">
+            <button className="px-6 py-3 bg-accent-blue text-black font-semibold rounded-lg hover:bg-yellow-600 transition flex items-center justify-center gap-2">
               Subscribe <Send className="w-4 h-4" />
             </button>
           </form>
@@ -1689,21 +1281,21 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 md:px-12 border-t border-white/5 bg-black text-xs text-gray-500">
+      <footer className="py-12 px-6 md:px-12 border-t border-white/5 bg-[#0D1117] text-xs text-gray-400">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3 group">
             <img 
               src="/images/logo.png" 
               alt="D&V Global Logo" 
-              className="h-7 w-auto object-contain opacity-60 hover:opacity-100 transition filter drop-shadow-[0_0_4px_rgba(6,182,212,0.25)] hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]"
+              className="h-7 w-auto object-contain opacity-80 hover:opacity-100 transition filter drop-shadow-[0_0_4px_rgba(255,255,255,0.15)]"
             />
-            <span className="font-bold text-white group-hover:text-accent-cyan transition duration-300">D&V Global Summit Pvt. Ltd.</span>
+            <span className="font-bold text-gray-100 group-hover:text-white transition duration-300">D&V Global Summit Pvt. Ltd.</span>
           </div>
           <div className="flex gap-6">
-            <Link href="/policies" className="hover:text-white transition">Privacy Policy</Link>
-            <Link href="/terms-of-use" className="hover:text-white transition">Terms of Service</Link>
-            <a href="#" className="hover:text-white transition">Regulatory Disclosures</a>
-            <a href="#" className="hover:text-white transition">Contact Support</a>
+            <Link href="/policies" className="hover:text-white hover:underline transition">Privacy Policy</Link>
+            <Link href="/terms-of-use" className="hover:text-white hover:underline transition">Terms of Service</Link>
+            <a href="#" className="hover:text-white hover:underline transition">Regulatory Disclosures</a>
+            <a href="#" className="hover:text-white hover:underline transition">Contact Support</a>
           </div>
           <p>© 2026 D&V Global Summit Pvt. Ltd. All rights reserved.</p>
         </div>
@@ -1717,7 +1309,7 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl bg-[#081028] border border-amber-500/40 rounded-2xl shadow-2xl p-6 md:p-8 overflow-hidden my-8"
+              className="relative w-full max-w-2xl bg-[#081028] border border-accent-blue/40 rounded-2xl shadow-2xl p-6 md:p-8 overflow-hidden my-8"
             >
               {/* Top Gold Bar */}
               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500" />
@@ -1735,8 +1327,8 @@ export default function HomePage() {
 
               {!sponsorSubmitted ? (
                 <div>
-                  <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-400 tracking-wider uppercase mb-1">
-                    <Sparkles className="w-4 h-4 text-amber-400" /> Sponsorship Portal
+                  <div className="flex items-center gap-2 text-xs font-mono font-bold text-accent-blue tracking-wider uppercase mb-1">
+                    <Sparkles className="w-4 h-4 text-accent-blue" /> Sponsorship Portal
                   </div>
                   <h2 className="text-2xl font-extrabold text-white mb-2">
                     Reserve Sponsorship Package
@@ -1764,8 +1356,8 @@ export default function HomePage() {
                             onClick={() => setSelectedSponsorshipTier(tier.name)}
                             className={`cursor-pointer p-3 rounded-xl border text-xs transition-all flex flex-col justify-between ${
                               selectedSponsorshipTier === tier.name
-                                ? "bg-amber-500/20 border-amber-400 text-white shadow-md shadow-amber-500/10"
-                                : "bg-white/5 border-white/10 text-gray-400 hover:border-amber-400/40 hover:text-gray-200"
+                                ? "bg-amber-500/20 border-accent-blue text-white shadow-md shadow-amber-500/10"
+                                : "bg-white/5 border-white/10 text-gray-400 hover:border-accent-blue/40 hover:text-gray-200"
                             }`}
                           >
                             <div className="font-bold flex items-center justify-between">
@@ -1774,7 +1366,7 @@ export default function HomePage() {
                                 <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" />
                               )}
                             </div>
-                            <div className="text-[11px] font-mono text-amber-400 mt-1 font-bold">
+                            <div className="text-[11px] font-mono text-accent-blue mt-1 font-bold">
                               {tier.priceINR} <span className="text-gray-400 font-normal">({tier.priceUSD})</span>
                             </div>
                           </div>
@@ -1791,7 +1383,7 @@ export default function HomePage() {
                           placeholder="e.g. SolarCorp Global"
                           value={sponsorFormData.company}
                           onChange={(e) => setSponsorFormData({ ...sponsorFormData, company: e.target.value })}
-                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition"
+                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-blue transition"
                         />
                       </div>
                       <div>
@@ -1802,7 +1394,7 @@ export default function HomePage() {
                           placeholder="e.g. Sarah Jenkins"
                           value={sponsorFormData.name}
                           onChange={(e) => setSponsorFormData({ ...sponsorFormData, name: e.target.value })}
-                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition"
+                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-blue transition"
                         />
                       </div>
                     </div>
@@ -1816,7 +1408,7 @@ export default function HomePage() {
                           placeholder="sarah@solarcorp.com"
                           value={sponsorFormData.email}
                           onChange={(e) => setSponsorFormData({ ...sponsorFormData, email: e.target.value })}
-                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition"
+                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-blue transition"
                         />
                       </div>
                       <div>
@@ -1826,7 +1418,7 @@ export default function HomePage() {
                           placeholder="+1 (555) 019-2834"
                           value={sponsorFormData.phone}
                           onChange={(e) => setSponsorFormData({ ...sponsorFormData, phone: e.target.value })}
-                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition"
+                          className="w-full px-3.5 py-2.5 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-blue transition"
                         />
                       </div>
                     </div>
@@ -1838,13 +1430,13 @@ export default function HomePage() {
                         placeholder="Mention booth space preferences, keynote speaker details, or team size..."
                         value={sponsorFormData.message}
                         onChange={(e) => setSponsorFormData({ ...sponsorFormData, message: e.target.value })}
-                        className="w-full px-3.5 py-2 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition resize-none"
+                        className="w-full px-3.5 py-2 bg-black/50 border border-white/10 rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-accent-blue transition resize-none"
                       />
                     </div>
 
                     <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
                       <div className="text-[11px] text-gray-400 font-mono">
-                        Direct Desk: <a href="mailto:sponsorships@dvglobalsummits.org" className="text-amber-400 underline">sponsorships@dvglobalsummits.org</a>
+                        Direct Desk: <a href="mailto:info@dvglobalsummits.org" className="text-accent-blue underline">info@dvglobalsummits.org</a>
                       </div>
                       <button
                         type="submit"
@@ -1857,12 +1449,12 @@ export default function HomePage() {
                 </div>
               ) : (
                 <div className="py-8 text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-amber-400/20 text-amber-400 border border-amber-400/50 flex items-center justify-center mx-auto text-2xl font-bold shadow-[0_0_20px_rgba(251,191,36,0.3)]">
+                  <div className="w-16 h-16 rounded-full bg-amber-400/20 text-accent-blue border border-accent-blue/40 flex items-center justify-center mx-auto text-2xl font-bold shadow-[0_0_20px_rgba(251,191,36,0.3)]">
                     ✓
                   </div>
                   <h3 className="text-2xl font-bold text-white">Sponsorship Request Received!</h3>
                   <p className="text-xs text-gray-300 max-w-md mx-auto leading-relaxed">
-                    Thank you for partnering with D&V Global Summit. Our team has received your reservation for the <span className="text-amber-400 font-bold">{selectedSponsorshipTier}</span> package. A senior event coordinator will contact you at <span className="text-white font-mono">{sponsorFormData.email}</span> within 24 hours.
+                    Thank you for partnering with D&V Global Summit. Our team has received your reservation for the <span className="text-accent-blue font-bold">{selectedSponsorshipTier}</span> package. A senior event coordinator will contact you at <span className="text-white font-mono">{sponsorFormData.email}</span> within 24 hours.
                   </p>
                   <div className="pt-4">
                     <button
@@ -1959,26 +1551,20 @@ function GlobeIcon(props: React.SVGProps<SVGSVGElement>) {
 
 // Gold Globe Shield Logo representation
 const GoldLogo = () => (
-  <div className="flex items-center justify-center p-3 rounded-full bg-[#050b1a]/40 backdrop-blur-md border border-white/5 shadow-2xl relative group overflow-hidden">
-    {/* Glowing background highlights inside the circle */}
-    <div className="absolute inset-0 bg-gradient-to-tr from-accent-cyan/20 to-accent-gold/20 opacity-50 blur-xl group-hover:opacity-85 transition duration-500" />
-    
-    <img 
-      src="/images/logo.png" 
-      alt="D&V Global Logo" 
-      className="w-44 h-auto object-contain relative z-10 filter drop-shadow-[0_0_12px_rgba(6,182,212,0.45)] drop-shadow-[0_0_25px_rgba(212,175,55,0.25)] group-hover:scale-105 transition duration-500"
-    />
-  </div>
+  <img 
+    src="/images/logo.png" 
+    alt="D&V Global Logo" 
+    className="w-56 h-auto object-contain relative z-10 filter drop-shadow-[0_4px_15px_rgba(0,0,0,0.15)] group-hover:scale-105 transition duration-500"
+  />
 );
 
 // Small header version logo representation
 const HeaderLogo = () => (
   <Link href="/" className="flex items-center group relative">
-    <div className="absolute -inset-2 bg-gradient-to-r from-accent-cyan to-accent-gold rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-500" />
     <img 
       src="/images/logo.png" 
       alt="D&V Global Logo" 
-      className="h-16 w-auto object-contain relative z-10 transition duration-300 filter drop-shadow-[0_0_6px_rgba(6,182,212,0.4)] group-hover:drop-shadow-[0_0_14px_rgba(6,182,212,0.7)] group-hover:scale-105"
+      className="h-20 md:h-24 w-auto object-contain transition duration-300"
     />
   </Link>
 );

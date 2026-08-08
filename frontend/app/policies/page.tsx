@@ -119,7 +119,7 @@ export default function PoliciesPage() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 w-full border-b border-white/5 py-3 px-6 md:px-12 flex justify-between items-center backdrop-blur-md" style={{ background: "rgba(5,11,26,0.92)" }}>
         <Link href="/" className="flex items-center group">
-          <img src="/images/logo.png" alt="D&V Global Logo" className="h-14 w-auto object-contain filter drop-shadow-[0_0_6px_rgba(6,182,212,0.4)] group-hover:scale-105 transition duration-300" />
+          <img src="/images/logo.png" alt="D&V Global Logo" className="h-20 md:h-24 w-auto object-contain transition duration-300" />
         </Link>
         <div className="flex items-center gap-2 text-xs font-semibold text-gray-400">
           <Link href="/" className="hover:text-white transition flex items-center gap-1">

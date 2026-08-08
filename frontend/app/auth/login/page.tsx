@@ -36,15 +36,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background relative flex items-center justify-center p-6 overflow-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] relative flex items-center justify-center p-6 overflow-hidden">
       
       {/* Background glow decor */}
-      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-accent-gold/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent-cyan/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Floating Header */}
       <div className="absolute top-8 left-8">
-        <Link href="/" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition">
+        <Link href="/" className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#1E40AF] transition font-semibold">
           <ArrowLeft className="w-4 h-4" /> Back to home
         </Link>
       </div>
@@ -53,68 +53,68 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md glass-panel p-8 rounded-2xl border-t border-accent-gold/30 shadow-2xl relative z-10"
+        className="w-full max-w-md bg-white p-8 rounded-2xl border border-slate-200 shadow-2xl relative z-10"
       >
         <div className="flex flex-col items-center mb-8">
-          <div className="p-3 bg-accent-gold/10 rounded-full border border-accent-gold/25 mb-3 text-accent-gold">
+          <div className="p-3 bg-blue-50 rounded-full border border-blue-100 mb-3 text-[#1E40AF]">
             <Sparkles className="w-6 h-6 animate-pulse" />
           </div>
-          <h2 className="font-display font-bold text-2xl text-white">Welcome Back</h2>
+          <h2 className="font-display font-bold text-2xl text-[#0D1117]">Welcome Back</h2>
           <p className="text-xs text-gray-500 mt-1">Sign in to your conference portal</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-lg text-center font-medium">
+          <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 text-red-600 text-xs rounded-lg text-center font-medium">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-xs uppercase tracking-wider font-semibold text-gray-400 mb-2">
+            <label className="block text-xs uppercase tracking-wider font-semibold text-gray-600 mb-2">
               Academic Email
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 absolute left-3.5 top-3.5 text-gray-500" />
+              <Mail className="w-4 h-4 absolute left-3.5 top-3.5 text-gray-400" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@university.edu"
-                className="w-full pl-10 pr-4 py-3 rounded-lg text-sm glass-input"
+                className="w-full pl-10 pr-4 py-3 rounded-lg text-sm bg-slate-50 border border-slate-200 text-[#0D1117] placeholder-gray-400 focus:outline-none focus:border-[#1E40AF] focus:ring-1 focus:ring-[#1E40AF]/30 transition"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs uppercase tracking-wider font-semibold text-gray-400 mb-2">
+            <label className="block text-xs uppercase tracking-wider font-semibold text-gray-600 mb-2">
               Password
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 absolute left-3.5 top-3.5 text-gray-500" />
+              <Lock className="w-4 h-4 absolute left-3.5 top-3.5 text-gray-400" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 rounded-lg text-sm glass-input"
+                className="w-full pl-10 pr-4 py-3 rounded-lg text-sm bg-slate-50 border border-slate-200 text-[#0D1117] placeholder-gray-400 focus:outline-none focus:border-[#1E40AF] focus:ring-1 focus:ring-[#1E40AF]/30 transition"
               />
             </div>
           </div>
 
           <div className="flex justify-between items-center text-xs">
-            <label className="flex items-center gap-2 cursor-pointer text-gray-400">
-              <input type="checkbox" className="accent-accent-gold rounded" /> Remember session
+            <label className="flex items-center gap-2 cursor-pointer text-gray-600 font-semibold">
+              <input type="checkbox" className="accent-[#1E40AF] rounded" /> Remember session
             </label>
-            <a href="#" className="text-accent-gold hover:underline">Forgot password?</a>
+            <a href="#" className="text-[#1E40AF] hover:underline font-semibold">Forgot password?</a>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-gradient-to-r from-accent-gold to-yellow-600 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-accent-gold/20 transition flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-gradient-to-r from-[#1E40AF] to-[#1E3A8A] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/10 transition flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
@@ -126,9 +126,9 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-8 border-t border-white/5 pt-6 text-center text-xs text-gray-500">
+        <div className="mt-8 border-t border-slate-200 pt-6 text-center text-xs text-gray-500">
           New to the platform?{" "}
-          <Link href="/auth/register" className="text-accent-cyan hover:underline font-semibold">
+          <Link href="/auth/register" className="text-[#1E40AF] hover:underline font-bold">
             Create Account
           </Link>
         </div>
