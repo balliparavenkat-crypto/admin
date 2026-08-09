@@ -41,16 +41,75 @@ export default function SummitsPage() {
 
   const fetchSummits = async () => {
     setLoading(true);
+    let loaded: any[] = [];
     try {
       const res = await api.get("/conferences/public/all");
       if (res.data && res.data.length > 0) {
-        setSummits(res.data);
+        loaded = res.data;
       }
     } catch {
-      // Fallback to initial state
-    } finally {
-      setLoading(false);
+      // Fallback
     }
+
+    let localCustom: any[] = [];
+    try {
+      const savedStr = localStorage.getItem("custom_summits");
+      if (savedStr) {
+        localCustom = JSON.parse(savedStr);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    const defaultSummits = [
+      {
+        id: 1,
+        title: "D&V Global Summit 2026: Advances in Artificial Intelligence",
+        acronym: "DVGS2026",
+        description: "Premier global conference on Deep Learning and Generative AI systems.",
+        startDate: "2026-10-15",
+        endDate: "2026-10-18",
+        venueName: "Grand Palace Convention Center",
+        city: "San Francisco",
+        country: "United States",
+        status: "ACTIVE",
+        registrationFeeAuthor: 499.00,
+        registrationFeeListener: 299.00,
+        currency: "USD",
+        registrationsCount: 14,
+        papersCount: 12,
+      },
+      {
+        id: 2,
+        title: "International Conference on Sustainable Climate Solutions",
+        acronym: "ICSCS2026",
+        description: "Global summit focusing on renewable energy economics, microgrids, and carbon capture.",
+        startDate: "2026-11-20",
+        endDate: "2026-11-23",
+        venueName: "Marina Bay Sands Expo Center",
+        city: "Singapore",
+        country: "Singapore",
+        status: "ACTIVE",
+        registrationFeeAuthor: 450.00,
+        registrationFeeListener: 250.00,
+        currency: "USD",
+        registrationsCount: 8,
+        papersCount: 6,
+      },
+    ];
+
+    const combined = [...localCustom, ...loaded, ...defaultSummits];
+    // Deduplicate by ID or acronym
+    const uniqueMap = new Map();
+    combined.forEach((item) => {
+      const key = item.id || item.acronym;
+      if (!uniqueMap.has(key)) {
+        uniqueMap.set(key, item);
+      }
+    });
+
+    setSummits(Array.from(uniqueMap.values()));
+    setLoading(false);
   };
 
   const filteredSummits = summits.filter((s) => {
@@ -150,7 +209,9 @@ export default function SummitsPage() {
                 filteredSummits.map((s) => (
                   <tr key={s.id} className="hover:bg-slate-800/40 transition-colors">
                     <td className="p-4">
-                      <span className="font-extrabold text-white text-sm block">{s.title}</span>
+                      <Link href={`/dashboard/admin/summits/${s.id}`} className="font-extrabold text-white text-sm block hover:text-accent-cyan transition-colors cursor-pointer">
+                        {s.title}
+                      </Link>
                       <span className="text-[10px] font-mono text-accent-cyan bg-accent-blue/10 px-2 py-0.5 rounded border border-accent-blue/20 mt-1 inline-block">
                         {s.acronym}
                       </span>

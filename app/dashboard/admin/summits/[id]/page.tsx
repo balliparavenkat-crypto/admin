@@ -28,6 +28,37 @@ export default function SummitConsolePage() {
     registrationFeeListener: 299.00,
   });
 
+  useEffect(() => {
+    // Check localStorage custom_summits first
+    try {
+      const savedStr = localStorage.getItem("custom_summits");
+      if (savedStr) {
+        const customList: any[] = JSON.parse(savedStr);
+        const match = customList.find((s) => String(s.id) === String(summitId) || s.acronym === summitId);
+        if (match) {
+          setSummit(match);
+          return;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    if (String(summitId) === "2") {
+      setSummit({
+        id: 2,
+        title: "International Conference on Sustainable Climate Solutions",
+        acronym: "ICSCS2026",
+        description: "Global summit focusing on renewable energy economics, microgrids, and carbon capture.",
+        city: "Singapore",
+        country: "Singapore",
+        status: "ACTIVE",
+        registrationFeeAuthor: 450.00,
+        registrationFeeListener: 250.00,
+      });
+    }
+  }, [summitId]);
+
   const tabs = [
     { id: "overview", label: "Overview", icon: Calendar },
     { id: "registrations", label: "Registrations", icon: Users },

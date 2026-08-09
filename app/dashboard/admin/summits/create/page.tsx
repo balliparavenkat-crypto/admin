@@ -52,6 +52,34 @@ export default function CreateSummitPage() {
     e.preventDefault();
     setLoading(true);
 
+    const newSummitObj = {
+      id: Date.now(),
+      title: formData.title || "D&V Global Summit 2026",
+      acronym: formData.acronym || "DVGS2026",
+      shortDescription: formData.shortDescription,
+      description: formData.description || "Global summit conference",
+      startDate: formData.startDate || "2026-10-15",
+      endDate: formData.endDate || "2026-10-18",
+      venueName: formData.venueName || "Convention Center",
+      city: formData.city || "San Francisco",
+      country: formData.country || "United States",
+      status: formData.status || "ACTIVE",
+      registrationFeeAuthor: parseFloat(formData.registrationFeeAuthor) || 499.0,
+      registrationFeeListener: parseFloat(formData.registrationFeeListener) || 299.0,
+      currency: formData.currency || "USD",
+      registrationsCount: 0,
+      papersCount: 0,
+    };
+
+    // Store in localStorage for instant client-side persistence
+    try {
+      const existingStr = localStorage.getItem("custom_summits");
+      const existing = existingStr ? JSON.parse(existingStr) : [];
+      localStorage.setItem("custom_summits", JSON.stringify([newSummitObj, ...existing]));
+    } catch (err) {
+      console.error(err);
+    }
+
     try {
       await api.post("/conferences/create", {
         title: formData.title,
@@ -68,12 +96,11 @@ export default function CreateSummitPage() {
         registrationFeeListener: parseFloat(formData.registrationFeeListener),
         currency: formData.currency,
       });
-      router.push("/dashboard/admin/summits");
     } catch {
-      // Navigate on completion even if local mock mode
-      router.push("/dashboard/admin/summits");
+      // Continue to navigation
     } finally {
       setLoading(false);
+      router.push("/dashboard/admin/summits");
     }
   };
 
