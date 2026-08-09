@@ -319,11 +319,6 @@ export default function HomePage() {
     }
   ];
 
-  const journals = [
-    { name: "DV Global Journal of Intelligent Systems", impact: "8.4 IF", scope: "Machine Learning & Soft Computing" },
-    { name: "International Review of Clinical Bio-Medicine", impact: "6.9 IF", scope: "Genomics, Pathology & Clinical Care" },
-    { name: "Journal of Sustainable Climate Solutions", impact: "5.7 IF", scope: "Renewable Systems & Economics" },
-  ];
 
   const awards = [
     { title: "DV Global Research Excellence Award", desc: "For breakthrough discoveries in Applied Sciences." },
@@ -355,7 +350,7 @@ export default function HomePage() {
           <a href="#about" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">ABOUT US</a>
           <a href="#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SUMMITS</a>
           <a href="#sponsorship" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SPONSORSHIP</a>
-          <a href="#journals" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SCHEDULE</a>
+          <a href="#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SCHEDULE</a>
           <Link href="/indian-registers" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">REGISTER</Link>
           <Link href="/policies" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">POLICIES</Link>
           <Link href="/cancellation-policy" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">CANCELLATION POLICY</Link>
@@ -392,7 +387,7 @@ export default function HomePage() {
             <a href="#about" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">ABOUT US</a>
             <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SUMMITS</a>
             <a href="#sponsorship" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SPONSORSHIP</a>
-            <a href="#journals" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SCHEDULE</a>
+            <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SCHEDULE</a>
             <Link href="/indian-registers" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">REGISTER</Link>
             <Link href="/policies" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">POLICIES</Link>
             <Link href="/cancellation-policy" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">CANCELLATION POLICY</Link>
@@ -984,45 +979,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Journal Indexing Panel */}
-      <section id="journals" className="py-24 px-6 md:px-12 bg-primary/10 border-y border-[#1E40AF]/10">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-            <div className="lg:col-span-1">
-              <span className="text-xs uppercase font-bold font-mono tracking-wider text-accent-cyan mb-2 block">
-                Publications
-              </span>
-              <h2 className="font-display font-bold text-3xl text-[#0D1117] mb-4">
-                Partner Journals
-              </h2>
-              <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                DV Global partners with top scientific publications. All accepted papers are sent directly to review boards for automated fast-track indexation.
-              </p>
-              <div className="flex gap-2">
-                <span className="px-3 py-1 bg-[#FFFFFF]/30 border border-[#1E40AF]/15 rounded-full text-xs text-gray-600">Scopus Indexed</span>
-                <span className="px-3 py-1 bg-[#FFFFFF]/30 border border-[#1E40AF]/15 rounded-full text-xs text-gray-600">Web of Science</span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {journals.map((j, i) => (
-                <div key={i} className="glass-panel p-5 rounded-xl border border-[#1E40AF]/10 hover:border-accent-cyan/35 transition">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="font-bold text-[#0D1117] text-base leading-snug">{j.name}</h3>
-                    <span className="bg-accent-blue/10 text-accent-gold text-[10px] px-2 py-0.5 rounded border border-accent-gold/25 font-bold whitespace-nowrap">
-                      {j.impact}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-600 mb-4 font-mono">{j.scope}</p>
-                  <span className="text-accent-cyan text-xs font-semibold flex items-center hover:underline cursor-pointer">
-                    Submission Criteria <ChevronRight className="w-3.5 h-3.5 ml-1" />
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Sponsorship Opportunities Section */}
       <section id="sponsorship" className="py-24 px-6 md:px-12 bg-gradient-to-b from-[#F8FAFC] via-[#FFFFFF]/60 to-[#F8FAFC] border-y border-[#1E40AF]/15 relative overflow-hidden">
