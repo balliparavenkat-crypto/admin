@@ -16,18 +16,20 @@ import java.util.Set;
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final ConferenceRepository conferenceRepository;
-    private final TrackRepository trackRepository;
-    private final SpeakerRepository speakerRepository;
-    private final SessionRepository sessionRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final RegistrationRepository registrationRepository;
+    private final SponsorRepository sponsorRepository;
+    private final AnnouncementRepository announcementRepository;
+    private final AuditLogRepository auditLogRepository;
+    private final WebsiteContentRepository websiteContentRepository;
+    private final PaymentRepository paymentRepository;
 
     public DatabaseSeeder(UserRepository userRepository, RoleRepository roleRepository,
                           ConferenceRepository conferenceRepository, TrackRepository trackRepository,
                           SpeakerRepository speakerRepository, SessionRepository sessionRepository,
-                          PasswordEncoder passwordEncoder) {
+                          PasswordEncoder passwordEncoder, RegistrationRepository registrationRepository,
+                          SponsorRepository sponsorRepository, AnnouncementRepository announcementRepository,
+                          AuditLogRepository auditLogRepository, WebsiteContentRepository websiteContentRepository,
+                          PaymentRepository paymentRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.conferenceRepository = conferenceRepository;
@@ -35,6 +37,12 @@ public class DatabaseSeeder implements CommandLineRunner {
         this.speakerRepository = speakerRepository;
         this.sessionRepository = sessionRepository;
         this.passwordEncoder = passwordEncoder;
+        this.registrationRepository = registrationRepository;
+        this.sponsorRepository = sponsorRepository;
+        this.announcementRepository = announcementRepository;
+        this.auditLogRepository = auditLogRepository;
+        this.websiteContentRepository = websiteContentRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     @Override
@@ -168,15 +176,67 @@ public class DatabaseSeeder implements CommandLineRunner {
                     .conference(conf)
                     .build();
 
-            Session session2 = Session.builder()
-                    .title("Panel: Image Understanding and Generative Media")
-                    .description("Interactive panel chaired by Dr. Fei-Fei Li discussing generative vision systems and robotics alignment.")
-                    .startTime(conf.getStartDate().plus(11, ChronoUnit.HOURS))
-                    .endTime(conf.getStartDate().plus(12, ChronoUnit.HOURS).plus(30, ChronoUnit.MINUTES))
-                    .location("Grand Ballroom")
+            sessionRepository.saveAll(List.of(session1, session2));
+
+            // Seed Registrations
+            User author = userRepository.findByEmail("author@dvglobal.com").orElse(null);
+            if (author != null) {
+                Registration reg1 = Registration.builder()
+                        .registrationCode("DV-REG-1001")
+                        .user(author)
+                        .conference(conf)
+                        .category("AUTHOR")
+                        .amount(499.00)
+                        .currency("USD")
+                        .paymentStatus("SUCCESS")
+                        .registrationStatus("APPROVED")
+                        .qrCode("QR-DV-REG-1001")
+                        .checkedIn(true)
+                        .checkedInAt(Instant.now().minus(2, ChronoUnit.HOURS))
+                        .build();
+                registrationRepository.save(reg1);
+
+                Payment pay1 = Payment.builder()
+                        .amount(499.00)
+                        .currency("USD")
+                        .status("SUCCESS")
+                        .paymentMethod("RAZORPAY")
+                        .transactionId("txn_1029384756")
+                        .user(author)
+                        .conference(conf)
+                        .build();
+                paymentRepository.save(pay1);
+            }
+
+            // Seed Sponsors
+            Sponsor sponsor1 = Sponsor.builder()
+                    .companyName("NVIDIA AI Research")
+                    .logoUrl("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=120&h=120&fit=crop")
+                    .websiteUrl("https://nvidia.com")
+                    .description("Global Leader in Accelerated Computing")
+                    .level("PLATINUM")
                     .conference(conf)
                     .build();
-            sessionRepository.saveAll(List.of(session1, session2));
+            sponsorRepository.save(sponsor1);
+
+            // Seed Announcements
+            Announcement ann1 = Announcement.builder()
+                    .title("Paper Submission Deadline Extended!")
+                    .message("The paper submission deadline for DVGS2026 has been extended by 2 weeks.")
+                    .conference(conf)
+                    .publishDate(Instant.now())
+                    .status("PUBLISHED")
+                    .build();
+            announcementRepository.save(ann1);
+
+            // Seed Audit Log
+            AuditLog log1 = AuditLog.builder()
+                    .userEmail("admin@dvglobal.com")
+                    .action("CREATED_SUMMIT")
+                    .details("Admin created summit D&V Global Summit 2026")
+                    .timestamp(Instant.now().minus(5, ChronoUnit.HOURS))
+                    .build();
+            auditLogRepository.save(log1);
         }
     }
 }
