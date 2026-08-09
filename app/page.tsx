@@ -256,8 +256,34 @@ export default function HomePage() {
   }, [currentSlide]);
 
 
-  const conferences = [
+  const [dynamicConferences, setDynamicConferences] = useState<any[]>([]);
+
+  useEffect(() => {
+    try {
+      const savedStr = localStorage.getItem("custom_summits");
+      if (savedStr) {
+        const customList: any[] = JSON.parse(savedStr);
+        const mappedCustom = customList.map((c, i) => ({
+          id: c.id || `custom-${i}`,
+          year: 2026,
+          title: c.title,
+          date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
+          location: `${c.city || "San Francisco"}, ${c.country || "USA"}`,
+          status: c.status || "Registration Open",
+          image: "/images/ai_quantum_summit.png",
+          tag: "Advanced Tech",
+          countryCode: "us",
+        }));
+        setDynamicConferences(mappedCustom);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const defaultConferences = [
     {
+      id: 1,
       year: 2026,
       title: "DV Global AI & Quantum Summit 2026",
       date: "Oct 12-14, 2026",
@@ -268,6 +294,7 @@ export default function HomePage() {
       countryCode: "us"
     },
     {
+      id: 2,
       year: 2026,
       title: "International Bio-Medicine & Genetics Congress",
       date: "Nov 08-11, 2026",
@@ -278,6 +305,7 @@ export default function HomePage() {
       countryCode: "ch"
     },
     {
+      id: 3,
       year: 2026,
       title: "World Clean Energy & Sustainability Summit",
       date: "Dec 03-05, 2026",
@@ -288,6 +316,7 @@ export default function HomePage() {
       countryCode: "jp"
     },
     {
+      id: 4,
       year: 2027,
       title: "DV Global Robotics & IoT Summit 2027",
       date: "Apr 18-20, 2027",
@@ -298,6 +327,7 @@ export default function HomePage() {
       countryCode: "de"
     },
     {
+      id: 5,
       year: 2027,
       title: "International Neuro-Oncology & Brain Genomics Congress 2027",
       date: "May 22-25, 2027",
@@ -308,6 +338,7 @@ export default function HomePage() {
       countryCode: "us"
     },
     {
+      id: 6,
       year: 2027,
       title: "World Sustainable Infrastructure & Smart Cities Forum 2027",
       date: "Sep 14-16, 2027",
@@ -318,6 +349,8 @@ export default function HomePage() {
       countryCode: "sg"
     }
   ];
+
+  const conferences = [...dynamicConferences, ...defaultConferences];
 
 
   const awards = [
@@ -799,7 +832,9 @@ export default function HomePage() {
                       </div>
                       <div className="p-6 flex-1 flex flex-col justify-between">
                         <div>
-                          <h3 className="font-bold text-lg text-[#0D1117] mb-2 leading-snug">{conf.title}</h3>
+                          <Link href={`/summits/${conf.id || 1}`} className="hover:text-[#1E40AF] transition duration-200 block">
+                            <h3 className="font-bold text-lg text-[#0D1117] mb-2 leading-snug">{conf.title}</h3>
+                          </Link>
                           <div className="flex flex-col gap-2 text-xs text-gray-600 mb-6">
                             <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-accent-gold" /> {conf.date}</span>
                             <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-accent-gold" /> {conf.location}</span>
@@ -809,7 +844,7 @@ export default function HomePage() {
                           <span className="text-xs font-semibold text-[#93C5FD] bg-blue-500/10 border border-accent-blue/30 px-2.5 py-1 rounded-lg">
                             {conf.status}
                           </span>
-                          <Link href={`/auth/login`} className="text-xs font-bold text-accent-blue hover:text-[#93C5FD] flex items-center gap-1 hover:underline">
+                          <Link href={`/summits/${conf.id || 1}`} className="text-xs font-bold text-accent-blue hover:text-[#93C5FD] flex items-center gap-1 hover:underline">
                             Click Here <ChevronRight className="w-3.5 h-3.5" />
                           </Link>
                         </div>
