@@ -270,7 +270,7 @@ export default function HomePage() {
           date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
           location: `${c.city || "San Francisco"}, ${c.country || "USA"}`,
           status: c.status || "Registration Open",
-          image: "/images/ai_quantum_summit.png",
+          image: c.bannerUrl || "/images/ai_quantum_summit.png",
           tag: "Advanced Tech",
           countryCode: "us",
         }));

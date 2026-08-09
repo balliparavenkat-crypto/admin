@@ -98,6 +98,16 @@ export default function PublicSummitDetailPage() {
 
       {/* Hero Banner */}
       <div className="relative bg-gradient-to-b from-[#0D1117] via-[#050b1a] to-[#0D1117] text-white py-20 px-6 md:px-12 border-b border-[#1E40AF]/20 overflow-hidden">
+        {summit.bannerUrl && (
+          <>
+            <img
+              src={summit.bannerUrl}
+              alt={summit.title}
+              className="absolute inset-0 w-full h-full object-cover opacity-25 filter blur-sm"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/80 via-[#050b1a]/90 to-[#0D1117]" />
+          </>
+        )}
         <div className="max-w-6xl mx-auto space-y-6 relative z-10">
           <div className="flex flex-wrap items-center gap-3">
             <span className="px-3 py-1 bg-amber-500/20 text-amber-300 font-mono font-bold text-xs rounded-full border border-amber-500/30">

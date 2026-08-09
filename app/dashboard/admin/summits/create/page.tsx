@@ -16,6 +16,7 @@ export default function CreateSummitPage() {
   const [formData, setFormData] = useState({
     title: "",
     acronym: "",
+    bannerUrl: "",
     shortDescription: "",
     description: "",
     websiteUrl: "",
@@ -56,6 +57,7 @@ export default function CreateSummitPage() {
       id: Date.now(),
       title: formData.title || "D&V Global Summit 2026",
       acronym: formData.acronym || "DVGS2026",
+      bannerUrl: formData.bannerUrl || "/images/ai_quantum_summit.png",
       shortDescription: formData.shortDescription,
       description: formData.description || "Global summit conference",
       startDate: formData.startDate || "2026-10-15",
@@ -182,6 +184,37 @@ export default function CreateSummitPage() {
                   placeholder="e.g. DVGS2026"
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-accent-cyan/50 font-mono"
                 />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs font-semibold text-slate-300 block mb-2">Summit Banner Image URL / Cover Image</label>
+              <input
+                type="text"
+                name="bannerUrl"
+                value={formData.bannerUrl}
+                onChange={handleChange}
+                placeholder="e.g. /images/ai_quantum_summit.png or https://images.unsplash.com/photo-..."
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-accent-cyan/50 font-mono"
+              />
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-[10px] text-slate-500 font-mono">Quick Presets:</span>
+                {[
+                  { name: "AI & Tech", url: "/images/ai_quantum_summit.png" },
+                  { name: "BioMedicine", url: "/images/biomedicine_congress.png" },
+                  { name: "Clean Energy", url: "/images/clean_energy_summit.png" },
+                  { name: "Robotics", url: "/images/robotics_summit.png" },
+                  { name: "Smart Cities", url: "/images/smart_cities.png" },
+                ].map((p) => (
+                  <button
+                    key={p.name}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, bannerUrl: p.url })}
+                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-mono"
+                  >
+                    {p.name}
+                  </button>
+                ))}
               </div>
             </div>
 

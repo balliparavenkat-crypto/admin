@@ -252,6 +252,13 @@ export default function SummitsPage() {
                         >
                           <Eye className="w-4 h-4" />
                         </Link>
+                        <Link
+                          href={`/dashboard/admin/summits/edit/${s.id}`}
+                          className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white"
+                          title="Edit Summit Details & Banner"
+                        >
+                          <Edit className="w-4 h-4 text-accent-gold" />
+                        </Link>
                         <button
                           onClick={() => setDeleteModalId(s.id)}
                           className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20"
