@@ -98,28 +98,28 @@ export default function RegistrationsPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Registration Management</h1>
-          <p className="text-xs text-slate-400">View, approve, and manage summit participant registrations</p>
+          <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Registration Management</h1>
+          <p className="text-xs text-slate-700 font-medium">View, approve, and manage summit participant registrations</p>
         </div>
 
         <button
           onClick={exportCSV}
-          className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center gap-2 border border-slate-700 w-fit"
+          className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs flex items-center gap-2 border border-slate-300 w-fit"
         >
-          <Download className="w-4 h-4" /> Export CSV Report
+          <Download className="w-4 h-4 text-[#1E40AF]" /> Export CSV Report
         </button>
       </div>
 
       {/* Filter Bar */}
-      <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div className="p-4 rounded-2xl bg-white border border-[#1E40AF]/15 flex flex-col sm:flex-row gap-4 items-center justify-between shadow-sm">
         <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#1E40AF]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search code, participant name, email..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-accent-cyan/50"
+            className="w-full bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-900 font-semibold placeholder-slate-500 focus:outline-none focus:border-[#1E40AF]"
           />
         </div>
 
@@ -127,7 +127,7 @@ export default function RegistrationsPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none"
+            className="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
           >
             <option value="ALL">All Categories</option>
             <option value="AUTHOR">AUTHOR</option>
@@ -139,7 +139,7 @@ export default function RegistrationsPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none"
+            className="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
           >
             <option value="ALL">All Statuses</option>
             <option value="APPROVED">APPROVED</option>
@@ -147,17 +147,17 @@ export default function RegistrationsPage() {
             <option value="REJECTED">REJECTED</option>
           </select>
 
-          <button onClick={fetchRegistrations} className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400">
+          <button onClick={fetchRegistrations} className="p-2.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 hover:text-[#1E40AF]">
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           </button>
         </div>
       </div>
 
       {/* Registrations Table */}
-      <div className="rounded-3xl bg-slate-900/60 border border-slate-800 overflow-hidden shadow-xl">
+      <div className="rounded-3xl bg-white border border-[#1E40AF]/15 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-100 text-slate-800 font-mono text-[11px] uppercase tracking-wider border-b border-slate-300 font-extrabold">
               <tr>
                 <th className="p-4">Reg Code</th>
                 <th className="p-4">Participant Info</th>
@@ -167,28 +167,28 @@ export default function RegistrationsPage() {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-200 text-slate-900 font-medium">
               {filtered.map((r) => (
-                <tr key={r.id} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="p-4 font-mono font-bold text-accent-cyan">{r.registrationCode}</td>
+                <tr key={r.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="p-4 font-mono font-bold text-[#1E40AF]">{r.registrationCode}</td>
                   <td className="p-4">
-                    <span className="font-bold text-white block">{r.user?.firstName} {r.user?.lastName}</span>
-                    <span className="text-[11px] text-slate-400 block">{r.user?.email}</span>
-                    <span className="text-[10px] text-slate-500 font-mono">{r.user?.institution} ({r.user?.country})</span>
+                    <span className="font-bold text-[#0D1117] block">{r.user?.firstName} {r.user?.lastName}</span>
+                    <span className="text-[11px] text-slate-600 font-mono font-bold block">{r.user?.email}</span>
+                    <span className="text-[10px] text-slate-600 font-mono font-bold">{r.user?.institution} ({r.user?.country})</span>
                   </td>
-                  <td className="p-4 font-mono text-slate-300">{r.conference?.acronym || "DVGS2026"}</td>
+                  <td className="p-4 font-mono text-slate-800 font-bold">{r.conference?.acronym || "DVGS2026"}</td>
                   <td className="p-4 space-y-1">
-                    <span className="px-2 py-0.5 rounded bg-slate-800 text-amber-400 font-mono font-bold text-[10px] inline-block">
+                    <span className="px-2 py-0.5 rounded bg-blue-50 text-[#1E40AF] border border-blue-200 font-mono font-bold text-[10px] inline-block">
                       {r.category}
                     </span>
-                    <span className="block text-emerald-400 font-mono font-bold">${r.amount}</span>
+                    <span className="block text-emerald-800 font-mono font-black">${r.amount}</span>
                   </td>
                   <td className="p-4">
                     <span
                       className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase ${
                         r.registrationStatus === "APPROVED"
-                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
-                          : "bg-rose-500/10 text-rose-400 border border-rose-500/30"
+                          ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                          : "bg-rose-100 text-rose-800 border border-rose-300"
                       }`}
                     >
                       {r.registrationStatus}
@@ -197,17 +197,17 @@ export default function RegistrationsPage() {
                   <td className="p-4 text-right space-x-2">
                     <button
                       onClick={() => updateStatus(r.id, "APPROVED")}
-                      className="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20"
+                      className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200"
                       title="Approve Registration"
                     >
-                      <CheckCircle className="w-4 h-4" />
+                      <CheckCircle className="w-4 h-4 text-emerald-600" />
                     </button>
                     <button
                       onClick={() => updateStatus(r.id, "REJECTED")}
-                      className="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20"
+                      className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
                       title="Reject Registration"
                     >
-                      <XCircle className="w-4 h-4" />
+                      <XCircle className="w-4 h-4 text-rose-600" />
                     </button>
                   </td>
                 </tr>

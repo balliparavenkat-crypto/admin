@@ -28,27 +28,27 @@ export default function UsersPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">User Account Directory</h1>
-          <p className="text-xs text-slate-400">Manage system users, roles, password resets, and verification states</p>
+          <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">User Account Directory</h1>
+          <p className="text-xs text-slate-700 font-medium">Manage system users, roles, password resets, and verification states</p>
         </div>
       </div>
 
-      <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row gap-4 items-center justify-between">
+      <div className="p-4 rounded-2xl bg-white border border-[#1E40AF]/15 flex flex-col sm:flex-row gap-4 items-center justify-between shadow-sm">
         <div className="relative flex-1 w-full">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#1E40AF]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search name, email, institution..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none"
+            className="w-full bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-900 font-semibold placeholder-slate-500 focus:outline-none focus:border-[#1E40AF]"
           />
         </div>
 
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value)}
-          className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none"
+          className="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
         >
           <option value="ALL">All Roles</option>
           <option value="SUPER_ADMIN">SUPER_ADMIN</option>
@@ -58,10 +58,10 @@ export default function UsersPage() {
         </select>
       </div>
 
-      <div className="rounded-3xl bg-slate-900/60 border border-slate-800 overflow-hidden shadow-xl">
+      <div className="rounded-3xl bg-white border border-[#1E40AF]/15 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-100 text-slate-800 font-mono text-[11px] uppercase tracking-wider border-b border-slate-300 font-extrabold">
               <tr>
                 <th className="p-4">User Name & Email</th>
                 <th className="p-4">Institution & Country</th>
@@ -70,30 +70,30 @@ export default function UsersPage() {
                 <th className="p-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-200 text-slate-900 font-medium">
               {filtered.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-800/40 transition-colors">
+                <tr key={u.id} className="hover:bg-slate-50 transition-colors">
                   <td className="p-4">
-                    <span className="font-bold text-white block">{u.firstName} {u.lastName}</span>
-                    <span className="text-[11px] text-slate-400 font-mono">{u.email}</span>
+                    <span className="font-bold text-[#0D1117] block">{u.firstName} {u.lastName}</span>
+                    <span className="text-[11px] text-slate-600 font-mono font-bold">{u.email}</span>
                   </td>
                   <td className="p-4">
-                    <span className="block text-slate-300">{u.institution}</span>
-                    <span className="text-[10px] text-slate-500 font-mono">{u.country}</span>
+                    <span className="block text-slate-800 font-semibold">{u.institution}</span>
+                    <span className="text-[10px] text-slate-600 font-mono font-bold">{u.country}</span>
                   </td>
                   <td className="p-4 font-mono">
-                    <span className="px-2.5 py-1 rounded bg-accent-blue/10 text-accent-cyan border border-accent-blue/20 font-bold text-[10px]">
+                    <span className="px-2.5 py-1 rounded bg-blue-50 text-[#1E40AF] border border-blue-200 font-extrabold text-[10px]">
                       {u.role}
                     </span>
                   </td>
                   <td className="p-4">
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-bold">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-mono font-bold uppercase">
                       VERIFIED
                     </span>
                   </td>
                   <td className="p-4 text-right">
-                    <button className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white" title="Reset Password">
-                      <Key className="w-4 h-4" />
+                    <button className="p-1.5 rounded-lg bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200" title="Reset Password">
+                      <Key className="w-4 h-4 text-[#1E40AF]" />
                     </button>
                   </td>
                 </tr>

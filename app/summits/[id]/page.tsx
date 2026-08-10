@@ -88,20 +88,12 @@ export default function PublicSummitDetailPage() {
         <Link href="/" className="flex items-center gap-2 text-xs font-bold text-[#1E40AF] hover:underline">
           <ArrowLeft className="w-4 h-4" /> Back to D&V Global Summits
         </Link>
-        <div className="flex items-center gap-3">
-          <Link
-            href="/indian-registers"
-            className="px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md hover:scale-[1.02] transition duration-300"
-          >
-            India (Razorpay ₹)
-          </Link>
-          <Link
-            href="/international-registers"
-            className="px-5 py-2.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md hover:scale-[1.02] transition duration-300"
-          >
-            International (PayPal $)
-          </Link>
-        </div>
+        <Link
+          href="/indian-registers"
+          className="px-6 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md hover:scale-[1.02] transition duration-300"
+        >
+          Register For Summit
+        </Link>
       </nav>
 
       {/* Hero Banner */}
@@ -146,13 +138,7 @@ export default function PublicSummitDetailPage() {
               href="/indian-registers"
               className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
             >
-              Register India (Razorpay ₹) <ChevronRight className="w-4 h-4 stroke-[3]" />
-            </Link>
-            <Link
-              href="/international-registers"
-              className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
-            >
-              Register International (PayPal $) <ChevronRight className="w-4 h-4 stroke-[3]" />
+              Register Now <ChevronRight className="w-4 h-4 stroke-[3]" />
             </Link>
           </div>
         </div>
@@ -180,42 +166,27 @@ export default function PublicSummitDetailPage() {
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Author Registration</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeAuthor || 499} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Includes paper presentation slot, conference proceedings indexation, and all summit passes.</p>
-              <div className="grid grid-cols-2 gap-2 mt-4">
-                <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">
-                  Razorpay ₹
-                </Link>
-                <Link href="/international-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-[10px] font-extrabold uppercase tracking-wider">
-                  PayPal $
-                </Link>
-              </div>
+              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+                Register as Author
+              </Link>
             </div>
 
             <div className="p-6 rounded-3xl bg-white border border-[#1E40AF]/10 space-y-3 shadow-sm hover:border-[#1E40AF]/30 transition">
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Delegate / Listener</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeListener || 299} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Full access to keynote sessions, panel discussions, networking lunch, and attendance certificate.</p>
-              <div className="grid grid-cols-2 gap-2 mt-4">
-                <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">
-                  Razorpay ₹
-                </Link>
-                <Link href="/international-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-[10px] font-extrabold uppercase tracking-wider">
-                  PayPal $
-                </Link>
-              </div>
+              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+                Register as Listener
+              </Link>
             </div>
 
             <div className="p-6 rounded-3xl bg-white border border-[#1E40AF]/10 space-y-3 shadow-sm hover:border-[#1E40AF]/30 transition">
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Student Registration</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeStudent || 199} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Discounted pass for verified undergraduate and graduate research students.</p>
-              <div className="grid grid-cols-2 gap-2 mt-4">
-                <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-amber-500 text-slate-950 text-[10px] font-extrabold uppercase tracking-wider">
-                  Razorpay ₹
-                </Link>
-                <Link href="/international-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-[10px] font-extrabold uppercase tracking-wider">
-                  PayPal $
-                </Link>
-              </div>
+              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+                Register as Student
+              </Link>
             </div>
           </div>
         </section>
