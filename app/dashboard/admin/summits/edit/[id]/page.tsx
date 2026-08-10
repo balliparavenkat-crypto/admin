@@ -140,6 +140,7 @@ export default function EditSummitPage() {
         String(item.id) === String(summitId) || item.acronym === formData.acronym ? { ...item, ...updatedSummitObj } : item
       );
 
+      // If not present in existing, push it
       if (!existing.some((item) => String(item.id) === String(summitId))) {
         updatedList.push(updatedSummitObj);
       }
@@ -151,7 +152,7 @@ export default function EditSummitPage() {
     try {
       await api.put(`/conferences/update/${summitId}`, updatedSummitObj);
     } catch {
-      // Continue
+      // Continue to navigation
     } finally {
       setLoading(false);
       setSavedSuccess(true);
@@ -167,20 +168,20 @@ export default function EditSummitPage() {
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard/admin/summits"
-            className="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900"
+            className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Edit Summit: {formData.acronym}</h1>
-            <p className="text-xs text-slate-700 font-medium">Modify summit banner image, schedule, pricing, and deadlines</p>
+            <h1 className="text-2xl font-extrabold text-white tracking-tight">Edit Summit: {formData.acronym}</h1>
+            <p className="text-xs text-slate-400">Modify summit banner image, schedule, pricing, and deadlines</p>
           </div>
         </div>
 
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md hover:scale-[1.02] transition-transform w-fit"
+          className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-lg hover:scale-[1.02] transition-transform w-fit"
         >
           {savedSuccess ? <CheckCircle className="w-4 h-4 text-slate-950" /> : <Save className="w-4 h-4 stroke-[3]" />}
           {savedSuccess ? "Saved Changes ✓" : loading ? "Saving..." : "Save Changes"}
@@ -188,7 +189,7 @@ export default function EditSummitPage() {
       </div>
 
       {/* Step Navigation Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-800">
         {[
           { step: 1, label: "Basic Info & Banner", icon: FileText },
           { step: 2, label: "Schedule & Location", icon: Calendar },
@@ -201,8 +202,8 @@ export default function EditSummitPage() {
             onClick={() => setActiveStep(s.step)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
               activeStep === s.step
-                ? "bg-[#1E40AF] text-white shadow-sm"
-                : "text-slate-800 hover:text-[#1E40AF] hover:bg-slate-100"
+                ? "bg-accent-blue/20 text-accent-cyan border border-accent-blue/40 shadow-sm"
+                : "text-slate-400 hover:text-white hover:bg-slate-900/40"
             }`}
           >
             <s.icon className="w-4 h-4" />
@@ -211,41 +212,41 @@ export default function EditSummitPage() {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="p-8 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm space-y-6">
+      <form onSubmit={handleSubmit} className="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-6">
         {activeStep === 1 && (
           <div className="space-y-6">
-            <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Basic Information & Banner Image</h3>
+            <h3 className="text-base font-bold text-white tracking-wide border-b border-slate-800 pb-3">Basic Information & Banner Image</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Summit Full Title *</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Summit Full Title *</label>
                 <input
                   type="text"
                   name="title"
                   required
                   value={formData.title}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Summit Acronym *</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Summit Acronym *</label>
                 <input
                   type="text"
                   name="acronym"
                   required
                   value={formData.acronym}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono"
                 />
               </div>
             </div>
 
             {/* Banner Image URL Field */}
             <div>
-              <label className="text-xs font-extrabold text-[#0D1117] block mb-2 flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Summit Banner Image URL / Cover Image
+              <label className="text-xs font-semibold text-slate-300 block mb-2 flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-accent-cyan" /> Summit Banner Image URL / Cover Image
               </label>
               <input
                 type="text"
@@ -253,10 +254,10 @@ export default function EditSummitPage() {
                 value={formData.bannerUrl}
                 onChange={handleChange}
                 placeholder="e.g. /images/ai_quantum_summit.png or https://images.unsplash.com/..."
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono font-semibold focus:outline-none focus:border-[#1E40AF]"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono"
               />
               <div className="flex flex-wrap items-center gap-2 mt-2">
-                <span className="text-[10px] text-slate-700 font-bold font-mono">Quick Presets:</span>
+                <span className="text-[10px] text-slate-500 font-mono">Quick Presets:</span>
                 {[
                   { name: "AI & Tech", url: "/images/ai_quantum_summit.png" },
                   { name: "BioMedicine", url: "/images/biomedicine_congress.png" },
@@ -268,39 +269,39 @@ export default function EditSummitPage() {
                     key={p.name}
                     type="button"
                     onClick={() => setFormData({ ...formData, bannerUrl: p.url })}
-                    className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] font-mono font-bold border border-slate-300"
+                    className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-mono"
                   >
                     {p.name}
                   </button>
                 ))}
               </div>
               {formData.bannerUrl && (
-                <div className="mt-3 p-3 rounded-2xl bg-slate-50 border border-slate-300 flex items-center gap-4">
-                  <img src={formData.bannerUrl} alt="Banner Preview" className="w-24 h-14 rounded-xl object-cover border border-slate-300 shadow-sm" />
-                  <span className="text-xs text-slate-800 font-mono font-bold">Banner Image Preview Active</span>
+                <div className="mt-3 p-3 rounded-2xl bg-slate-950 border border-slate-800 flex items-center gap-4">
+                  <img src={formData.bannerUrl} alt="Banner Preview" className="w-24 h-14 rounded-xl object-cover border border-slate-700" />
+                  <span className="text-xs text-slate-400 font-mono">Banner Image Preview Active</span>
                 </div>
               )}
             </div>
 
             <div>
-              <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Short Summary Description</label>
+              <label className="text-xs font-semibold text-slate-300 block mb-2">Short Summary Description</label>
               <textarea
                 name="shortDescription"
                 rows={2}
                 value={formData.shortDescription}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-white"
               />
             </div>
 
             <div>
-              <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Full Summit Description</label>
+              <label className="text-xs font-semibold text-slate-300 block mb-2">Full Summit Description</label>
               <textarea
                 name="description"
                 rows={5}
                 value={formData.description}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-white"
               />
             </div>
           </div>
@@ -308,63 +309,63 @@ export default function EditSummitPage() {
 
         {activeStep === 2 && (
           <div className="space-y-6">
-            <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Event Schedule & Location</h3>
+            <h3 className="text-base font-bold text-white tracking-wide border-b border-slate-800 pb-3">Event Schedule & Location</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Start Date *</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Start Date *</label>
                 <input
                   type="date"
                   name="startDate"
                   value={formData.startDate}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">End Date *</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">End Date *</label>
                 <input
                   type="date"
                   name="endDate"
                   value={formData.endDate}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Venue Name</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Venue Name</label>
                 <input
                   type="text"
                   name="venueName"
                   value={formData.venueName}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">City</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">City</label>
                 <input
                   type="text"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Country</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Country</label>
                 <input
                   type="text"
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white"
                 />
               </div>
             </div>
@@ -373,39 +374,39 @@ export default function EditSummitPage() {
 
         {activeStep === 3 && (
           <div className="space-y-6">
-            <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Pricing & Delegate Categories</h3>
+            <h3 className="text-base font-bold text-white tracking-wide border-b border-slate-800 pb-3">Pricing & Delegate Categories</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Author Registration Fee ($)</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Author Registration Fee ($)</label>
                 <input
                   type="number"
                   name="registrationFeeAuthor"
                   value={formData.registrationFeeAuthor}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Listener / Delegate Fee ($)</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Listener / Delegate Fee ($)</label>
                 <input
                   type="number"
                   name="registrationFeeListener"
                   value={formData.registrationFeeListener}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Student Fee ($)</label>
+                <label className="text-xs font-semibold text-slate-300 block mb-2">Student Fee ($)</label>
                 <input
                   type="number"
                   name="registrationFeeStudent"
                   value={formData.registrationFeeStudent}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white font-mono"
                 />
               </div>
             </div>
@@ -414,15 +415,15 @@ export default function EditSummitPage() {
 
         {activeStep === 4 && (
           <div className="space-y-6">
-            <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Status & Publishing</h3>
+            <h3 className="text-base font-bold text-white tracking-wide border-b border-slate-800 pb-3">Status & Publishing</h3>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-2">Publication Status</label>
+              <label className="text-xs font-semibold text-slate-300 block mb-2">Publication Status</label>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white"
               >
                 <option value="ACTIVE">ACTIVE / LIVE</option>
                 <option value="DRAFT">DRAFT</option>
@@ -433,12 +434,12 @@ export default function EditSummitPage() {
           </div>
         )}
 
-        <div className="flex justify-between pt-4 border-t border-slate-200">
+        <div className="flex justify-between pt-4 border-t border-slate-800">
           {activeStep > 1 ? (
             <button
               type="button"
               onClick={() => setActiveStep((prev) => prev - 1)}
-              className="px-5 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold hover:bg-slate-200"
+              className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold hover:text-white"
             >
               Previous Step
             </button>
@@ -448,7 +449,7 @@ export default function EditSummitPage() {
             <button
               type="button"
               onClick={() => setActiveStep((prev) => prev + 1)}
-              className="px-5 py-2.5 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold"
+              className="px-5 py-2.5 rounded-xl bg-accent-blue hover:bg-blue-600 text-white text-xs font-bold"
             >
               Next Step
             </button>
@@ -456,7 +457,7 @@ export default function EditSummitPage() {
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase shadow-md"
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase shadow-lg"
             >
               {loading ? "Updating..." : "Save All Changes"}
             </button>

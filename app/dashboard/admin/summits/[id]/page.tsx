@@ -81,31 +81,31 @@ export default function SummitConsolePage() {
   return (
     <AdminLayout>
       {/* Top Console Navigation Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900/60 border border-slate-800">
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard/admin/summits"
-            className="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:text-slate-900"
+            className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 hover:text-white"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-bold text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+              <span className="text-[10px] font-mono font-bold text-accent-cyan bg-accent-blue/10 px-2 py-0.5 rounded border border-accent-blue/20">
                 {summit.acronym}
               </span>
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">
                 {summit.status}
               </span>
             </div>
-            <h1 className="text-xl font-extrabold text-[#0D1117] tracking-tight mt-1">{summit.title}</h1>
+            <h1 className="text-xl font-extrabold text-white tracking-tight mt-1">{summit.title}</h1>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <Link
-            href={`/dashboard/admin/summits/edit/${summit.id}`}
-            className="px-4 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-sm"
+            href={`/dashboard/admin/summits/create`}
+            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold"
           >
             Edit Settings
           </Link>
@@ -113,7 +113,7 @@ export default function SummitConsolePage() {
       </div>
 
       {/* Console Tab Strip */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-slate-200 custom-scrollbar">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-slate-800 custom-scrollbar">
         {tabs.map((t) => {
           const Icon = t.icon;
           return (
@@ -122,8 +122,8 @@ export default function SummitConsolePage() {
               onClick={() => setActiveTab(t.id)}
               className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                 activeTab === t.id
-                  ? "bg-[#1E40AF] text-white shadow-sm"
-                  : "text-slate-600 hover:text-[#1E40AF] hover:bg-slate-100"
+                  ? "bg-accent-blue/20 text-accent-cyan border border-accent-blue/40 shadow-sm"
+                  : "text-slate-400 hover:text-white hover:bg-slate-900/40"
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -134,23 +134,23 @@ export default function SummitConsolePage() {
       </div>
 
       {/* Tab Panel Contents */}
-      <div className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm min-h-[400px]">
+      <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 min-h-[400px]">
         {activeTab === "overview" && (
           <div className="space-y-6">
-            <h3 className="text-base font-bold text-[#0D1117] tracking-wide">Summit Overview</h3>
-            <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">{summit.description}</p>
+            <h3 className="text-base font-bold text-white tracking-wide">Summit Overview</h3>
+            <p className="text-xs text-slate-400 leading-relaxed max-w-3xl">{summit.description}</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
                 <span className="text-[10px] text-slate-500 font-mono block">Location</span>
-                <span className="text-sm font-bold text-[#0D1117] block mt-1">{summit.city}, {summit.country}</span>
+                <span className="text-sm font-bold text-white block mt-1">{summit.city}, {summit.country}</span>
               </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
                 <span className="text-[10px] text-slate-500 font-mono block">Author Fee</span>
-                <span className="text-sm font-bold text-emerald-700 block mt-1">${summit.registrationFeeAuthor}</span>
+                <span className="text-sm font-bold text-emerald-400 block mt-1">${summit.registrationFeeAuthor}</span>
               </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
                 <span className="text-[10px] text-slate-500 font-mono block">Listener Fee</span>
-                <span className="text-sm font-bold text-emerald-700 block mt-1">${summit.registrationFeeListener}</span>
+                <span className="text-sm font-bold text-emerald-400 block mt-1">${summit.registrationFeeListener}</span>
               </div>
             </div>
           </div>
@@ -158,11 +158,11 @@ export default function SummitConsolePage() {
 
         {activeTab !== "overview" && (
           <div className="text-center py-16 space-y-3">
-            <Sparkles className="w-8 h-8 text-amber-500 mx-auto" />
-            <h4 className="text-sm font-bold text-[#0D1117] uppercase tracking-wider">
+            <Sparkles className="w-8 h-8 text-accent-gold mx-auto" />
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">
               {activeTab.toUpperCase()} Module Ready
             </h4>
-            <p className="text-xs text-slate-600 max-w-md mx-auto">
+            <p className="text-xs text-slate-400 max-w-md mx-auto">
               Manage all {activeTab} associated specifically with {summit.acronym}. All edits sync directly with backend PostgreSQL storage.
             </p>
           </div>
