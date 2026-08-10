@@ -1,34 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Mic, Plus, X, Edit, Trash2 } from "lucide-react";
+import { Mic, Plus, X, Edit, Trash2, Filter } from "lucide-react";
 
 export default function SpeakersPage() {
-  const [speakers, setSpeakers] = useState<any[]>([
-    {
-      id: 1,
-      name: "Dr. Christopher Manning",
-      email: "manning@stanford.edu",
-      designation: "Professor of Computer Science",
-      institution: "Stanford University",
-      country: "USA",
-      bio: "World-renowned leader in Natural Language Processing and deep learning.",
-      imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop",
-      conferenceAcronym: "DVGS2026",
-    },
-    {
-      id: 2,
-      name: "Dr. Fei-Fei Li",
-      email: "feifeili@stanford.edu",
-      designation: "Co-Director of HAI",
-      institution: "Stanford University",
-      country: "USA",
-      bio: "Pioneer in computer vision and creator of ImageNet.",
-      imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop",
-      conferenceAcronym: "DVGS2026",
-    },
-  ]);
+  const [speakers, setSpeakers] = useState<any[]>([]);
+  const [summitsList, setSummitsList] = useState<any[]>([]);
+  const [selectedSummitFilter, setSelectedSummitFilter] = useState("ALL");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingSpeaker, setEditingSpeaker] = useState<any | null>(null);
@@ -43,6 +22,81 @@ export default function SpeakersPage() {
     conferenceAcronym: "DVGS2026",
   });
 
+  const loadData = () => {
+    // 1. Load Summits List from localStorage custom_summits
+    let customSummits: any[] = [];
+    try {
+      const savedSummits = localStorage.getItem("custom_summits");
+      if (savedSummits) customSummits = JSON.parse(savedSummits);
+    } catch (e) {
+      console.error(e);
+    }
+
+    const defaultSummits = [
+      { acronym: "DVGS2026", title: "D&V Global Summit 2026" },
+      { acronym: "ICSCS2026", title: "Sustainable Climate Solutions 2026" },
+    ];
+    const combinedSummits = [...defaultSummits, ...customSummits];
+    setSummitsList(combinedSummits);
+
+    // 2. Load Speakers from localStorage custom_speakers
+    let savedSpeakers: any[] = [];
+    try {
+      const str = localStorage.getItem("custom_speakers");
+      if (str) savedSpeakers = JSON.parse(str);
+    } catch (e) {
+      console.error(e);
+    }
+
+    if (savedSpeakers.length === 0) {
+      savedSpeakers = [
+        {
+          id: 1,
+          name: "Dr. Christopher Manning",
+          email: "manning@stanford.edu",
+          designation: "Professor of Computer Science",
+          institution: "Stanford University",
+          country: "USA",
+          bio: "World-renowned leader in Natural Language Processing and deep learning.",
+          imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop",
+          conferenceAcronym: "DVGS2026",
+        },
+        {
+          id: 2,
+          name: "Dr. Fei-Fei Li",
+          email: "feifeili@stanford.edu",
+          designation: "Co-Director of HAI",
+          institution: "Stanford University",
+          country: "USA",
+          bio: "Pioneer in computer vision and creator of ImageNet.",
+          imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop",
+          conferenceAcronym: "DVGS2026",
+        },
+        {
+          id: 3,
+          name: "Prof. Steven Chu",
+          email: "schu@stanford.edu",
+          designation: "Nobel Laureate in Physics",
+          institution: "Stanford University",
+          country: "USA",
+          bio: "Former US Secretary of Energy and Climate Action Pioneer.",
+          imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop",
+          conferenceAcronym: "ICSCS2026",
+        },
+      ];
+      try {
+        localStorage.setItem("custom_speakers", JSON.stringify(savedSpeakers));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    setSpeakers(savedSpeakers);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const handleOpenCreate = () => {
     setEditingSpeaker(null);
     setFormData({
@@ -53,7 +107,7 @@ export default function SpeakersPage() {
       country: "USA",
       bio: "",
       imageUrl: "",
-      conferenceAcronym: "DVGS2026",
+      conferenceAcronym: summitsList[0]?.acronym || "DVGS2026",
     });
     setIsModalOpen(true);
   };
@@ -62,44 +116,59 @@ export default function SpeakersPage() {
     setEditingSpeaker(sp);
     setFormData({
       name: sp.name,
-      email: sp.email,
-      designation: sp.designation,
-      institution: sp.institution,
-      country: sp.country,
-      bio: sp.bio,
-      imageUrl: sp.imageUrl,
-      conferenceAcronym: sp.conferenceAcronym,
+      email: sp.email || "",
+      designation: sp.designation || "",
+      institution: sp.institution || "",
+      country: sp.country || "USA",
+      bio: sp.bio || "",
+      imageUrl: sp.imageUrl || "",
+      conferenceAcronym: sp.conferenceAcronym || "DVGS2026",
     });
     setIsModalOpen(true);
   };
 
   const handleDeleteSpeaker = (id: number) => {
-    setSpeakers((prev) => prev.filter((s) => s.id !== id));
+    const updated = speakers.filter((s) => s.id !== id);
+    setSpeakers(updated);
+    try {
+      localStorage.setItem("custom_speakers", JSON.stringify(updated));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleSaveSpeaker = (e: React.FormEvent) => {
     e.preventDefault();
+    let updatedList: any[] = [];
     if (editingSpeaker) {
-      setSpeakers((prev) =>
-        prev.map((s) => (s.id === editingSpeaker.id ? { ...s, ...formData } : s))
-      );
+      updatedList = speakers.map((s) => (s.id === editingSpeaker.id ? { ...s, ...formData } : s));
     } else {
       const newObj = {
         id: Date.now(),
         ...formData,
         imageUrl: formData.imageUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
       };
-      setSpeakers([newObj, ...speakers]);
+      updatedList = [newObj, ...speakers];
+    }
+    setSpeakers(updatedList);
+    try {
+      localStorage.setItem("custom_speakers", JSON.stringify(updatedList));
+    } catch (e) {
+      console.error(e);
     }
     setIsModalOpen(false);
   };
+
+  const filteredSpeakers = speakers.filter((s) =>
+    selectedSummitFilter === "ALL" ? true : s.conferenceAcronym === selectedSummitFilter
+  );
 
   return (
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Keynote & Session Speakers</h1>
-          <p className="text-xs text-slate-700 font-medium">Manage conference speakers, biographies, designations, and session assignments</p>
+          <p className="text-xs text-slate-700 font-medium">Assign and manage speakers specifically per summit / conference</p>
         </div>
 
         <button
@@ -110,39 +179,66 @@ export default function SpeakersPage() {
         </button>
       </div>
 
+      {/* Summit Filter Selector */}
+      <div className="p-4 rounded-2xl bg-white border border-[#1E40AF]/15 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-[#1E40AF]" />
+          <span className="text-xs font-bold text-[#0D1117]">Filter Speakers by Summit:</span>
+        </div>
+
+        <select
+          value={selectedSummitFilter}
+          onChange={(e) => setSelectedSummitFilter(e.target.value)}
+          className="bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-extrabold focus:outline-none focus:border-[#1E40AF]"
+        >
+          <option value="ALL">All Summits</option>
+          {summitsList.map((summit, idx) => (
+            <option key={idx} value={summit.acronym}>
+              {summit.acronym} — {summit.title}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {speakers.map((s) => (
-          <div key={s.id} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm flex gap-4 relative group">
-            <img src={s.imageUrl} alt={s.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm" />
-            <div className="flex-1 space-y-1">
-              <div className="flex items-center justify-between">
-                <h3 className="font-extrabold text-[#0D1117] text-base">{s.name}</h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono font-bold text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                    {s.conferenceAcronym}
-                  </span>
-                  <button
-                    onClick={() => handleOpenEdit(s)}
-                    className="p-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200"
-                    title="Edit Speaker"
-                  >
-                    <Edit className="w-3.5 h-3.5 text-amber-600" />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteSpeaker(s.id)}
-                    className="p-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
-                    title="Delete Speaker"
-                  >
-                    <Trash2 className="w-3.5 h-3.5 text-rose-600" />
-                  </button>
-                </div>
-              </div>
-              <span className="text-xs text-amber-700 font-extrabold block">{s.designation}</span>
-              <span className="text-xs text-slate-700 font-bold block">{s.institution} ({s.country})</span>
-              <p className="text-xs text-slate-600 font-medium line-clamp-2 pt-2 border-t border-slate-200">{s.bio}</p>
-            </div>
+        {filteredSpeakers.length === 0 ? (
+          <div className="col-span-2 p-12 text-center bg-white rounded-3xl border border-[#1E40AF]/15 text-slate-700 font-bold text-xs">
+            No speakers assigned to {selectedSummitFilter}. Click "+ Add Speaker" to assign speakers to this summit!
           </div>
-        ))}
+        ) : (
+          filteredSpeakers.map((s) => (
+            <div key={s.id} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm flex gap-4 relative group">
+              <img src={s.imageUrl} alt={s.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm" />
+              <div className="flex-1 space-y-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-extrabold text-[#0D1117] text-base">{s.name}</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono font-black text-[#1E40AF] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                      {s.conferenceAcronym}
+                    </span>
+                    <button
+                      onClick={() => handleOpenEdit(s)}
+                      className="p-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200"
+                      title="Edit Speaker"
+                    >
+                      <Edit className="w-3.5 h-3.5 text-amber-600" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteSpeaker(s.id)}
+                      className="p-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
+                      title="Delete Speaker"
+                    >
+                      <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                    </button>
+                  </div>
+                </div>
+                <span className="text-xs text-amber-700 font-extrabold block">{s.designation}</span>
+                <span className="text-xs text-slate-700 font-bold block">{s.institution} ({s.country})</span>
+                <p className="text-xs text-slate-600 font-medium line-clamp-2 pt-2 border-t border-slate-200">{s.bio}</p>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Add / Edit Speaker Modal */}
@@ -159,6 +255,21 @@ export default function SpeakersPage() {
             </div>
 
             <form onSubmit={handleSaveSpeaker} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Assign To Summit *</label>
+                <select
+                  value={formData.conferenceAcronym}
+                  onChange={(e) => setFormData({ ...formData, conferenceAcronym: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                >
+                  {summitsList.map((summit, idx) => (
+                    <option key={idx} value={summit.acronym}>
+                      {summit.acronym} — {summit.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div>
                 <label className="text-xs font-bold text-[#0D1117] block mb-1">Speaker Full Name *</label>
                 <input

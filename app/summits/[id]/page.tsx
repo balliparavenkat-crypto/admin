@@ -37,16 +37,13 @@ export default function PublicSummitDetailPage() {
   ]);
 
   const [speakers, setSpeakers] = useState<any[]>([
-    { name: "Dr. Christopher Manning", designation: "Professor of Computer Science", institution: "Stanford University", bio: "World-renowned leader in NLP, deep learning, and structural linguistics.", imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop" },
-    { name: "Dr. Fei-Fei Li", designation: "Co-Director of HAI", institution: "Stanford University", bio: "Pioneer in computer vision and creator of ImageNet.", imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop" },
-  ]);
-
-  const [sessions, setSessions] = useState<any[]>([
-    { time: "09:00 AM - 10:30 AM", title: "Keynote: The Future of Large Language Models", location: "Auditorium A", speakerName: "Dr. Christopher Manning" },
-    { time: "11:00 AM - 12:30 PM", title: "Panel: Image Understanding and Generative Media", location: "Grand Ballroom", speakerName: "Dr. Fei-Fei Li" },
+    { name: "Dr. Christopher Manning", designation: "Professor of Computer Science", institution: "Stanford University", bio: "World-renowned leader in NLP, deep learning, and structural linguistics.", imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop", conferenceAcronym: "DVGS2026" },
+    { name: "Dr. Fei-Fei Li", designation: "Co-Director of HAI", institution: "Stanford University", bio: "Pioneer in computer vision and creator of ImageNet.", imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop", conferenceAcronym: "DVGS2026" },
   ]);
 
   useEffect(() => {
+    let resolvedSummit = { ...summit };
+
     // 1. Try resolving from localStorage custom_summits
     try {
       const savedStr = localStorage.getItem("custom_summits");
@@ -54,14 +51,35 @@ export default function PublicSummitDetailPage() {
         const customList: any[] = JSON.parse(savedStr);
         const match = customList.find((s) => String(s.id) === String(summitId) || s.acronym === summitId);
         if (match) {
-          setSummit((prev: any) => ({ ...prev, ...match }));
+          resolvedSummit = { ...resolvedSummit, ...match };
+          setSummit(resolvedSummit);
+          if (match.speakers && match.speakers.length > 0) {
+            setSpeakers(match.speakers);
+          }
         }
       }
     } catch (e) {
       console.error(e);
     }
 
-    // 2. Try resolving from Backend API
+    // 2. Load speakers specifically tagged for this summit acronym from custom_speakers
+    try {
+      const savedSpeakersStr = localStorage.getItem("custom_speakers");
+      if (savedSpeakersStr) {
+        const allSpeakers: any[] = JSON.parse(savedSpeakersStr);
+        const summitAcronym = resolvedSummit.acronym || summitId;
+        const matchingSpeakers = allSpeakers.filter(
+          (sp) => sp.conferenceAcronym === summitAcronym || String(sp.conferenceAcronym) === String(summitId)
+        );
+        if (matchingSpeakers.length > 0) {
+          setSpeakers(matchingSpeakers);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    // 3. Try resolving from Backend API
     const fetchApiData = async () => {
       try {
         const res = await api.get(`/conferences/public/all`);
@@ -71,11 +89,10 @@ export default function PublicSummitDetailPage() {
             setSummit((prev: any) => ({ ...prev, ...match }));
             if (match.tracks && match.tracks.length > 0) setTracks(match.tracks);
             if (match.speakers && match.speakers.length > 0) setSpeakers(match.speakers);
-            if (match.sessions && match.sessions.length > 0) setSessions(match.sessions);
           }
         }
       } catch {
-        // Fallback to loaded defaults
+        // Fallback
       }
     };
     fetchApiData();
@@ -191,33 +208,25 @@ export default function PublicSummitDetailPage() {
           </div>
         </section>
 
-        {/* Scientific Tracks */}
+        {/* Keynote Speakers Section specifically for THIS summit */}
         <section className="space-y-6">
-          <h2 className="text-xl font-bold text-[#0D1117] flex items-center gap-2">
-            <Layers className="w-5 h-5 text-amber-600" /> Research Tracks & Topics
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {tracks.map((t, idx) => (
-              <div key={idx} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/10 space-y-2 shadow-sm">
-                <span className="text-[10px] font-mono text-[#1E40AF] font-bold">TRACK #{idx + 1}</span>
-                <h3 className="font-bold text-[#0D1117] text-base">{t.name}</h3>
-                <p className="text-xs text-gray-600 leading-relaxed">{t.description}</p>
-              </div>
-            ))}
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold text-[#0D1117] flex items-center gap-2">
+              <Mic className="w-5 h-5 text-[#1E40AF]" /> Keynote Speakers ({summit.acronym || "DVGS2026"})
+            </h2>
           </div>
-        </section>
 
-        {/* Keynote Speakers */}
-        <section className="space-y-6">
-          <h2 className="text-xl font-bold text-[#0D1117] flex items-center gap-2">
-            <Mic className="w-5 h-5 text-[#1E40AF]" /> Keynote Speakers
-          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {speakers.map((sp, idx) => (
               <div key={idx} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/10 flex gap-4 shadow-sm">
                 <img src={sp.imageUrl} alt={sp.name} className="w-16 h-16 rounded-2xl object-cover border border-gray-200" />
                 <div className="space-y-1">
-                  <h3 className="font-bold text-[#0D1117] text-base">{sp.name}</h3>
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-[#0D1117] text-base">{sp.name}</h3>
+                    <span className="text-[10px] font-mono font-bold text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                      {sp.conferenceAcronym || summit.acronym}
+                    </span>
+                  </div>
                   <span className="text-xs text-[#1E40AF] font-bold block">{sp.designation}</span>
                   <span className="text-xs text-gray-500 block">{sp.institution}</span>
                   <p className="text-xs text-gray-600 pt-2 border-t border-gray-100">{sp.bio}</p>

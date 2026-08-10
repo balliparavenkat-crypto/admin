@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/AdminLayout";
-import { ArrowLeft, Save, Sparkles, Calendar, DollarSign, FileText, CheckCircle, Image as ImageIcon } from "lucide-react";
+import { ArrowLeft, Save, Sparkles, Calendar, DollarSign, FileText, Mic, Image as ImageIcon, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import api from "../../../../../lib/api";
@@ -45,6 +45,35 @@ export default function CreateSummitPage() {
     status: "ACTIVE",
   });
 
+  // Selected Speakers State for this specific summit
+  const [summitSpeakers, setSummitSpeakers] = useState<any[]>([]);
+  const [newSpeakerName, setNewSpeakerName] = useState("");
+  const [newSpeakerDesignation, setNewSpeakerDesignation] = useState("");
+  const [newSpeakerInstitution, setNewSpeakerInstitution] = useState("");
+  const [newSpeakerBio, setNewSpeakerBio] = useState("");
+
+  const handleAddSpeakerToSummit = () => {
+    if (!newSpeakerName.trim()) return;
+    const newSp = {
+      id: Date.now(),
+      name: newSpeakerName,
+      designation: newSpeakerDesignation || "Keynote Speaker",
+      institution: newSpeakerInstitution || "Global University",
+      bio: newSpeakerBio || "Distinguished researcher and keynote speaker.",
+      imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
+      conferenceAcronym: formData.acronym || "CUSTOM",
+    };
+    setSummitSpeakers([...summitSpeakers, newSp]);
+    setNewSpeakerName("");
+    setNewSpeakerDesignation("");
+    setNewSpeakerInstitution("");
+    setNewSpeakerBio("");
+  };
+
+  const handleRemoveSpeakerFromSummit = (id: number) => {
+    setSummitSpeakers(summitSpeakers.filter((sp) => sp.id !== id));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -53,10 +82,18 @@ export default function CreateSummitPage() {
     e.preventDefault();
     setLoading(true);
 
+    const summitAcronym = formData.acronym || `SUMMIT${Date.now()}`;
+
+    // Tag all selected speakers to this summit's acronym
+    const finalSpeakers = summitSpeakers.map((sp) => ({
+      ...sp,
+      conferenceAcronym: summitAcronym,
+    }));
+
     const newSummitObj = {
       id: Date.now(),
       title: formData.title,
-      acronym: formData.acronym,
+      acronym: summitAcronym,
       bannerUrl: formData.bannerUrl || "/images/ai_quantum_summit.png",
       shortDescription: formData.shortDescription,
       description: formData.description,
@@ -71,14 +108,25 @@ export default function CreateSummitPage() {
       registrationFeeStudent: parseFloat(formData.registrationFeeStudent) || 199.0,
       currency: formData.currency,
       registrationsCount: 0,
+      speakers: finalSpeakers,
     };
 
-    // Store in localStorage custom_summits for instant client availability
+    // Store summit in localStorage custom_summits
     try {
       const existingStr = localStorage.getItem("custom_summits");
       const existing = existingStr ? JSON.parse(existingStr) : [];
       existing.push(newSummitObj);
       localStorage.setItem("custom_summits", JSON.stringify(existing));
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Store custom speakers in localStorage custom_speakers
+    try {
+      const savedSpeakersStr = localStorage.getItem("custom_speakers");
+      const existingSpeakers = savedSpeakersStr ? JSON.parse(savedSpeakersStr) : [];
+      const updatedSpeakers = [...existingSpeakers, ...finalSpeakers];
+      localStorage.setItem("custom_speakers", JSON.stringify(updatedSpeakers));
     } catch (err) {
       console.error(err);
     }
@@ -105,7 +153,7 @@ export default function CreateSummitPage() {
           </Link>
           <div>
             <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Create New Summit</h1>
-            <p className="text-xs text-slate-700 font-medium">Configure new summit parameters, banner images, registration fees, and deadlines</p>
+            <p className="text-xs text-slate-700 font-medium">Configure new summit parameters, custom keynote speakers, banner images, and pricing</p>
           </div>
         </div>
 
@@ -123,8 +171,9 @@ export default function CreateSummitPage() {
         {[
           { step: 1, label: "Basic Info & Banner", icon: FileText },
           { step: 2, label: "Schedule & Location", icon: Calendar },
-          { step: 3, label: "Pricing Categories", icon: DollarSign },
-          { step: 4, label: "Deadlines & Status", icon: Sparkles },
+          { step: 3, label: "Speakers Selection", icon: Mic },
+          { step: 4, label: "Pricing Categories", icon: DollarSign },
+          { step: 5, label: "Deadlines & Status", icon: Sparkles },
         ].map((s) => (
           <button
             key={s.step}
@@ -304,7 +353,90 @@ export default function CreateSummitPage() {
           </div>
         )}
 
+        {/* Step 3: Keynote Speakers Selection specifically for this summit */}
         {activeStep === 3 && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <div>
+                <h3 className="text-base font-bold text-[#0D1117] tracking-wide">Keynote Speakers for {formData.acronym || "this Summit"}</h3>
+                <p className="text-xs text-slate-600 font-medium">Add speakers that belong specifically to this summit</p>
+              </div>
+            </div>
+
+            {/* Quick Add Speaker Card Form */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+              <h4 className="text-xs font-extrabold text-[#0D1117] uppercase tracking-wider">Add Speaker to this Summit</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <input
+                  type="text"
+                  value={newSpeakerName}
+                  onChange={(e) => setNewSpeakerName(e.target.value)}
+                  placeholder="Speaker Name (e.g. Dr. Jane Goodall)"
+                  className="bg-white border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+                <input
+                  type="text"
+                  value={newSpeakerDesignation}
+                  onChange={(e) => setNewSpeakerDesignation(e.target.value)}
+                  placeholder="Designation (e.g. Lead Researcher)"
+                  className="bg-white border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+                <input
+                  type="text"
+                  value={newSpeakerInstitution}
+                  onChange={(e) => setNewSpeakerInstitution(e.target.value)}
+                  placeholder="Institution / Org"
+                  className="bg-white border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleAddSpeakerToSummit}
+                  className="px-4 py-2 rounded-xl bg-[#1E40AF] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm"
+                >
+                  <Plus className="w-4 h-4" /> Add Speaker to Summit
+                </button>
+              </div>
+            </div>
+
+            {/* Assigned Speakers List */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-extrabold text-[#0D1117] uppercase tracking-wider">Selected Speakers ({summitSpeakers.length})</h4>
+              {summitSpeakers.length === 0 ? (
+                <p className="text-xs text-slate-500 italic p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                  No custom speakers assigned yet for this summit. (Optional: Speakers can also be added later from the Speakers Manager page)
+                </p>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {summitSpeakers.map((sp) => (
+                    <div key={sp.id} className="p-4 rounded-2xl bg-white border border-[#1E40AF]/15 shadow-sm flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <img src={sp.imageUrl} alt={sp.name} className="w-10 h-10 rounded-xl object-cover border border-slate-200" />
+                        <div>
+                          <h5 className="font-bold text-xs text-[#0D1117]">{sp.name}</h5>
+                          <span className="text-[10px] text-[#1E40AF] font-bold block">{sp.designation}</span>
+                          <span className="text-[10px] text-slate-500 font-medium block">{sp.institution}</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSpeakerFromSummit(sp.id)}
+                        className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200"
+                        title="Remove Speaker"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeStep === 4 && (
           <div className="space-y-6">
             <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Pricing & Delegate Categories</h3>
 
@@ -345,7 +477,7 @@ export default function CreateSummitPage() {
           </div>
         )}
 
-        {activeStep === 4 && (
+        {activeStep === 5 && (
           <div className="space-y-6">
             <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Status & Publishing</h3>
 
@@ -377,7 +509,7 @@ export default function CreateSummitPage() {
             </button>
           ) : <div />}
 
-          {activeStep < 4 ? (
+          {activeStep < 5 ? (
             <button
               type="button"
               onClick={() => setActiveStep((prev) => prev + 1)}
