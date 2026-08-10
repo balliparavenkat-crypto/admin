@@ -34,29 +34,29 @@ export default function SpeakersPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Keynote & Session Speakers</h1>
-          <p className="text-xs text-slate-400">Manage conference speakers, biographies, designations, and session assignments</p>
+          <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Keynote & Session Speakers</h1>
+          <p className="text-xs text-slate-700 font-medium">Manage conference speakers, biographies, designations, and session assignments</p>
         </div>
 
-        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-lg w-fit">
+        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit">
           <Plus className="w-4 h-4 stroke-[3]" /> Add Speaker
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {speakers.map((s) => (
-          <div key={s.id} className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 flex gap-4">
-            <img src={s.imageUrl} alt={s.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-700 shadow-md" />
+          <div key={s.id} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm flex gap-4">
+            <img src={s.imageUrl} alt={s.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-300 shadow-sm" />
             <div className="flex-1 space-y-1">
               <div className="flex items-center justify-between">
-                <h3 className="font-extrabold text-white text-base">{s.name}</h3>
-                <span className="text-[10px] font-mono text-accent-cyan bg-accent-blue/10 px-2 py-0.5 rounded border border-accent-blue/20">
+                <h3 className="font-extrabold text-[#0D1117] text-base">{s.name}</h3>
+                <span className="text-[10px] font-mono font-bold text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                   {s.conferenceAcronym}
                 </span>
               </div>
-              <span className="text-xs text-amber-400 font-semibold block">{s.designation}</span>
-              <span className="text-xs text-slate-400 block">{s.institution} ({s.country})</span>
-              <p className="text-xs text-slate-400 line-clamp-2 pt-2 border-t border-slate-800">{s.bio}</p>
+              <span className="text-xs text-[#1E40AF] font-extrabold block">{s.designation}</span>
+              <span className="text-xs text-slate-700 font-bold block">{s.institution} ({s.country})</span>
+              <p className="text-xs text-slate-600 font-medium line-clamp-2 pt-2 border-t border-slate-200">{s.bio}</p>
             </div>
           </div>
         ))}
