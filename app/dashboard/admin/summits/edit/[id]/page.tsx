@@ -173,7 +173,7 @@ export default function EditSummitPage() {
           </Link>
           <div>
             <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Edit Summit: {formData.acronym}</h1>
-            <p className="text-xs text-slate-500">Modify summit banner image, schedule, pricing, and deadlines</p>
+            <p className="text-xs text-slate-700 font-medium">Modify summit banner image, schedule, pricing, and deadlines</p>
           </div>
         </div>
 
@@ -202,7 +202,7 @@ export default function EditSummitPage() {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${
               activeStep === s.step
                 ? "bg-[#1E40AF] text-white shadow-sm"
-                : "text-slate-600 hover:text-[#1E40AF] hover:bg-slate-100"
+                : "text-slate-800 hover:text-[#1E40AF] hover:bg-slate-100"
             }`}
           >
             <s.icon className="w-4 h-4" />
@@ -218,33 +218,33 @@ export default function EditSummitPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Summit Full Title *</label>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Summit Full Title *</label>
                 <input
                   type="text"
                   name="title"
                   required
                   value={formData.title}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-700 block mb-2">Summit Acronym *</label>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Summit Acronym *</label>
                 <input
                   type="text"
                   name="acronym"
                   required
                   value={formData.acronym}
                   onChange={handleChange}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono font-bold focus:outline-none focus:border-[#1E40AF]"
                 />
               </div>
             </div>
 
             {/* Banner Image URL Field */}
             <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-2 flex items-center gap-2">
+              <label className="text-xs font-extrabold text-[#0D1117] block mb-2 flex items-center gap-2">
                 <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Summit Banner Image URL / Cover Image
               </label>
               <input
@@ -253,10 +253,10 @@ export default function EditSummitPage() {
                 value={formData.bannerUrl}
                 onChange={handleChange}
                 placeholder="e.g. /images/ai_quantum_summit.png or https://images.unsplash.com/..."
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-mono font-semibold focus:outline-none focus:border-[#1E40AF]"
               />
               <div className="flex flex-wrap items-center gap-2 mt-2">
-                <span className="text-[10px] text-slate-500 font-mono">Quick Presets:</span>
+                <span className="text-[10px] text-slate-700 font-bold font-mono">Quick Presets:</span>
                 {[
                   { name: "AI & Tech", url: "/images/ai_quantum_summit.png" },
                   { name: "BioMedicine", url: "/images/biomedicine_congress.png" },
@@ -268,39 +268,39 @@ export default function EditSummitPage() {
                     key={p.name}
                     type="button"
                     onClick={() => setFormData({ ...formData, bannerUrl: p.url })}
-                    className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-mono border border-slate-200"
+                    className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] font-mono font-bold border border-slate-300"
                   >
                     {p.name}
                   </button>
                 ))}
               </div>
               {formData.bannerUrl && (
-                <div className="mt-3 p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-4">
-                  <img src={formData.bannerUrl} alt="Banner Preview" className="w-24 h-14 rounded-xl object-cover border border-slate-300" />
-                  <span className="text-xs text-slate-600 font-mono">Banner Image Preview Active</span>
+                <div className="mt-3 p-3 rounded-2xl bg-slate-50 border border-slate-300 flex items-center gap-4">
+                  <img src={formData.bannerUrl} alt="Banner Preview" className="w-24 h-14 rounded-xl object-cover border border-slate-300 shadow-sm" />
+                  <span className="text-xs text-slate-800 font-mono font-bold">Banner Image Preview Active</span>
                 </div>
               )}
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-2">Short Summary Description</label>
+              <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Short Summary Description</label>
               <textarea
                 name="shortDescription"
                 rows={2}
                 value={formData.shortDescription}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700 block mb-2">Full Summit Description</label>
+              <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Full Summit Description</label>
               <textarea
                 name="description"
                 rows={5}
                 value={formData.description}
                 onChange={handleChange}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-900 focus:outline-none focus:border-[#1E40AF]"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
               />
             </div>
           </div>

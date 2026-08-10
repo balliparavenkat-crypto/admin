@@ -101,10 +101,10 @@ export default function AdminSidebar({
                 <div key={idx} className="space-y-1">
                   <button
                     onClick={() => setSummitsOpen(!summitsOpen)}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                       isSubActive
                         ? "bg-blue-50 text-[#1E40AF] border border-blue-200"
-                        : "text-slate-600 hover:text-[#1E40AF] hover:bg-slate-100/80"
+                        : "text-slate-800 hover:text-[#1E40AF] hover:bg-slate-100"
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -112,22 +112,22 @@ export default function AdminSidebar({
                       <span>{item.name}</span>
                     </div>
                     {summitsOpen ? (
-                      <ChevronDown className="w-3.5 h-3.5" />
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-700" />
                     ) : (
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-700" />
                     )}
                   </button>
                   {summitsOpen && (
-                    <div className="pl-9 space-y-1 border-l border-slate-200 ml-5 my-1">
+                    <div className="pl-9 space-y-1 border-l-2 border-blue-200 ml-5 my-1">
                       {item.subItems.map((sub, sIdx) => (
                         <Link
                           key={sIdx}
                           href={sub.href}
                           onClick={() => setIsMobileOpen(false)}
-                          className={`block px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                          className={`block px-3 py-2 rounded-lg text-xs font-bold transition-colors ${
                             isActive(sub.href)
-                              ? "text-[#1E40AF] font-extrabold bg-blue-50/80 border border-blue-100"
-                              : "text-slate-600 hover:text-[#1E40AF] hover:bg-slate-100/60"
+                              ? "text-[#1E40AF] font-black bg-blue-100/80 border border-blue-200"
+                              : "text-slate-700 hover:text-[#1E40AF] hover:bg-slate-100"
                           }`}
                         >
                           {sub.name}
@@ -144,13 +144,13 @@ export default function AdminSidebar({
                 key={idx}
                 href={item.href}
                 onClick={() => setIsMobileOpen(false)}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                   isActive(item.href)
                     ? "bg-[#1E40AF] text-white shadow-md shadow-blue-500/20"
-                    : "text-slate-600 hover:text-[#1E40AF] hover:bg-slate-100/80"
+                    : "text-slate-800 hover:text-[#1E40AF] hover:bg-slate-100"
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive(item.href) ? "text-amber-300" : "text-slate-500"}`} />
+                <Icon className={`w-4 h-4 ${isActive(item.href) ? "text-amber-300" : "text-[#1E40AF]"}`} />
                 <span>{item.name}</span>
               </Link>
             );
@@ -158,14 +158,14 @@ export default function AdminSidebar({
         </div>
 
         {/* Sidebar Footer User Info */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50">
+        <div className="p-4 border-t border-slate-200 bg-slate-100/70">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 flex items-center justify-center text-slate-950 font-extrabold text-xs shadow-sm">
               AD
             </div>
             <div className="flex-1 min-w-0">
               <span className="block text-xs font-bold text-[#0D1117] truncate">D&V Administrator</span>
-              <span className="block text-[10px] text-slate-500 truncate font-mono">admin@dvglobal.com</span>
+              <span className="block text-[11px] text-slate-700 font-bold truncate font-mono">admin@dvglobal.com</span>
             </div>
           </div>
         </div>

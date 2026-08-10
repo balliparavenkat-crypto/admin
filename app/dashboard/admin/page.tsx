@@ -106,7 +106,7 @@ export default function AdminDashboardPage() {
               className="p-5 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm hover:shadow-md hover:border-[#1E40AF]/30 transition-all space-y-3 group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold tracking-wider text-slate-500 uppercase">
+                <span className="text-[10px] font-mono font-bold tracking-wider text-slate-700 uppercase">
                   {card.label}
                 </span>
                 <div className={`w-8 h-8 rounded-xl bg-gradient-to-tr ${card.color} p-0.5 shadow-sm`}>
@@ -119,7 +119,7 @@ export default function AdminDashboardPage() {
                 <span className="text-2xl font-black text-[#0D1117] tracking-tight block">
                   {card.value}
                 </span>
-                <span className="text-[11px] font-semibold text-[#1E40AF] flex items-center gap-1 mt-1">
+                <span className="text-[11px] font-bold text-[#1E40AF] flex items-center gap-1 mt-1">
                   <TrendingUp className="w-3 h-3" /> {card.badge}
                 </span>
               </div>
@@ -137,7 +137,7 @@ export default function AdminDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-[#0D1117] tracking-wide">Revenue & Registrations Analytics</h3>
-                <p className="text-xs text-slate-500">Financial status and category breakdown</p>
+                <p className="text-xs text-slate-600 font-medium">Financial status and category breakdown</p>
               </div>
               <Link href="/dashboard/admin/payments" className="text-xs text-[#1E40AF] hover:underline font-bold flex items-center gap-1">
                 View Ledger <ChevronRight className="w-3.5 h-3.5" />
@@ -146,19 +146,19 @@ export default function AdminDashboardPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-[11px] text-slate-500 font-mono">Gross Revenue</span>
-                <span className="text-xl font-bold text-emerald-600 block mt-1">${stats.totalRevenue.toLocaleString()}</span>
-                <span className="text-[10px] text-slate-400 mt-1 block">100% verified gateway</span>
+                <span className="text-[11px] text-slate-700 font-bold font-mono">Gross Revenue</span>
+                <span className="text-xl font-black text-emerald-700 block mt-1">${stats.totalRevenue.toLocaleString()}</span>
+                <span className="text-[10px] text-slate-600 font-semibold mt-1 block">100% verified gateway</span>
               </div>
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-[11px] text-slate-500 font-mono">Pending Payments</span>
-                <span className="text-xl font-bold text-amber-600 block mt-1">$0.00</span>
-                <span className="text-[10px] text-slate-400 mt-1 block">0 pending authorizations</span>
+                <span className="text-[11px] text-slate-700 font-bold font-mono">Pending Payments</span>
+                <span className="text-xl font-black text-amber-700 block mt-1">$0.00</span>
+                <span className="text-[10px] text-slate-600 font-semibold mt-1 block">0 pending authorizations</span>
               </div>
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-[11px] text-slate-500 font-mono">Refunded Amount</span>
-                <span className="text-xl font-bold text-rose-600 block mt-1">$0.00</span>
-                <span className="text-[10px] text-slate-400 mt-1 block">Clean financial record</span>
+                <span className="text-[11px] text-slate-700 font-bold font-mono">Refunded Amount</span>
+                <span className="text-xl font-black text-rose-700 block mt-1">$0.00</span>
+                <span className="text-[10px] text-slate-600 font-semibold mt-1 block">Clean financial record</span>
               </div>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function AdminDashboardPage() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-[#0D1117] tracking-wide">Paper Submissions & Review Pipeline</h3>
-                <p className="text-xs text-slate-500">Status of scientific abstracts and manuscripts</p>
+                <p className="text-xs text-slate-600 font-medium">Status of scientific abstracts and manuscripts</p>
               </div>
               <Link href="/dashboard/admin/papers" className="text-xs text-[#1E40AF] hover:underline font-bold flex items-center gap-1">
                 View All Papers <ChevronRight className="w-3.5 h-3.5" />
@@ -181,15 +181,15 @@ export default function AdminDashboardPage() {
                 <span className="text-2xl font-black text-[#0D1117] mt-1 block">12</span>
               </div>
               <div className="p-4 rounded-2xl bg-amber-50 border border-amber-100 text-center">
-                <span className="text-xs text-amber-700 font-bold block uppercase tracking-wider">Under Review</span>
+                <span className="text-xs text-amber-800 font-bold block uppercase tracking-wider">Under Review</span>
                 <span className="text-2xl font-black text-[#0D1117] mt-1 block">{stats.pendingReviews}</span>
               </div>
               <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100 text-center">
-                <span className="text-xs text-emerald-700 font-bold block uppercase tracking-wider">Accepted</span>
+                <span className="text-xs text-emerald-800 font-bold block uppercase tracking-wider">Accepted</span>
                 <span className="text-2xl font-black text-[#0D1117] mt-1 block">{stats.acceptedPapers}</span>
               </div>
               <div className="p-4 rounded-2xl bg-rose-50 border border-rose-100 text-center">
-                <span className="text-xs text-rose-700 font-bold block uppercase tracking-wider">Rejected</span>
+                <span className="text-xs text-rose-800 font-bold block uppercase tracking-wider">Rejected</span>
                 <span className="text-2xl font-black text-[#0D1117] mt-1 block">2</span>
               </div>
             </div>
@@ -203,17 +203,17 @@ export default function AdminDashboardPage() {
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
               <h3 className="text-base font-bold text-[#0D1117] tracking-wide">Live Activity Stream</h3>
             </div>
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">Real-time</span>
+            <span className="text-[10px] font-mono text-slate-700 font-bold uppercase tracking-widest">Real-time</span>
           </div>
 
           <div className="flex-1 space-y-3 overflow-y-auto max-h-[460px] pr-1">
             {activities.map((act) => (
               <div key={act.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1 hover:border-[#1E40AF]/30 transition-colors shadow-xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#1E40AF]">{act.title}</span>
-                  <span className="text-[10px] text-slate-400 font-mono">{act.time}</span>
+                  <span className="text-xs font-extrabold text-[#1E40AF]">{act.title}</span>
+                  <span className="text-[10px] text-slate-700 font-mono font-bold">{act.time}</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">{act.detail}</p>
+                <p className="text-xs text-slate-800 font-medium leading-relaxed">{act.detail}</p>
               </div>
             ))}
           </div>
