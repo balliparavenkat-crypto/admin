@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/AdminLayout";
-import { ArrowLeft, Save, Sparkles, Calendar, DollarSign, FileText, Mic, Image as ImageIcon, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, Save, Sparkles, Calendar, DollarSign, FileText, Mic, Image as ImageIcon, Plus, Trash2, Upload } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import api from "../../../../../lib/api";
@@ -51,6 +51,18 @@ export default function CreateSummitPage() {
   const [newSpeakerDesignation, setNewSpeakerDesignation] = useState("");
   const [newSpeakerInstitution, setNewSpeakerInstitution] = useState("");
   const [newSpeakerBio, setNewSpeakerBio] = useState("");
+  const [newSpeakerImageUrl, setNewSpeakerImageUrl] = useState("");
+
+  const handleSpeakerFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewSpeakerImageUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleAddSpeakerToSummit = () => {
     if (!newSpeakerName.trim()) return;
@@ -60,7 +72,7 @@ export default function CreateSummitPage() {
       designation: newSpeakerDesignation || "Keynote Speaker",
       institution: newSpeakerInstitution || "Global University",
       bio: newSpeakerBio || "Distinguished researcher and keynote speaker.",
-      imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
+      imageUrl: newSpeakerImageUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
       conferenceAcronym: formData.acronym || "CUSTOM",
     };
     setSummitSpeakers([...summitSpeakers, newSp]);
@@ -68,6 +80,7 @@ export default function CreateSummitPage() {
     setNewSpeakerDesignation("");
     setNewSpeakerInstitution("");
     setNewSpeakerBio("");
+    setNewSpeakerImageUrl("");
   };
 
   const handleRemoveSpeakerFromSummit = (id: number) => {
@@ -359,13 +372,14 @@ export default function CreateSummitPage() {
             <div className="flex items-center justify-between border-b border-slate-200 pb-3">
               <div>
                 <h3 className="text-base font-bold text-[#0D1117] tracking-wide">Keynote Speakers for {formData.acronym || "this Summit"}</h3>
-                <p className="text-xs text-slate-600 font-medium">Add speakers that belong specifically to this summit</p>
+                <p className="text-xs text-slate-600 font-medium">Add speakers with photo uploads that belong specifically to this summit</p>
               </div>
             </div>
 
             {/* Quick Add Speaker Card Form */}
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
               <h4 className="text-xs font-extrabold text-[#0D1117] uppercase tracking-wider">Add Speaker to this Summit</h4>
+              
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <input
                   type="text"
@@ -388,6 +402,36 @@ export default function CreateSummitPage() {
                   placeholder="Institution / Org"
                   className="bg-white border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
                 />
+              </div>
+
+              {/* Speaker Photo Upload Box */}
+              <div className="space-y-2 pt-2 border-t border-slate-200">
+                <label className="text-xs font-extrabold text-[#0D1117] block flex items-center gap-1.5">
+                  <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Speaker Photo / Headshot
+                </label>
+
+                <div className="flex items-center gap-3">
+                  <label className="px-4 py-2 bg-white hover:bg-slate-100 border border-slate-300 rounded-xl cursor-pointer text-xs font-bold text-slate-800 flex items-center gap-2 transition-colors shadow-sm">
+                    <Upload className="w-4 h-4 text-[#1E40AF]" /> Upload Photo File
+                    <input type="file" accept="image/*" onChange={handleSpeakerFileUpload} className="hidden" />
+                  </label>
+                  <span className="text-[11px] text-slate-500 font-medium">Or paste image link</span>
+                </div>
+
+                <input
+                  type="text"
+                  value={newSpeakerImageUrl}
+                  onChange={(e) => setNewSpeakerImageUrl(e.target.value)}
+                  placeholder="https://images.unsplash.com/photo-..."
+                  className="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                />
+
+                {newSpeakerImageUrl && (
+                  <div className="flex items-center gap-3 p-2.5 bg-blue-50/50 border border-blue-200 rounded-xl">
+                    <img src={newSpeakerImageUrl} alt="Preview" className="w-10 h-10 rounded-lg object-cover border border-slate-300" />
+                    <span className="text-xs font-bold text-[#0D1117]">Photo Ready</span>
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end">

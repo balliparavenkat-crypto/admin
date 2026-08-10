@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Mic, Plus, X, Edit, Trash2, Filter } from "lucide-react";
+import { Mic, Plus, X, Edit, Trash2, Filter, Upload, Image as ImageIcon } from "lucide-react";
 
 export default function SpeakersPage() {
   const [speakers, setSpeakers] = useState<any[]>([]);
@@ -97,6 +97,17 @@ export default function SpeakersPage() {
     loadData();
   }, []);
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, imageUrl: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleOpenCreate = () => {
     setEditingSpeaker(null);
     setFormData({
@@ -168,7 +179,7 @@ export default function SpeakersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Keynote & Session Speakers</h1>
-          <p className="text-xs text-slate-700 font-medium">Assign and manage speakers specifically per summit / conference</p>
+          <p className="text-xs text-slate-700 font-medium">Assign and manage speakers with custom headshots per summit / conference</p>
         </div>
 
         <button
@@ -208,7 +219,7 @@ export default function SpeakersPage() {
         ) : (
           filteredSpeakers.map((s) => (
             <div key={s.id} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm flex gap-4 relative group">
-              <img src={s.imageUrl} alt={s.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm" />
+              <img src={s.imageUrl} alt={s.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm flex-shrink-0" />
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between">
                   <h3 className="font-extrabold text-[#0D1117] text-base">{s.name}</h3>
@@ -244,7 +255,7 @@ export default function SpeakersPage() {
       {/* Add / Edit Speaker Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+          <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-slate-200 pb-3">
               <h3 className="text-base font-extrabold text-[#0D1117]">
                 {editingSpeaker ? "Edit Speaker Profile" : "Add New Keynote / Speaker"}
@@ -307,8 +318,22 @@ export default function SpeakersPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="text-xs font-bold text-[#0D1117] block mb-1">Headshot Image URL</label>
+              {/* Speaker Headshot Image Upload Section */}
+              <div className="space-y-2">
+                <label className="text-xs font-extrabold text-[#0D1117] block flex items-center gap-1.5">
+                  <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Speaker Headshot Image *
+                </label>
+
+                {/* File Upload Button */}
+                <div className="flex items-center gap-3">
+                  <label className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl cursor-pointer text-xs font-bold text-slate-800 flex items-center gap-2 transition-colors">
+                    <Upload className="w-4 h-4 text-[#1E40AF]" /> Choose Photo File
+                    <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+                  </label>
+                  <span className="text-[11px] text-slate-500 font-medium">Or paste image URL below</span>
+                </div>
+
+                {/* Direct Image URL Input */}
                 <input
                   type="text"
                   value={formData.imageUrl}
@@ -316,6 +341,37 @@ export default function SpeakersPage() {
                   placeholder="https://images.unsplash.com/photo-..."
                   className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
                 />
+
+                {/* Preset Avatars */}
+                <div className="flex items-center gap-2 pt-1">
+                  <span className="text-[10px] text-slate-600 font-bold font-mono">Sample Photos:</span>
+                  {[
+                    { name: "Speaker 1", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop" },
+                    { name: "Speaker 2", url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop" },
+                    { name: "Speaker 3", url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop" },
+                    { name: "Speaker 4", url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop" },
+                  ].map((p, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, imageUrl: p.url })}
+                      className="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] font-bold border border-slate-300"
+                    >
+                      {p.name}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Live Image Preview Thumbnail */}
+                {formData.imageUrl && (
+                  <div className="flex items-center gap-3 p-3 bg-blue-50/50 border border-blue-200 rounded-2xl mt-2">
+                    <img src={formData.imageUrl} alt="Preview" className="w-12 h-12 rounded-xl object-cover border border-slate-300 shadow-sm" />
+                    <div>
+                      <span className="text-xs font-bold text-[#0D1117] block">Image Preview Active</span>
+                      <span className="text-[10px] text-slate-600 font-mono block truncate max-w-xs">{formData.imageUrl}</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div>
