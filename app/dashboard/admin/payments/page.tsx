@@ -34,30 +34,30 @@ export default function PaymentsPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Financial Ledger & Payments</h1>
-          <p className="text-xs text-slate-400">Track registration payments, transactions, gateway verifications, and receipts</p>
+          <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Financial Ledger & Payments</h1>
+          <p className="text-xs text-slate-700 font-medium">Track registration payments, transactions, gateway verifications, and receipts</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span className="text-[10px] text-slate-400 font-mono">Gross Revenue</span>
-          <span className="text-2xl font-black text-emerald-400 block mt-1">$6,986.00</span>
+        <div className="p-5 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm space-y-1">
+          <span className="text-[11px] text-slate-700 font-bold font-mono uppercase tracking-wider">Gross Revenue</span>
+          <span className="text-2xl font-black text-emerald-800 block mt-1">$6,986.00</span>
         </div>
-        <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span className="text-[10px] text-slate-400 font-mono">Successful Transactions</span>
-          <span className="text-2xl font-black text-white block mt-1">14</span>
+        <div className="p-5 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm space-y-1">
+          <span className="text-[11px] text-slate-700 font-bold font-mono uppercase tracking-wider">Successful Transactions</span>
+          <span className="text-2xl font-black text-[#0D1117] block mt-1">14</span>
         </div>
-        <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
-          <span className="text-[10px] text-slate-400 font-mono">Refunded Transactions</span>
-          <span className="text-2xl font-black text-rose-400 block mt-1">0</span>
+        <div className="p-5 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm space-y-1">
+          <span className="text-[11px] text-slate-700 font-bold font-mono uppercase tracking-wider">Refunded Transactions</span>
+          <span className="text-2xl font-black text-rose-700 block mt-1">0</span>
         </div>
       </div>
 
-      <div className="rounded-3xl bg-slate-900/60 border border-slate-800 overflow-hidden shadow-xl">
+      <div className="rounded-3xl bg-white border border-[#1E40AF]/15 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-100 text-slate-800 font-mono text-[11px] uppercase tracking-wider border-b border-slate-300 font-extrabold">
               <tr>
                 <th className="p-4">Txn ID & Gateway</th>
                 <th className="p-4">Payer Details</th>
@@ -66,21 +66,21 @@ export default function PaymentsPage() {
                 <th className="p-4">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-200 text-slate-900 font-medium">
               {payments.map((p) => (
-                <tr key={p.id} className="hover:bg-slate-800/40">
+                <tr key={p.id} className="hover:bg-slate-50 transition-colors">
                   <td className="p-4 font-mono">
-                    <span className="font-bold text-accent-cyan block">{p.transactionId}</span>
-                    <span className="text-[10px] text-slate-400">{p.paymentGateway}</span>
+                    <span className="font-bold text-[#1E40AF] block">{p.transactionId}</span>
+                    <span className="text-[11px] text-slate-600 font-bold">{p.paymentGateway}</span>
                   </td>
                   <td className="p-4">
-                    <span className="font-bold text-white block">{p.user?.firstName} {p.user?.lastName}</span>
-                    <span className="text-[11px] text-slate-400">{p.user?.email}</span>
+                    <span className="font-bold text-[#0D1117] block">{p.user?.firstName} {p.user?.lastName}</span>
+                    <span className="text-[11px] text-slate-600 font-mono font-bold">{p.user?.email}</span>
                   </td>
-                  <td className="p-4 font-mono text-slate-300">{p.conference?.acronym}</td>
-                  <td className="p-4 font-mono font-bold text-emerald-400">${p.amount} {p.currency}</td>
+                  <td className="p-4 font-mono text-slate-800 font-bold">{p.conference?.acronym}</td>
+                  <td className="p-4 font-mono font-black text-emerald-800">${p.amount} {p.currency}</td>
                   <td className="p-4">
-                    <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-mono font-bold text-[10px]">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 font-mono font-bold text-[10px] uppercase">
                       {p.status}
                     </span>
                   </td>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Clock, Plus, MapPin, Mic, Calendar } from "lucide-react";
+import { Clock, Plus, MapPin } from "lucide-react";
 
 export default function SessionsPage() {
   const [sessions, setSessions] = useState<any[]>([
@@ -30,35 +30,35 @@ export default function SessionsPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Sessions & Summit Timeline</h1>
-          <p className="text-xs text-slate-400">Visual schedule builder for keynotes, workshops, and presentation panels</p>
+          <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Sessions & Summit Timeline</h1>
+          <p className="text-xs text-slate-700 font-medium">Visual schedule builder for keynotes, workshops, and presentation panels</p>
         </div>
 
-        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-lg w-fit">
+        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit">
           <Plus className="w-4 h-4 stroke-[3]" /> Add Session
         </button>
       </div>
 
       <div className="space-y-4">
         {sessions.map((s) => (
-          <div key={s.id} className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div key={s.id} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono font-bold text-[10px]">
+                <span className="px-2.5 py-0.5 rounded bg-amber-100 text-amber-800 font-mono font-bold text-[10px] uppercase border border-amber-300">
                   {s.sessionType}
                 </span>
-                <span className="text-xs font-mono text-slate-400 flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-accent-cyan" /> {s.time}
+                <span className="text-xs font-mono text-slate-700 font-bold flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-[#1E40AF]" /> {s.time}
                 </span>
               </div>
-              <h3 className="font-bold text-white text-base">{s.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">{s.description}</p>
+              <h3 className="font-bold text-[#0D1117] text-base">{s.title}</h3>
+              <p className="text-xs text-slate-600 font-medium leading-relaxed">{s.description}</p>
             </div>
 
             <div className="space-y-1 text-right md:min-w-[200px]">
-              <span className="block text-xs font-bold text-emerald-400">{s.speakerName}</span>
-              <span className="text-[11px] text-slate-400 flex items-center justify-end gap-1 font-mono">
-                <MapPin className="w-3.5 h-3.5 text-rose-400" /> {s.location}
+              <span className="block text-xs font-black text-emerald-800">{s.speakerName}</span>
+              <span className="text-[11px] text-slate-700 font-bold flex items-center justify-end gap-1 font-mono">
+                <MapPin className="w-3.5 h-3.5 text-rose-600" /> {s.location}
               </span>
             </div>
           </div>
