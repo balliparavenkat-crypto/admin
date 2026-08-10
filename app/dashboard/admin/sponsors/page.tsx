@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Building2, Plus, ExternalLink, X } from "lucide-react";
+import { Building2, Plus, ExternalLink, X, Edit, Trash2 } from "lucide-react";
 
 export default function SponsorsPage() {
   const [sponsors, setSponsors] = useState<any[]>([
@@ -25,6 +25,7 @@ export default function SponsorsPage() {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingSponsor, setEditingSponsor] = useState<any | null>(null);
   const [formData, setFormData] = useState({
     companyName: "",
     websiteUrl: "",
@@ -33,21 +34,42 @@ export default function SponsorsPage() {
     logoUrl: "",
   });
 
-  const handleAddSponsor = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newObj = {
-      id: Date.now(),
-      ...formData,
-      logoUrl: formData.logoUrl || "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=120&h=120&fit=crop",
-    };
-    setSponsors([newObj, ...sponsors]);
+  const handleOpenCreate = () => {
+    setEditingSponsor(null);
+    setFormData({ companyName: "", websiteUrl: "", level: "PLATINUM", description: "", logoUrl: "" });
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEdit = (sp: any) => {
+    setEditingSponsor(sp);
     setFormData({
-      companyName: "",
-      websiteUrl: "",
-      level: "PLATINUM",
-      description: "",
-      logoUrl: "",
+      companyName: sp.companyName,
+      websiteUrl: sp.websiteUrl,
+      level: sp.level,
+      description: sp.description,
+      logoUrl: sp.logoUrl,
     });
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteSponsor = (id: number) => {
+    setSponsors((prev) => prev.filter((sp) => sp.id !== id));
+  };
+
+  const handleSaveSponsor = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingSponsor) {
+      setSponsors((prev) =>
+        prev.map((sp) => (sp.id === editingSponsor.id ? { ...sp, ...formData } : sp))
+      );
+    } else {
+      const newObj = {
+        id: Date.now(),
+        ...formData,
+        logoUrl: formData.logoUrl || "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=120&h=120&fit=crop",
+      };
+      setSponsors([newObj, ...sponsors]);
+    }
     setIsModalOpen(false);
   };
 
@@ -60,7 +82,7 @@ export default function SponsorsPage() {
         </div>
 
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleOpenCreate}
           className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit hover:scale-[1.02] transition-transform"
         >
           <Plus className="w-4 h-4 stroke-[3]" /> Add Sponsor
@@ -74,9 +96,25 @@ export default function SponsorsPage() {
               <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-800 font-mono font-bold text-[10px] uppercase border border-amber-300">
                 {sp.level} SPONSOR
               </span>
-              <a href={sp.websiteUrl} target="_blank" rel="noreferrer" className="text-[#1E40AF] hover:underline text-xs flex items-center gap-1 font-bold">
-                Website <ExternalLink className="w-3 h-3" />
-              </a>
+              <div className="flex items-center gap-2">
+                <a href={sp.websiteUrl} target="_blank" rel="noreferrer" className="text-[#1E40AF] hover:underline text-xs flex items-center gap-1 font-bold">
+                  Website <ExternalLink className="w-3 h-3" />
+                </a>
+                <button
+                  onClick={() => handleOpenEdit(sp)}
+                  className="p-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200"
+                  title="Edit Sponsor"
+                >
+                  <Edit className="w-3.5 h-3.5 text-amber-600" />
+                </button>
+                <button
+                  onClick={() => handleDeleteSponsor(sp.id)}
+                  className="p-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
+                  title="Delete Sponsor"
+                >
+                  <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                </button>
+              </div>
             </div>
 
             <div className="flex items-center gap-4">
@@ -90,18 +128,20 @@ export default function SponsorsPage() {
         ))}
       </div>
 
-      {/* Add Sponsor Modal */}
+      {/* Add / Edit Sponsor Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
             <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-              <h3 className="text-base font-extrabold text-[#0D1117]">Add Corporate Sponsor</h3>
+              <h3 className="text-base font-extrabold text-[#0D1117]">
+                {editingSponsor ? "Edit Sponsor Details" : "Add Corporate Sponsor"}
+              </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleAddSponsor} className="space-y-4">
+            <form onSubmit={handleSaveSponsor} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-[#0D1117] block mb-1">Company / Sponsor Name *</label>
                 <input
@@ -164,7 +204,7 @@ export default function SponsorsPage() {
                   type="submit"
                   className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
                 >
-                  Add Sponsor
+                  {editingSponsor ? "Save Updates" : "Add Sponsor"}
                 </button>
               </div>
             </form>

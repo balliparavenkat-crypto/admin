@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Upload, Copy, Check, X } from "lucide-react";
+import { Upload, Copy, Check, X, Trash2 } from "lucide-react";
 
 export default function MediaPage() {
   const [copiedId, setCopiedId] = useState<number | null>(null);
@@ -23,6 +23,10 @@ export default function MediaPage() {
     navigator.clipboard.writeText(url);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleDeleteMedia = (id: number) => {
+    setMediaItems((prev) => prev.filter((m) => m.id !== id));
   };
 
   const handleUploadAsset = (e: React.FormEvent) => {
@@ -57,13 +61,22 @@ export default function MediaPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {mediaItems.map((m) => (
-          <div key={m.id} className="p-4 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm space-y-3 group">
+          <div key={m.id} className="p-4 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm space-y-3 group relative">
             <img src={m.url} alt={m.name} className="w-full h-40 rounded-2xl object-cover border border-slate-200" />
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono font-bold text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                 {m.category}
               </span>
-              <span className="text-[10px] text-slate-700 font-bold font-mono">{m.size}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-slate-700 font-bold font-mono">{m.size}</span>
+                <button
+                  onClick={() => handleDeleteMedia(m.id)}
+                  className="p-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
+                  title="Delete Media Asset"
+                >
+                  <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                </button>
+              </div>
             </div>
             <span className="font-extrabold text-[#0D1117] text-xs block truncate">{m.name}</span>
             <button

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Mic, Plus, X, Save } from "lucide-react";
+import { Mic, Plus, X, Edit, Trash2 } from "lucide-react";
 
 export default function SpeakersPage() {
   const [speakers, setSpeakers] = useState<any[]>([
@@ -31,6 +31,7 @@ export default function SpeakersPage() {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingSpeaker, setEditingSpeaker] = useState<any | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,14 +43,8 @@ export default function SpeakersPage() {
     conferenceAcronym: "DVGS2026",
   });
 
-  const handleAddSpeaker = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newObj = {
-      id: Date.now(),
-      ...formData,
-      imageUrl: formData.imageUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
-    };
-    setSpeakers([newObj, ...speakers]);
+  const handleOpenCreate = () => {
+    setEditingSpeaker(null);
     setFormData({
       name: "",
       email: "",
@@ -60,6 +55,42 @@ export default function SpeakersPage() {
       imageUrl: "",
       conferenceAcronym: "DVGS2026",
     });
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEdit = (sp: any) => {
+    setEditingSpeaker(sp);
+    setFormData({
+      name: sp.name,
+      email: sp.email,
+      designation: sp.designation,
+      institution: sp.institution,
+      country: sp.country,
+      bio: sp.bio,
+      imageUrl: sp.imageUrl,
+      conferenceAcronym: sp.conferenceAcronym,
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteSpeaker = (id: number) => {
+    setSpeakers((prev) => prev.filter((s) => s.id !== id));
+  };
+
+  const handleSaveSpeaker = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingSpeaker) {
+      setSpeakers((prev) =>
+        prev.map((s) => (s.id === editingSpeaker.id ? { ...s, ...formData } : s))
+      );
+    } else {
+      const newObj = {
+        id: Date.now(),
+        ...formData,
+        imageUrl: formData.imageUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
+      };
+      setSpeakers([newObj, ...speakers]);
+    }
     setIsModalOpen(false);
   };
 
@@ -72,7 +103,7 @@ export default function SpeakersPage() {
         </div>
 
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleOpenCreate}
           className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit hover:scale-[1.02] transition-transform"
         >
           <Plus className="w-4 h-4 stroke-[3]" /> Add Speaker
@@ -81,14 +112,30 @@ export default function SpeakersPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {speakers.map((s) => (
-          <div key={s.id} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm flex gap-4">
+          <div key={s.id} className="p-6 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm flex gap-4 relative group">
             <img src={s.imageUrl} alt={s.name} className="w-16 h-16 rounded-2xl object-cover border border-slate-200 shadow-sm" />
             <div className="flex-1 space-y-1">
               <div className="flex items-center justify-between">
                 <h3 className="font-extrabold text-[#0D1117] text-base">{s.name}</h3>
-                <span className="text-[10px] font-mono font-bold text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                  {s.conferenceAcronym}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono font-bold text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                    {s.conferenceAcronym}
+                  </span>
+                  <button
+                    onClick={() => handleOpenEdit(s)}
+                    className="p-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200"
+                    title="Edit Speaker"
+                  >
+                    <Edit className="w-3.5 h-3.5 text-amber-600" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteSpeaker(s.id)}
+                    className="p-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
+                    title="Delete Speaker"
+                  >
+                    <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                  </button>
+                </div>
               </div>
               <span className="text-xs text-amber-700 font-extrabold block">{s.designation}</span>
               <span className="text-xs text-slate-700 font-bold block">{s.institution} ({s.country})</span>
@@ -98,18 +145,20 @@ export default function SpeakersPage() {
         ))}
       </div>
 
-      {/* Add Speaker Modal */}
+      {/* Add / Edit Speaker Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
             <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-              <h3 className="text-base font-extrabold text-[#0D1117]">Add New Keynote / Speaker</h3>
+              <h3 className="text-base font-extrabold text-[#0D1117]">
+                {editingSpeaker ? "Edit Speaker Profile" : "Add New Keynote / Speaker"}
+              </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleAddSpeaker} className="space-y-4">
+            <form onSubmit={handleSaveSpeaker} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-[#0D1117] block mb-1">Speaker Full Name *</label>
                 <input
@@ -181,7 +230,7 @@ export default function SpeakersPage() {
                   type="submit"
                   className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
                 >
-                  Add Speaker
+                  {editingSpeaker ? "Save Updates" : "Add Speaker"}
                 </button>
               </div>
             </form>

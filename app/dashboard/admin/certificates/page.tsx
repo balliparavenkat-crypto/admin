@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Plus, CheckCircle, ExternalLink, X } from "lucide-react";
+import { Plus, CheckCircle, ExternalLink, X, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 
 export default function CertificatesPage() {
@@ -28,26 +28,56 @@ export default function CertificatesPage() {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingCert, setEditingCert] = useState<any | null>(null);
   const [formData, setFormData] = useState({
     recipientName: "",
     certificateType: "PRESENTATION",
     conferenceTitle: "D&V Global Summit 2026",
   });
 
-  const handleIssueCertificate = (e: React.FormEvent) => {
-    e.preventDefault();
-    const randomCode = `CERT-DV-${Math.floor(100000 + Math.random() * 900000)}`;
-    const newObj = {
-      id: Date.now(),
-      certificateCode: randomCode,
-      recipientName: formData.recipientName,
-      certificateType: formData.certificateType,
-      conferenceTitle: formData.conferenceTitle,
-      issueDate: new Date().toISOString().substring(0, 10),
-      verificationHash: `${Math.random().toString(36).substring(2, 10)}-${Math.random().toString(36).substring(2, 10)}`,
-    };
-    setCertificates([newObj, ...certificates]);
+  const handleOpenCreate = () => {
+    setEditingCert(null);
     setFormData({ recipientName: "", certificateType: "PRESENTATION", conferenceTitle: "D&V Global Summit 2026" });
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEdit = (cert: any) => {
+    setEditingCert(cert);
+    setFormData({
+      recipientName: cert.recipientName,
+      certificateType: cert.certificateType,
+      conferenceTitle: cert.conferenceTitle,
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteCert = (id: number) => {
+    setCertificates((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const handleSaveCertificate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingCert) {
+      setCertificates((prev) =>
+        prev.map((c) =>
+          c.id === editingCert.id
+            ? { ...c, recipientName: formData.recipientName, certificateType: formData.certificateType, conferenceTitle: formData.conferenceTitle }
+            : c
+        )
+      );
+    } else {
+      const randomCode = `CERT-DV-${Math.floor(100000 + Math.random() * 900000)}`;
+      const newObj = {
+        id: Date.now(),
+        certificateCode: randomCode,
+        recipientName: formData.recipientName,
+        certificateType: formData.certificateType,
+        conferenceTitle: formData.conferenceTitle,
+        issueDate: new Date().toISOString().substring(0, 10),
+        verificationHash: `${Math.random().toString(36).substring(2, 10)}-${Math.random().toString(36).substring(2, 10)}`,
+      };
+      setCertificates([newObj, ...certificates]);
+    }
     setIsModalOpen(false);
   };
 
@@ -56,7 +86,7 @@ export default function CertificatesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Certificate Engine & Verification</h1>
-          <p className="text-xs text-slate-700 font-medium">Issue, generate, and verify participation and presentation certificates</p>
+          <p className="text-xs text-slate-700 font-medium">Issue, generate, edit, and verify participation and presentation certificates</p>
         </div>
 
         <div className="flex items-center gap-3">
@@ -68,7 +98,7 @@ export default function CertificatesPage() {
             <ExternalLink className="w-4 h-4 text-[#1E40AF]" /> Public Verification Tool
           </Link>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleOpenCreate}
             className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md hover:scale-[1.02] transition-transform"
           >
             <Plus className="w-4 h-4 stroke-[3]" /> Issue Certificate
@@ -110,6 +140,20 @@ export default function CertificatesPage() {
                     >
                       <CheckCircle className="w-4 h-4 text-emerald-600" />
                     </Link>
+                    <button
+                      onClick={() => handleOpenEdit(c)}
+                      className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200"
+                      title="Edit Certificate"
+                    >
+                      <Edit className="w-4 h-4 text-amber-600" />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCert(c.id)}
+                      className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
+                      title="Delete Certificate"
+                    >
+                      <Trash2 className="w-4 h-4 text-rose-600" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -118,18 +162,20 @@ export default function CertificatesPage() {
         </div>
       </div>
 
-      {/* Issue Certificate Modal */}
+      {/* Issue / Edit Certificate Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-md w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
             <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-              <h3 className="text-base font-extrabold text-[#0D1117]">Issue Certificate of Achievement</h3>
+              <h3 className="text-base font-extrabold text-[#0D1117]">
+                {editingCert ? "Edit Certificate Details" : "Issue Certificate of Achievement"}
+              </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleIssueCertificate} className="space-y-4">
+            <form onSubmit={handleSaveCertificate} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-[#0D1117] block mb-1">Recipient Name *</label>
                 <input
@@ -178,7 +224,7 @@ export default function CertificatesPage() {
                   type="submit"
                   className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
                 >
-                  Generate & Issue
+                  {editingCert ? "Save Updates" : "Generate & Issue"}
                 </button>
               </div>
             </form>

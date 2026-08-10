@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Clock, Plus, MapPin, X } from "lucide-react";
+import { Clock, Plus, MapPin, X, Edit, Trash2 } from "lucide-react";
 
 export default function SessionsPage() {
   const [sessions, setSessions] = useState<any[]>([
@@ -27,6 +27,7 @@ export default function SessionsPage() {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingSession, setEditingSession] = useState<any | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -36,13 +37,8 @@ export default function SessionsPage() {
     sessionType: "WORKSHOP",
   });
 
-  const handleAddSession = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newObj = {
-      id: Date.now(),
-      ...formData,
-    };
-    setSessions([...sessions, newObj]);
+  const handleOpenCreate = () => {
+    setEditingSession(null);
     setFormData({
       title: "",
       description: "",
@@ -51,6 +47,39 @@ export default function SessionsPage() {
       speakerName: "",
       sessionType: "WORKSHOP",
     });
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEdit = (s: any) => {
+    setEditingSession(s);
+    setFormData({
+      title: s.title,
+      description: s.description,
+      time: s.time,
+      location: s.location,
+      speakerName: s.speakerName,
+      sessionType: s.sessionType,
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteSession = (id: number) => {
+    setSessions((prev) => prev.filter((s) => s.id !== id));
+  };
+
+  const handleSaveSession = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingSession) {
+      setSessions((prev) =>
+        prev.map((s) => (s.id === editingSession.id ? { ...s, ...formData } : s))
+      );
+    } else {
+      const newObj = {
+        id: Date.now(),
+        ...formData,
+      };
+      setSessions([...sessions, newObj]);
+    }
     setIsModalOpen(false);
   };
 
@@ -63,7 +92,7 @@ export default function SessionsPage() {
         </div>
 
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleOpenCreate}
           className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit hover:scale-[1.02] transition-transform"
         >
           <Plus className="w-4 h-4 stroke-[3]" /> Add Session
@@ -86,28 +115,46 @@ export default function SessionsPage() {
               <p className="text-xs text-slate-600 font-medium leading-relaxed">{s.description}</p>
             </div>
 
-            <div className="space-y-1 text-right md:min-w-[200px]">
+            <div className="space-y-2 text-right md:min-w-[200px]">
               <span className="block text-xs font-black text-emerald-800">{s.speakerName}</span>
               <span className="text-[11px] text-slate-700 font-bold flex items-center justify-end gap-1 font-mono">
                 <MapPin className="w-3.5 h-3.5 text-rose-600" /> {s.location}
               </span>
+              <div className="flex items-center justify-end gap-2 pt-1">
+                <button
+                  onClick={() => handleOpenEdit(s)}
+                  className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200"
+                  title="Edit Session"
+                >
+                  <Edit className="w-3.5 h-3.5 text-amber-600" />
+                </button>
+                <button
+                  onClick={() => handleDeleteSession(s.id)}
+                  className="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200"
+                  title="Delete Session"
+                >
+                  <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Add Session Modal */}
+      {/* Add / Edit Session Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
             <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-              <h3 className="text-base font-extrabold text-[#0D1117]">Schedule New Session</h3>
+              <h3 className="text-base font-extrabold text-[#0D1117]">
+                {editingSession ? "Edit Session Details" : "Schedule New Session"}
+              </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleAddSession} className="space-y-4">
+            <form onSubmit={handleSaveSession} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-[#0D1117] block mb-1">Session Title *</label>
                 <input
@@ -184,7 +231,7 @@ export default function SessionsPage() {
                   type="submit"
                   className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
                 >
-                  Schedule Session
+                  {editingSession ? "Save Updates" : "Schedule Session"}
                 </button>
               </div>
             </form>
