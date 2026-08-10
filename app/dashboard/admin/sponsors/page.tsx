@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Building2, Plus, ExternalLink } from "lucide-react";
+import { Building2, Plus, ExternalLink, X } from "lucide-react";
 
 export default function SponsorsPage() {
   const [sponsors, setSponsors] = useState<any[]>([
@@ -24,6 +24,33 @@ export default function SponsorsPage() {
     },
   ]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    companyName: "",
+    websiteUrl: "",
+    level: "PLATINUM",
+    description: "",
+    logoUrl: "",
+  });
+
+  const handleAddSponsor = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newObj = {
+      id: Date.now(),
+      ...formData,
+      logoUrl: formData.logoUrl || "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=120&h=120&fit=crop",
+    };
+    setSponsors([newObj, ...sponsors]);
+    setFormData({
+      companyName: "",
+      websiteUrl: "",
+      level: "PLATINUM",
+      description: "",
+      logoUrl: "",
+    });
+    setIsModalOpen(false);
+  };
+
   return (
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -32,7 +59,10 @@ export default function SponsorsPage() {
           <p className="text-xs text-slate-700 font-medium">Manage sponsorship logos, website links, descriptions, and sponsorship tiers</p>
         </div>
 
-        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit hover:scale-[1.02] transition-transform"
+        >
           <Plus className="w-4 h-4 stroke-[3]" /> Add Sponsor
         </button>
       </div>
@@ -59,6 +89,88 @@ export default function SponsorsPage() {
           </div>
         ))}
       </div>
+
+      {/* Add Sponsor Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+              <h3 className="text-base font-extrabold text-[#0D1117]">Add Corporate Sponsor</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddSponsor} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Company / Sponsor Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.companyName}
+                  onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                  placeholder="e.g. OpenAI"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-[#0D1117] block mb-1">Sponsorship Tier</label>
+                  <select
+                    value={formData.level}
+                    onChange={(e) => setFormData({ ...formData, level: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                  >
+                    <option value="PLATINUM">PLATINUM</option>
+                    <option value="GOLD">GOLD</option>
+                    <option value="SILVER">SILVER</option>
+                    <option value="BRONZE">BRONZE</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-[#0D1117] block mb-1">Website URL *</label>
+                  <input
+                    type="url"
+                    required
+                    value={formData.websiteUrl}
+                    onChange={(e) => setFormData({ ...formData, websiteUrl: e.target.value })}
+                    placeholder="https://openai.com"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Company Description</label>
+                <input
+                  type="text"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Official sponsor of keynote sessions..."
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
+                >
+                  Add Sponsor
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }

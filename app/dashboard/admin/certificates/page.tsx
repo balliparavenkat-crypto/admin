@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Plus, CheckCircle, ExternalLink } from "lucide-react";
+import { Plus, CheckCircle, ExternalLink, X } from "lucide-react";
 import Link from "next/link";
 
 export default function CertificatesPage() {
@@ -27,6 +27,30 @@ export default function CertificatesPage() {
     },
   ]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    recipientName: "",
+    certificateType: "PRESENTATION",
+    conferenceTitle: "D&V Global Summit 2026",
+  });
+
+  const handleIssueCertificate = (e: React.FormEvent) => {
+    e.preventDefault();
+    const randomCode = `CERT-DV-${Math.floor(100000 + Math.random() * 900000)}`;
+    const newObj = {
+      id: Date.now(),
+      certificateCode: randomCode,
+      recipientName: formData.recipientName,
+      certificateType: formData.certificateType,
+      conferenceTitle: formData.conferenceTitle,
+      issueDate: new Date().toISOString().substring(0, 10),
+      verificationHash: `${Math.random().toString(36).substring(2, 10)}-${Math.random().toString(36).substring(2, 10)}`,
+    };
+    setCertificates([newObj, ...certificates]);
+    setFormData({ recipientName: "", certificateType: "PRESENTATION", conferenceTitle: "D&V Global Summit 2026" });
+    setIsModalOpen(false);
+  };
+
   return (
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -43,7 +67,10 @@ export default function CertificatesPage() {
           >
             <ExternalLink className="w-4 h-4 text-[#1E40AF]" /> Public Verification Tool
           </Link>
-          <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md hover:scale-[1.02] transition-transform"
+          >
             <Plus className="w-4 h-4 stroke-[3]" /> Issue Certificate
           </button>
         </div>
@@ -90,6 +117,74 @@ export default function CertificatesPage() {
           </table>
         </div>
       </div>
+
+      {/* Issue Certificate Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="max-w-md w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+              <h3 className="text-base font-extrabold text-[#0D1117]">Issue Certificate of Achievement</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleIssueCertificate} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Recipient Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.recipientName}
+                  onChange={(e) => setFormData({ ...formData, recipientName: e.target.value })}
+                  placeholder="e.g. Prof. Arthur Dent"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Certificate Type</label>
+                <select
+                  value={formData.certificateType}
+                  onChange={(e) => setFormData({ ...formData, certificateType: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                >
+                  <option value="PRESENTATION">PRESENTATION CERTIFICATE</option>
+                  <option value="PARTICIPATION">PARTICIPATION CERTIFICATE</option>
+                  <option value="SPEAKER">KEYNOTE SPEAKER CERTIFICATE</option>
+                  <option value="BEST_PAPER">BEST PAPER AWARD</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Summit Title</label>
+                <input
+                  type="text"
+                  value={formData.conferenceTitle}
+                  onChange={(e) => setFormData({ ...formData, conferenceTitle: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
+                >
+                  Generate & Issue
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }

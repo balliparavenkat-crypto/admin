@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Upload, Copy, Check } from "lucide-react";
+import { Upload, Copy, Check, X } from "lucide-react";
 
 export default function MediaPage() {
   const [copiedId, setCopiedId] = useState<number | null>(null);
@@ -12,10 +12,31 @@ export default function MediaPage() {
     { id: 3, name: "dr_manning_headshot.jpg", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop", category: "SPEAKER", size: "480 KB" },
   ]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    url: "",
+    category: "BANNER",
+  });
+
   const copyUrl = (id: number, url: string) => {
     navigator.clipboard.writeText(url);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleUploadAsset = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newObj = {
+      id: Date.now(),
+      name: formData.name || "uploaded_asset.png",
+      url: formData.url || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=300&fit=crop",
+      category: formData.category,
+      size: "850 KB",
+    };
+    setMediaItems([newObj, ...mediaItems]);
+    setFormData({ name: "", url: "", category: "BANNER" });
+    setIsModalOpen(false);
   };
 
   return (
@@ -26,7 +47,10 @@ export default function MediaPage() {
           <p className="text-xs text-slate-700 font-medium">Upload, store, and manage summit banners, speaker headshots, sponsor logos, and PDFs</p>
         </div>
 
-        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit hover:scale-[1.02] transition-transform"
+        >
           <Upload className="w-4 h-4 stroke-[3]" /> Upload Asset
         </button>
       </div>
@@ -52,6 +76,76 @@ export default function MediaPage() {
           </div>
         ))}
       </div>
+
+      {/* Upload Asset Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="max-w-md w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+              <h3 className="text-base font-extrabold text-[#0D1117]">Upload Media Asset</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleUploadAsset} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Asset Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. quantum_key_banner.png"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Asset URL / Link *</label>
+                <input
+                  type="url"
+                  required
+                  value={formData.url}
+                  onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+                  placeholder="https://images.unsplash.com/photo-..."
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Category</label>
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                >
+                  <option value="BANNER">SUMMIT BANNER</option>
+                  <option value="SPEAKER">SPEAKER HEADSHOT</option>
+                  <option value="SPONSOR">SPONSOR LOGO</option>
+                  <option value="DOCUMENT">DOCUMENT / PDF</option>
+                </select>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
+                >
+                  Upload & Save Asset
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }

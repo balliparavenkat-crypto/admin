@@ -7,7 +7,7 @@ import {
   LayoutDashboard, Calendar, Users, FileText, CheckSquare, UserCheck, 
   Mic, Building2, CreditCard, QrCode, Award, Bell, Mail, Image as ImageIcon, 
   Globe, FileSpreadsheet, BarChart3, Shield, History, Settings, 
-  ChevronDown, ChevronRight, Menu, X, Sparkles, Layers, Clock
+  ChevronDown, ChevronRight, X, Sparkles
 } from "lucide-react";
 
 export default function AdminSidebar({
@@ -26,6 +26,7 @@ export default function AdminSidebar({
     { name: "Dashboard", href: "/dashboard/admin", icon: LayoutDashboard },
     {
       name: "Summits",
+      href: "/dashboard/admin/summits",
       icon: Calendar,
       subItems: [
         { name: "All Summits", href: "/dashboard/admin/summits" },
@@ -99,24 +100,34 @@ export default function AdminSidebar({
               const isSubActive = item.subItems.some((sub) => pathname === sub.href);
               return (
                 <div key={idx} className="space-y-1">
-                  <button
-                    onClick={() => setSummitsOpen(!summitsOpen)}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                      isSubActive
-                        ? "bg-blue-50 text-[#1E40AF] border border-blue-200"
-                        : "text-slate-800 hover:text-[#1E40AF] hover:bg-slate-100"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href={item.href}
+                      onClick={() => {
+                        setSummitsOpen(true);
+                        setIsMobileOpen(false);
+                      }}
+                      className={`flex-1 flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                        isSubActive
+                          ? "bg-blue-50 text-[#1E40AF] border border-blue-200"
+                          : "text-slate-800 hover:text-[#1E40AF] hover:bg-slate-100"
+                      }`}
+                    >
                       <Icon className="w-4 h-4 text-[#1E40AF]" />
                       <span>{item.name}</span>
-                    </div>
-                    {summitsOpen ? (
-                      <ChevronDown className="w-3.5 h-3.5 text-slate-700" />
-                    ) : (
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-700" />
-                    )}
-                  </button>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setSummitsOpen(!summitsOpen)}
+                      className="p-2 text-slate-700 hover:text-[#1E40AF]"
+                    >
+                      {summitsOpen ? (
+                        <ChevronDown className="w-3.5 h-3.5 text-slate-700" />
+                      ) : (
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-700" />
+                      )}
+                    </button>
+                  </div>
                   {summitsOpen && (
                     <div className="pl-9 space-y-1 border-l-2 border-blue-200 ml-5 my-1">
                       {item.subItems.map((sub, sIdx) => (

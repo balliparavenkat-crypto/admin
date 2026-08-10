@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Layers, Plus } from "lucide-react";
+import { Layers, Plus, X } from "lucide-react";
 
 export default function TracksPage() {
   const [tracks, setTracks] = useState<any[]>([
@@ -10,6 +10,25 @@ export default function TracksPage() {
     { id: 2, name: "Computer Vision & Robotics", description: "Topics related to object detection, generative video, and locomotion.", paperCount: 4 },
     { id: 3, name: "AI Safety & Alignment", description: "Topics related to RLHF, governance, and cybersecurity.", paperCount: 3 },
   ]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+  });
+
+  const handleAddTrack = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newObj = {
+      id: tracks.length + 1,
+      name: formData.name,
+      description: formData.description,
+      paperCount: 0,
+    };
+    setTracks([...tracks, newObj]);
+    setFormData({ name: "", description: "" });
+    setIsModalOpen(false);
+  };
 
   return (
     <AdminLayout>
@@ -19,7 +38,10 @@ export default function TracksPage() {
           <p className="text-xs text-slate-700 font-medium">Configure research tracks for paper submission classification</p>
         </div>
 
-        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit hover:scale-[1.02] transition-transform"
+        >
           <Plus className="w-4 h-4 stroke-[3]" /> Add Track
         </button>
       </div>
@@ -38,6 +60,61 @@ export default function TracksPage() {
           </div>
         ))}
       </div>
+
+      {/* Add Track Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="max-w-md w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+              <h3 className="text-base font-extrabold text-[#0D1117]">Add Scientific Research Track</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddTrack} className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Track Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. Quantum Computing & Cryptography"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Track Scope & Description</label>
+                <textarea
+                  rows={3}
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Sub-topics, keywords, paper guidelines..."
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
+                >
+                  Create Track
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }
