@@ -2,14 +2,9 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Shield, Lock, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 
 export default function RolesPermissionsPage() {
-  const roles = [
-    "SUPER_ADMIN", "ADMIN", "CONFERENCE_CHAIR", "ORGANIZER", 
-    "REVIEWER", "SPEAKER", "AUTHOR", "LISTENER", "FINANCE"
-  ];
-
   const permissions = [
     { key: "SUMMIT_CREATE", label: "Create & Publish Summits" },
     { key: "SUMMIT_EDIT", label: "Edit Summit Settings" },
@@ -24,15 +19,15 @@ export default function RolesPermissionsPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Role-Based Access Control (RBAC) Matrix</h1>
-          <p className="text-xs text-slate-400">Configure granular API and system capabilities across platform user roles</p>
+          <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Role-Based Access Control (RBAC) Matrix</h1>
+          <p className="text-xs text-slate-500">Configure granular API and system capabilities across platform user roles</p>
         </div>
       </div>
 
-      <div className="rounded-3xl bg-slate-900/60 border border-slate-800 overflow-hidden shadow-xl">
+      <div className="rounded-3xl bg-white border border-[#1E40AF]/15 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
+            <thead className="bg-slate-100/80 text-slate-600 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200">
               <tr>
                 <th className="p-4">Permission Capability</th>
                 <th className="p-4 text-center">SUPER_ADMIN</th>
@@ -42,18 +37,18 @@ export default function RolesPermissionsPage() {
                 <th className="p-4 text-center">AUTHOR</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-200 text-slate-800">
               {permissions.map((p) => (
-                <tr key={p.key} className="hover:bg-slate-800/40">
-                  <td className="p-4 font-bold text-white">
+                <tr key={p.key} className="hover:bg-slate-50">
+                  <td className="p-4 font-bold text-[#0D1117]">
                     {p.label}
                     <span className="block text-[10px] font-mono text-slate-500">{p.key}</span>
                   </td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-emerald-400 mx-auto" /></td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-emerald-400 mx-auto" /></td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-emerald-400 mx-auto" /></td>
-                  <td className="p-4 text-center"><X className="w-4 h-4 text-slate-600 mx-auto" /></td>
-                  <td className="p-4 text-center"><X className="w-4 h-4 text-slate-600 mx-auto" /></td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
+                  <td className="p-4 text-center"><X className="w-4 h-4 text-slate-400 mx-auto" /></td>
+                  <td className="p-4 text-center"><X className="w-4 h-4 text-slate-400 mx-auto" /></td>
                 </tr>
               ))}
             </tbody>

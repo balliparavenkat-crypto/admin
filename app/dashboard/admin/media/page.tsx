@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Image as ImageIcon, Upload, Copy, Check, Trash2 } from "lucide-react";
+import { Upload, Copy, Check } from "lucide-react";
 
 export default function MediaPage() {
   const [copiedId, setCopiedId] = useState<number | null>(null);
@@ -22,31 +22,31 @@ export default function MediaPage() {
     <AdminLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Centralized Media Library</h1>
-          <p className="text-xs text-slate-400">Upload, store, and manage summit banners, speaker headshots, sponsor logos, and PDFs</p>
+          <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Centralized Media Library</h1>
+          <p className="text-xs text-slate-500">Upload, store, and manage summit banners, speaker headshots, sponsor logos, and PDFs</p>
         </div>
 
-        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-lg w-fit">
+        <button className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs tracking-wider uppercase flex items-center gap-2 shadow-md w-fit">
           <Upload className="w-4 h-4 stroke-[3]" /> Upload Asset
         </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {mediaItems.map((m) => (
-          <div key={m.id} className="p-4 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-3 group">
-            <img src={m.url} alt={m.name} className="w-full h-40 rounded-2xl object-cover border border-slate-700/60" />
+          <div key={m.id} className="p-4 rounded-3xl bg-white border border-[#1E40AF]/15 shadow-sm space-y-3 group">
+            <img src={m.url} alt={m.name} className="w-full h-40 rounded-2xl object-cover border border-slate-200" />
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono text-accent-cyan bg-accent-blue/10 px-2 py-0.5 rounded">
+              <span className="text-[10px] font-mono text-[#1E40AF] bg-blue-50 px-2 py-0.5 rounded font-bold border border-blue-100">
                 {m.category}
               </span>
               <span className="text-[10px] text-slate-500 font-mono">{m.size}</span>
             </div>
-            <span className="font-bold text-white text-xs block truncate">{m.name}</span>
+            <span className="font-bold text-[#0D1117] text-xs block truncate">{m.name}</span>
             <button
               onClick={() => copyUrl(m.id, m.url)}
-              className="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+              className="w-full py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors border border-slate-200"
             >
-              {copiedId === m.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copiedId === m.id ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
               {copiedId === m.id ? "Copied URL" : "Copy Image URL"}
             </button>
           </div>
