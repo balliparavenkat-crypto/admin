@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../../components/AdminLayout";
-import { ArrowLeft, Save, Sparkles, Calendar, DollarSign, FileText, Image as ImageIcon } from "lucide-react";
+import { ArrowLeft, Save, Sparkles, Calendar, DollarSign, FileText, Image as ImageIcon, Upload } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import api from "../../../../../../lib/api";
@@ -101,6 +101,17 @@ export default function EditSummitPage() {
     });
   }, [summitId]);
 
+  const handleBannerFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, bannerUrl: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -162,7 +173,7 @@ export default function EditSummitPage() {
           </Link>
           <div>
             <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Edit Summit Details</h1>
-            <p className="text-xs text-slate-700 font-medium">Update summit metadata, banner image, dates, and registration pricing</p>
+            <p className="text-xs text-slate-700 font-medium">Update summit metadata, banner image from device gallery, dates, and registration pricing</p>
           </div>
         </div>
 
@@ -230,10 +241,20 @@ export default function EditSummitPage() {
               </div>
             </div>
 
-            <div>
-              <label className="text-xs font-extrabold text-[#0D1117] block mb-2 flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Summit Banner Image URL / Cover Image
+            {/* Banner Image Upload & Preset Picker */}
+            <div className="space-y-2">
+              <label className="text-xs font-extrabold text-[#0D1117] block flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Summit Banner Image / Cover Image *
               </label>
+
+              <div className="flex items-center gap-3">
+                <label className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl cursor-pointer text-xs font-bold text-slate-800 flex items-center gap-2 transition-colors">
+                  <Upload className="w-4 h-4 text-[#1E40AF]" /> Upload Banner Photo from Device
+                  <input type="file" accept="image/*" onChange={handleBannerFileUpload} className="hidden" />
+                </label>
+                <span className="text-[11px] text-slate-500 font-medium">Or paste image URL</span>
+              </div>
+
               <input
                 type="text"
                 name="bannerUrl"
@@ -241,6 +262,7 @@ export default function EditSummitPage() {
                 onChange={handleChange}
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF] font-mono"
               />
+
               <div className="flex flex-wrap items-center gap-2 mt-2">
                 <span className="text-[10px] text-slate-700 font-bold font-mono">Quick Presets:</span>
                 {[

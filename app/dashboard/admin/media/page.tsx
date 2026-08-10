@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Upload, Copy, Check, X, Trash2 } from "lucide-react";
+import { Upload, Copy, Check, X, Trash2, Image as ImageIcon } from "lucide-react";
 
 export default function MediaPage() {
   const [copiedId, setCopiedId] = useState<number | null>(null);
@@ -18,6 +18,21 @@ export default function MediaPage() {
     url: "",
     category: "BANNER",
   });
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          name: prev.name || file.name,
+          url: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const copyUrl = (id: number, url: string) => {
     navigator.clipboard.writeText(url);
@@ -48,7 +63,7 @@ export default function MediaPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-[#0D1117] tracking-tight">Centralized Media Library</h1>
-          <p className="text-xs text-slate-700 font-medium">Upload, store, and manage summit banners, speaker headshots, sponsor logos, and PDFs</p>
+          <p className="text-xs text-slate-700 font-medium">Upload photos from device gallery, store, and manage summit banners, speaker headshots, sponsor logos, and PDFs</p>
         </div>
 
         <button
@@ -93,15 +108,30 @@ export default function MediaPage() {
       {/* Upload Asset Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="max-w-md w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+          <div className="max-w-md w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-              <h3 className="text-base font-extrabold text-[#0D1117]">Upload Media Asset</h3>
+              <h3 className="text-base font-extrabold text-[#0D1117]">Upload Media Asset from Device</h3>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-slate-800">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleUploadAsset} className="space-y-4">
+              {/* File Upload Box */}
+              <div className="space-y-2">
+                <label className="text-xs font-extrabold text-[#0D1117] block flex items-center gap-1.5">
+                  <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Choose Image / File from Local Gallery *
+                </label>
+
+                <div className="flex items-center gap-3">
+                  <label className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl cursor-pointer text-xs font-bold text-slate-800 flex items-center gap-2 transition-colors">
+                    <Upload className="w-4 h-4 text-[#1E40AF]" /> Upload File from Gallery
+                    <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+                  </label>
+                  <span className="text-[11px] text-slate-500 font-medium">Or paste image URL</span>
+                </div>
+              </div>
+
               <div>
                 <label className="text-xs font-bold text-[#0D1117] block mb-1">Asset Name *</label>
                 <input
@@ -115,9 +145,9 @@ export default function MediaPage() {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#0D1117] block mb-1">Asset URL / Link *</label>
+                <label className="text-xs font-bold text-[#0D1117] block mb-1">Asset Link / Data URL *</label>
                 <input
-                  type="url"
+                  type="text"
                   required
                   value={formData.url}
                   onChange={(e) => setFormData({ ...formData, url: e.target.value })}
@@ -125,6 +155,13 @@ export default function MediaPage() {
                   className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
                 />
               </div>
+
+              {formData.url && (
+                <div className="flex items-center gap-3 p-3 bg-blue-50/50 border border-blue-200 rounded-2xl">
+                  <img src={formData.url} alt="Preview" className="w-16 h-12 rounded-xl object-cover border border-slate-300" />
+                  <span className="text-xs font-bold text-[#0D1117]">Asset Preview Ready</span>
+                </div>
+              )}
 
               <div>
                 <label className="text-xs font-bold text-[#0D1117] block mb-1">Category</label>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import AdminLayout from "../components/AdminLayout";
-import { Building2, Plus, ExternalLink, X, Edit, Trash2 } from "lucide-react";
+import { Building2, Plus, ExternalLink, X, Edit, Trash2, Upload, Image as ImageIcon } from "lucide-react";
 
 export default function SponsorsPage() {
   const [sponsors, setSponsors] = useState<any[]>([
@@ -33,6 +33,17 @@ export default function SponsorsPage() {
     description: "",
     logoUrl: "",
   });
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, logoUrl: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleOpenCreate = () => {
     setEditingSponsor(null);
@@ -131,7 +142,7 @@ export default function SponsorsPage() {
       {/* Add / Edit Sponsor Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+          <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center border-b border-slate-200 pb-3">
               <h3 className="text-base font-extrabold text-[#0D1117]">
                 {editingSponsor ? "Edit Sponsor Details" : "Add Corporate Sponsor"}
@@ -179,6 +190,36 @@ export default function SponsorsPage() {
                     className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
                   />
                 </div>
+              </div>
+
+              {/* Sponsor Logo File Upload & URL Picker */}
+              <div className="space-y-2">
+                <label className="text-xs font-extrabold text-[#0D1117] block flex items-center gap-1.5">
+                  <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Sponsor Logo Image *
+                </label>
+
+                <div className="flex items-center gap-3">
+                  <label className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl cursor-pointer text-xs font-bold text-slate-800 flex items-center gap-2 transition-colors">
+                    <Upload className="w-4 h-4 text-[#1E40AF]" /> Upload Logo File
+                    <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+                  </label>
+                  <span className="text-[11px] text-slate-500 font-medium">Or paste image URL</span>
+                </div>
+
+                <input
+                  type="text"
+                  value={formData.logoUrl}
+                  onChange={(e) => setFormData({ ...formData, logoUrl: e.target.value })}
+                  placeholder="https://images.unsplash.com/photo-..."
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                />
+
+                {formData.logoUrl && (
+                  <div className="flex items-center gap-3 p-3 bg-blue-50/50 border border-blue-200 rounded-2xl">
+                    <img src={formData.logoUrl} alt="Logo Preview" className="w-12 h-12 rounded-xl object-cover border border-slate-300" />
+                    <span className="text-xs font-bold text-[#0D1117]">Logo Preview Active</span>
+                  </div>
+                )}
               </div>
 
               <div>

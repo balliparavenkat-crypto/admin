@@ -53,6 +53,17 @@ export default function CreateSummitPage() {
   const [newSpeakerBio, setNewSpeakerBio] = useState("");
   const [newSpeakerImageUrl, setNewSpeakerImageUrl] = useState("");
 
+  const handleBannerFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({ ...prev, bannerUrl: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSpeakerFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -237,10 +248,20 @@ export default function CreateSummitPage() {
               </div>
             </div>
 
-            <div>
-              <label className="text-xs font-extrabold text-[#0D1117] block mb-2 flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Summit Banner Image URL / Cover Image
+            {/* Banner Image Upload & Preset Picker */}
+            <div className="space-y-2">
+              <label className="text-xs font-extrabold text-[#0D1117] block flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-[#1E40AF]" /> Summit Banner Cover Image *
               </label>
+
+              <div className="flex items-center gap-3">
+                <label className="px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl cursor-pointer text-xs font-bold text-slate-800 flex items-center gap-2 transition-colors">
+                  <Upload className="w-4 h-4 text-[#1E40AF]" /> Upload Banner Photo from Device
+                  <input type="file" accept="image/*" onChange={handleBannerFileUpload} className="hidden" />
+                </label>
+                <span className="text-[11px] text-slate-500 font-medium">Or paste image link</span>
+              </div>
+
               <input
                 type="text"
                 name="bannerUrl"
@@ -249,6 +270,7 @@ export default function CreateSummitPage() {
                 placeholder="e.g. /images/ai_quantum_summit.png or https://images.unsplash.com/photo-..."
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-semibold placeholder-slate-500 focus:outline-none focus:border-[#1E40AF] font-mono"
               />
+
               <div className="flex flex-wrap items-center gap-2 mt-2">
                 <span className="text-[10px] text-slate-700 font-bold font-mono">Quick Presets:</span>
                 {[
@@ -268,6 +290,13 @@ export default function CreateSummitPage() {
                   </button>
                 ))}
               </div>
+
+              {formData.bannerUrl && (
+                <div className="p-3 bg-blue-50/50 border border-blue-200 rounded-2xl flex items-center gap-4 mt-2">
+                  <img src={formData.bannerUrl} alt="Banner Preview" className="w-24 h-12 rounded-xl object-cover border border-slate-300" />
+                  <span className="text-xs font-bold text-[#0D1117]">Banner Preview Ready</span>
+                </div>
+              )}
             </div>
 
             <div>
@@ -412,7 +441,7 @@ export default function CreateSummitPage() {
 
                 <div className="flex items-center gap-3">
                   <label className="px-4 py-2 bg-white hover:bg-slate-100 border border-slate-300 rounded-xl cursor-pointer text-xs font-bold text-slate-800 flex items-center gap-2 transition-colors shadow-sm">
-                    <Upload className="w-4 h-4 text-[#1E40AF]" /> Upload Photo File
+                    <Upload className="w-4 h-4 text-[#1E40AF]" /> Upload Photo File from Gallery
                     <input type="file" accept="image/*" onChange={handleSpeakerFileUpload} className="hidden" />
                   </label>
                   <span className="text-[11px] text-slate-500 font-medium">Or paste image link</span>
