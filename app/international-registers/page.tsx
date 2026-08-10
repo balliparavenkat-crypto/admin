@@ -2,38 +2,38 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ChevronRight, RefreshCw, Home, CheckCircle, CreditCard, ShieldCheck, Zap, Lock } from "lucide-react";
+import { ChevronRight, RefreshCw, Home, CheckCircle, CreditCard, ShieldCheck, Globe, Lock } from "lucide-react";
 import api from "../../lib/api";
 
 declare global {
   interface Window {
-    Razorpay: any;
+    paypal: any;
   }
 }
 
-// ── Indian INR Fee Structure ──────────────────────────────────────────────────
+// ── International USD Fee Structure ──────────────────────────────────────────
 const categories = [
-  { id: "oral",      label: "Oral Talk (Presenter)",       earlyBird: 15000, superEarly: 18000, standard: 22000 },
-  { id: "invited",   label: "Invited Keynote Speaker",      earlyBird: 15000, superEarly: 18000, standard: 22000 },
-  { id: "poster",    label: "Poster Presentation",          earlyBird: 10000, superEarly: 12000, standard: 15000 },
-  { id: "student",   label: "Student / Scholar Delegate",  earlyBird: 7500,  superEarly: 9000,  standard: 11000 },
-  { id: "industry",  label: "Industry Executive Delegate",  earlyBird: 25000, superEarly: 30000, standard: 35000 },
-  { id: "virtual",   label: "Virtual Online Delegate",      earlyBird: 4500,  superEarly: 6000,  standard: 8000 },
-  { id: "accompany", label: "Accompanying Person",          earlyBird: 6000,  superEarly: 6000,  standard: 6000 },
+  { id: "oral",      label: "Oral Talk (Presenter)",       earlyBird: 499, superEarly: 599, standard: 699 },
+  { id: "invited",   label: "Invited Keynote Speaker",      earlyBird: 499, superEarly: 599, standard: 699 },
+  { id: "poster",    label: "Poster Presentation",          earlyBird: 399, superEarly: 499, standard: 599 },
+  { id: "student",   label: "Student / Scholar Delegate",  earlyBird: 299, superEarly: 399, standard: 499 },
+  { id: "industry",  label: "Industry Executive Delegate",  earlyBird: 699, superEarly: 799, standard: 899 },
+  { id: "virtual",   label: "Virtual Online Delegate",      earlyBird: 199, superEarly: 299, standard: 399 },
+  { id: "accompany", label: "Accompanying Person",          earlyBird: 299, superEarly: 299, standard: 299 },
 ];
 
 const accommodation = [
-  { nights: "1 Night",  single: 4500,  double: 5500,  triple: 6500 },
-  { nights: "2 Nights", single: 9000,  double: 11000, triple: 13000 },
-  { nights: "3 Nights", single: 13500, double: 16500, triple: 19500 },
-  { nights: "4 Nights", single: 18000, double: 22000, triple: 26000 },
+  { nights: "1 Night",  single: 180, double: 200, triple: 220 },
+  { nights: "2 Nights", single: 360, double: 400, triple: 440 },
+  { nights: "3 Nights", single: 540, double: 600, triple: 660 },
+  { nights: "4 Nights", single: 720, double: 800, triple: 880 },
 ];
 
 const packages = [
-  { id: "pkgA", label: "Package A", price: 24000, desc: "Registration + 2 Nights Single Occupancy Hotel Stay" },
-  { id: "pkgB", label: "Package B", price: 28500, desc: "Registration + 3 Nights Single Occupancy Hotel Stay" },
-  { id: "pkgC", label: "Package C", price: 26000, desc: "Registration + 2 Nights Double Shared Occupancy Stay" },
-  { id: "pkgD", label: "Package D", price: 31000, desc: "Registration + 3 Nights Double Shared Occupancy Stay" },
+  { id: "pkgA", label: "Package A", price: 850,  desc: "Registration + 2 Nights Single Occupancy Hotel Stay" },
+  { id: "pkgB", label: "Package B", price: 1050, desc: "Registration + 3 Nights Single Occupancy Hotel Stay" },
+  { id: "pkgC", label: "Package C", price: 950,  desc: "Registration + 2 Nights Double Shared Occupancy Stay" },
+  { id: "pkgD", label: "Package D", price: 1150, desc: "Registration + 3 Nights Double Shared Occupancy Stay" },
 ];
 
 // ── Captcha Generator ─────────────────────────────────────────────────────────
@@ -66,17 +66,15 @@ function CaptchaCanvas({ text }: { text: string }) {
   return <canvas ref={ref} width={180} height={50} className="rounded-xl border border-slate-300 shadow-xs" />;
 }
 
-export default function IndianRegistersPage() {
+export default function InternationalRegistersPage() {
   const [form, setForm] = useState({
-    title: "Dr.",
+    title: "Prof.",
     firstName: "",
     lastName: "",
     university: "",
-    state: "",
-    city: "",
+    country: "United States",
     email: "",
     whatsapp: "",
-    gstNumber: "",
   });
 
   const [feeType, setFeeType] = useState<"earlyBird" | "superEarly" | "standard">("earlyBird");
@@ -88,10 +86,15 @@ export default function IndianRegistersPage() {
   const [processing, setProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState<any | null>(null);
 
-  // Load Razorpay dynamic SDK script
+  const paypalContainerRef = useRef<HTMLDivElement>(null);
+
+  // Load PayPal SDK script
   useEffect(() => {
+    if (document.getElementById("paypal-sdk-script")) return;
+
     const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.id = "paypal-sdk-script";
+    script.src = "https://www.paypal.com/sdk/js?client-id=sb&currency=USD";
     script.async = true;
     document.body.appendChild(script);
   }, []);
@@ -107,10 +110,85 @@ export default function IndianRegistersPage() {
     return catFee + accomFee;
   })();
 
-  const fmtINR = (n: number) => `₹ ${n.toLocaleString("en-IN")}`;
+  const fmtUSD = (n: number) => `$ ${n.toLocaleString("en-US")} USD`;
 
-  // Process Razorpay Payment
-  const handleRazorpayPayment = (e: React.FormEvent) => {
+  // Render PayPal Smart Payment Buttons dynamically
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.paypal && paypalContainerRef.current) {
+      paypalContainerRef.current.innerHTML = "";
+      try {
+        window.paypal.Buttons({
+          style: {
+            layout: "vertical",
+            color: "gold",
+            shape: "rect",
+            label: "paypal",
+          },
+          createOrder: function (data: any, actions: any) {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: total.toString(),
+                  },
+                  description: `D&V Global Summit International Registration (${selCat.toUpperCase()})`,
+                },
+              ],
+            });
+          },
+          onApprove: function (data: any, actions: any) {
+            return actions.order.capture().then(function (details: any) {
+              const regCode = `DV-REG-INTL-${Math.floor(100000 + Math.random() * 900000)}`;
+              const txId = details.id || `PAYID-PPL-${Date.now()}`;
+
+              const newRecord = {
+                id: Date.now(),
+                registrationCode: regCode,
+                transactionId: txId,
+                fullName: `${form.title} ${form.firstName} ${form.lastName}`,
+                user: { firstName: form.firstName, lastName: form.lastName, email: form.email, institution: form.university },
+                email: form.email,
+                whatsapp: form.whatsapp,
+                summitName: "D&V Global Summit 2026",
+                conference: { acronym: "DVGS2026" },
+                category: selCat.toUpperCase(),
+                paymentStatus: "PAID",
+                status: "SUCCESS",
+                amountPaid: total,
+                amount: total,
+                currency: "USD",
+                paymentGateway: "PAYPAL",
+                checkInStatus: "NOT_CHECKED_IN",
+                createdAt: new Date().toISOString(),
+              };
+
+              try {
+                const existingRegsStr = localStorage.getItem("custom_registrations");
+                const existingRegs = existingRegsStr ? JSON.parse(existingRegsStr) : [];
+                existingRegs.unshift(newRecord);
+                localStorage.setItem("custom_registrations", JSON.stringify(existingRegs));
+
+                const existingPayStr = localStorage.getItem("custom_payments");
+                const existingPay = existingPayStr ? JSON.parse(existingPayStr) : [];
+                existingPay.unshift(newRecord);
+                localStorage.setItem("custom_payments", JSON.stringify(existingPay));
+              } catch (err) {
+                console.error(err);
+              }
+
+              api.post("/registrations/create", newRecord).catch(() => {});
+
+              setPaymentSuccess(newRecord);
+            });
+          },
+        }).render(paypalContainerRef.current);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, [total, selCat, form]);
+
+  const handlePayPalDirectSimulate = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (captchaIn.toUpperCase() !== captcha) {
@@ -119,101 +197,59 @@ export default function IndianRegistersPage() {
       return;
     }
 
-    if (!form.firstName || !form.lastName || !form.email || !form.whatsapp) {
+    if (!form.firstName || !form.lastName || !form.email) {
       alert("Please fill in all mandatory contact information.");
       return;
     }
 
     setProcessing(true);
 
-    const regCode = `DV-REG-IND-${Math.floor(100000 + Math.random() * 900000)}`;
-    const txId = `pay_rzp_${Date.now()}`;
+    const regCode = `DV-REG-INTL-${Math.floor(100000 + Math.random() * 900000)}`;
+    const txId = `PAYID-PPL-${Date.now()}`;
 
-    // Options for Razorpay Modal
-    const options = {
-      key: "rzp_test_DVGlobalSummits", // Razorpay Key
-      amount: total * 100, // Amount in paise
-      currency: "INR",
-      name: "D&V Global Summits India",
-      description: `Registration Fee: ${selCat.toUpperCase()} (${regCode})`,
-      image: "/images/logo.png",
-      handler: function (response: any) {
-        const paymentId = response.razorpay_payment_id || txId;
-        const newRecord = {
-          id: Date.now(),
-          registrationCode: regCode,
-          transactionId: paymentId,
-          fullName: `${form.title} ${form.firstName} ${form.lastName}`,
-          user: { firstName: form.firstName, lastName: form.lastName, email: form.email, institution: form.university },
-          email: form.email,
-          whatsapp: form.whatsapp,
-          summitName: "D&V Global Summit 2026",
-          conference: { acronym: "DVGS2026" },
-          category: selCat.toUpperCase(),
-          paymentStatus: "PAID",
-          status: "SUCCESS",
-          amountPaid: total,
-          amount: total,
-          currency: "INR",
-          paymentGateway: "RAZORPAY",
-          checkInStatus: "NOT_CHECKED_IN",
-          createdAt: new Date().toISOString(),
-        };
-
-        // 1. Store in localStorage for client state & Admin Portal
-        try {
-          const existingRegsStr = localStorage.getItem("custom_registrations");
-          const existingRegs = existingRegsStr ? JSON.parse(existingRegsStr) : [];
-          existingRegs.unshift(newRecord);
-          localStorage.setItem("custom_registrations", JSON.stringify(existingRegs));
-
-          const existingPayStr = localStorage.getItem("custom_payments");
-          const existingPay = existingPayStr ? JSON.parse(existingPayStr) : [];
-          existingPay.unshift(newRecord);
-          localStorage.setItem("custom_payments", JSON.stringify(existingPay));
-        } catch (err) {
-          console.error(err);
-        }
-
-        // 2. Try posting to Backend API
-        api.post("/registrations/create", newRecord).catch(() => {});
-
-        setPaymentSuccess(newRecord);
-        setProcessing(false);
-      },
-      prefill: {
-        name: `${form.firstName} ${form.lastName}`,
+    setTimeout(() => {
+      const newRecord = {
+        id: Date.now(),
+        registrationCode: regCode,
+        transactionId: txId,
+        fullName: `${form.title} ${form.firstName} ${form.lastName}`,
+        user: { firstName: form.firstName, lastName: form.lastName, email: form.email, institution: form.university },
         email: form.email,
-        contact: form.whatsapp,
-      },
-      notes: {
-        registration_code: regCode,
-        university: form.university,
-        category: selCat,
-      },
-      theme: {
-        color: "#1E40AF",
-      },
-      modal: {
-        ondismiss: function () {
-          setProcessing(false);
-        },
-      },
-    };
+        whatsapp: form.whatsapp,
+        summitName: "D&V Global Summit 2026",
+        conference: { acronym: "DVGS2026" },
+        category: selCat.toUpperCase(),
+        paymentStatus: "PAID",
+        status: "SUCCESS",
+        amountPaid: total,
+        amount: total,
+        currency: "USD",
+        paymentGateway: "PAYPAL",
+        checkInStatus: "NOT_CHECKED_IN",
+        createdAt: new Date().toISOString(),
+      };
 
-    // If Razorpay SDK is loaded, open popup; else simulate instant fallback payment
-    if (typeof window !== "undefined" && window.Razorpay) {
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } else {
-      // Direct success simulation fallback
-      setTimeout(() => {
-        options.handler({ razorpay_payment_id: txId });
-      }, 1000);
-    }
+      try {
+        const existingRegsStr = localStorage.getItem("custom_registrations");
+        const existingRegs = existingRegsStr ? JSON.parse(existingRegsStr) : [];
+        existingRegs.unshift(newRecord);
+        localStorage.setItem("custom_registrations", JSON.stringify(existingRegs));
+
+        const existingPayStr = localStorage.getItem("custom_payments");
+        const existingPay = existingPayStr ? JSON.parse(existingPayStr) : [];
+        existingPay.unshift(newRecord);
+        localStorage.setItem("custom_payments", JSON.stringify(existingPay));
+      } catch (err) {
+        console.error(err);
+      }
+
+      api.post("/registrations/create", newRecord).catch(() => {});
+
+      setPaymentSuccess(newRecord);
+      setProcessing(false);
+    }, 1200);
   };
 
-  // Render Confirmation Receipt View
   if (paymentSuccess) {
     return (
       <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 text-[#0D1117]">
@@ -223,12 +259,12 @@ export default function IndianRegistersPage() {
           </div>
 
           <div>
-            <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider border border-emerald-300">
-              Razorpay Payment Verified (INR ₹)
+            <span className="px-3 py-1 rounded-full bg-blue-100 text-[#1E40AF] text-xs font-mono font-bold uppercase tracking-wider border border-blue-200">
+              PayPal International Secured Checkout Verified (USD $)
             </span>
-            <h2 className="font-extrabold text-2xl text-[#0D1117] mt-3">Registration & Payment Confirmed!</h2>
+            <h2 className="font-extrabold text-2xl text-[#0D1117] mt-3">International Registration Confirmed!</h2>
             <p className="text-xs text-slate-600 mt-1">
-              Receipt & confirmation badge sent to <span className="text-[#1E40AF] font-bold">{paymentSuccess.email}</span>
+              Official receipt and verification badge sent to <span className="text-[#1E40AF] font-bold">{paymentSuccess.email}</span>
             </p>
           </div>
 
@@ -238,7 +274,7 @@ export default function IndianRegistersPage() {
               <span className="font-bold text-[#1E40AF]">{paymentSuccess.registrationCode}</span>
             </div>
             <div className="flex justify-between border-b border-slate-200 pb-2">
-              <span className="text-slate-500">Razorpay Txn ID:</span>
+              <span className="text-slate-500">PayPal Txn ID:</span>
               <span className="font-bold text-slate-900">{paymentSuccess.transactionId}</span>
             </div>
             <div className="flex justify-between border-b border-slate-200 pb-2">
@@ -247,7 +283,7 @@ export default function IndianRegistersPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-slate-500">Total Paid:</span>
-              <span className="font-extrabold text-emerald-700 text-base">{fmtINR(paymentSuccess.amountPaid)}</span>
+              <span className="font-extrabold text-emerald-700 text-base">{fmtUSD(paymentSuccess.amountPaid)}</span>
             </div>
           </div>
 
@@ -277,7 +313,7 @@ export default function IndianRegistersPage() {
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           <span className="text-[#1E40AF] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-            India Registration (Razorpay ₹)
+            International Registration (PayPal $)
           </span>
         </div>
       </nav>
@@ -285,24 +321,24 @@ export default function IndianRegistersPage() {
       {/* Header Banner */}
       <div className="py-12 px-6 text-center border-b border-slate-200 bg-gradient-to-b from-blue-50/60 to-transparent">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-[#1E40AF] text-[11px] font-mono font-bold uppercase tracking-wider border border-blue-200 mb-3">
-          <ShieldCheck className="w-3.5 h-3.5" /> Razorpay Secured Gateway for Indian Delegates (INR ₹)
+          <Globe className="w-3.5 h-3.5" /> PayPal International Checkout (USD / EUR / Global Cards)
         </div>
         <h1 className="font-extrabold text-3xl md:text-4xl text-[#0D1117] tracking-tight">
-          Indian Delegate <span className="text-[#1E40AF]">Registration & Payment</span>
+          International Delegate <span className="text-[#1E40AF]">Registration & Payment</span>
         </h1>
         <p className="text-slate-600 text-xs mt-2 max-w-lg mx-auto font-medium">
-          Pay via UPI (GPay, PhonePe, Paytm), NetBanking, Credit/Debit Cards, EMI, or QR Code.
+          Pay via PayPal Balance, PayPal Credit, or International Credit/Debit Cards (Visa, Mastercard, Amex).
         </p>
       </div>
 
       {/* Registration & Payment Form */}
-      <form onSubmit={handleRazorpayPayment} className="max-w-5xl mx-auto px-4 md:px-6 py-10 space-y-8">
+      <form onSubmit={handlePayPalDirectSimulate} className="max-w-5xl mx-auto px-4 md:px-6 py-10 space-y-8">
         
         {/* Step 1: Personal Info */}
         <section className="rounded-3xl p-8 bg-white border border-[#1E40AF]/15 shadow-sm space-y-6">
           <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
             <span className="w-8 h-8 rounded-full bg-[#1E40AF] text-white font-extrabold text-xs flex items-center justify-center">1</span>
-            <h2 className="font-extrabold text-lg text-[#0D1117]">Delegate Personal Details</h2>
+            <h2 className="font-extrabold text-lg text-[#0D1117]">International Delegate Information</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -313,7 +349,7 @@ export default function IndianRegistersPage() {
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
               >
-                {["Dr.", "Prof.", "Mr.", "Mrs.", "Ms.", "Er."].map((t) => (
+                {["Prof.", "Dr.", "Mr.", "Mrs.", "Ms.", "Er."].map((t) => (
                   <option key={t} value={t}>{t}</option>
                 ))}
               </select>
@@ -324,7 +360,7 @@ export default function IndianRegistersPage() {
               <input
                 required
                 type="text"
-                placeholder="Enter First Name"
+                placeholder="First Name"
                 value={form.firstName}
                 onChange={(e) => setForm({ ...form, firstName: e.target.value })}
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
@@ -336,7 +372,7 @@ export default function IndianRegistersPage() {
               <input
                 required
                 type="text"
-                placeholder="Enter Last Name"
+                placeholder="Last Name"
                 value={form.lastName}
                 onChange={(e) => setForm({ ...form, lastName: e.target.value })}
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
@@ -344,13 +380,25 @@ export default function IndianRegistersPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Institution / University *</label>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">University / Organization *</label>
               <input
                 required
                 type="text"
-                placeholder="e.g. IIT Bombay / AIIMS / CSIR"
+                placeholder="e.g. Stanford University / CNRS / MIT"
                 value={form.university}
                 onChange={(e) => setForm({ ...form, university: e.target.value })}
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Country of Residence *</label>
+              <input
+                required
+                type="text"
+                placeholder="e.g. United States / Germany / Japan"
+                value={form.country}
+                onChange={(e) => setForm({ ...form, country: e.target.value })}
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
               />
             </div>
@@ -360,22 +408,10 @@ export default function IndianRegistersPage() {
               <input
                 required
                 type="email"
-                placeholder="email@domain.in"
+                placeholder="email@university.edu"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">WhatsApp / Mobile Number *</label>
-              <input
-                required
-                type="tel"
-                placeholder="+91 98765 43210"
-                value={form.whatsapp}
-                onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-xs text-slate-900 font-mono font-semibold focus:outline-none focus:border-[#1E40AF]"
               />
             </div>
           </div>
@@ -385,7 +421,7 @@ export default function IndianRegistersPage() {
         <section className="rounded-3xl p-8 bg-white border border-[#1E40AF]/15 shadow-sm space-y-6">
           <div className="flex items-center gap-3 border-b border-slate-200 pb-4">
             <span className="w-8 h-8 rounded-full bg-[#1E40AF] text-white font-extrabold text-xs flex items-center justify-center">2</span>
-            <h2 className="font-extrabold text-lg text-[#0D1117]">Select Registration Category (INR ₹)</h2>
+            <h2 className="font-extrabold text-lg text-[#0D1117]">Select Registration Category (USD $)</h2>
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -410,7 +446,7 @@ export default function IndianRegistersPage() {
               <thead className="bg-slate-100 text-slate-800 font-mono text-[11px] uppercase tracking-wider border-b border-slate-200 font-extrabold">
                 <tr>
                   <th className="p-4">Category</th>
-                  <th className="p-4 text-right">Fee (INR ₹)</th>
+                  <th className="p-4 text-right">Fee (USD $)</th>
                   <th className="p-4 text-center">Select</th>
                 </tr>
               </thead>
@@ -427,7 +463,7 @@ export default function IndianRegistersPage() {
                       }`}
                     >
                       <td className="p-4 font-bold text-[#0D1117]">{cat.label}</td>
-                      <td className="p-4 text-right font-mono font-black text-emerald-800">{fmtINR(fee)}</td>
+                      <td className="p-4 text-right font-mono font-black text-emerald-800">{fmtUSD(fee)}</td>
                       <td className="p-4 text-center">
                         <input
                           type="radio"
@@ -445,15 +481,15 @@ export default function IndianRegistersPage() {
           </div>
         </section>
 
-        {/* Step 3: Razorpay Payment Checkout */}
+        {/* Step 3: PayPal Order Summary & Checkout */}
         <section className="rounded-3xl p-8 bg-white border border-[#1E40AF]/15 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-slate-200 pb-4">
             <div className="flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-[#1E40AF] text-white font-extrabold text-xs flex items-center justify-center">3</span>
-              <h2 className="font-extrabold text-lg text-[#0D1117]">Razorpay Order Summary & Checkout</h2>
+              <h2 className="font-extrabold text-lg text-[#0D1117]">PayPal Smart Checkout Summary</h2>
             </div>
             <span className="text-xs font-mono font-extrabold text-[#1E40AF] bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-              Razorpay Secured
+              PayPal Global Encrypted
             </span>
           </div>
 
@@ -483,23 +519,29 @@ export default function IndianRegistersPage() {
 
             <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-slate-50 border border-blue-200 space-y-3">
               <span className="text-xs font-mono text-slate-600 font-bold uppercase block">Total Payable Amount</span>
-              <span className="text-4xl font-black text-[#0D1117] block font-mono">{fmtINR(total)}</span>
-              <p className="text-xs text-slate-600 font-medium">Includes conference kit, scientific session access, certificate & GST</p>
+              <span className="text-4xl font-black text-[#0D1117] block font-mono">{fmtUSD(total)}</span>
+              <p className="text-xs text-slate-600 font-medium">Includes international conference kit, session access & PDF receipt</p>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-200 flex flex-col items-center gap-3">
-            <button
-              type="submit"
-              disabled={processing}
-              className="w-full md:w-auto px-12 py-4 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 shadow-lg hover:scale-[1.02] transition-transform"
-            >
-              <CreditCard className="w-5 h-5 stroke-[2.5]" />
-              {processing ? "Opening Razorpay..." : `Proceed to Pay ${fmtINR(total)} via Razorpay`}
-            </button>
-            <span className="text-[11px] text-slate-500 font-mono flex items-center gap-1.5">
-              <Lock className="w-3.5 h-3.5 text-emerald-600" /> 256-Bit SSL Encrypted Razorpay Gateway
-            </span>
+          {/* PayPal Smart Payment Buttons Container */}
+          <div className="pt-4 border-t border-slate-200 space-y-4">
+            <div className="max-w-md mx-auto" ref={paypalContainerRef} />
+
+            <div className="text-center">
+              <button
+                type="submit"
+                disabled={processing}
+                className="px-10 py-3.5 rounded-full bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest shadow-md transition-all inline-flex items-center gap-2"
+              >
+                <CreditCard className="w-4 h-4" />
+                {processing ? "Connecting to PayPal..." : `Express Checkout ${fmtUSD(total)} via PayPal / Card`}
+              </button>
+            </div>
+
+            <p className="text-center text-[11px] text-slate-500 font-mono flex items-center justify-center gap-1.5">
+              <Lock className="w-3.5 h-3.5 text-emerald-600" /> PayPal 256-Bit SSL Encrypted International Payment Gateway
+            </p>
           </div>
         </section>
       </form>

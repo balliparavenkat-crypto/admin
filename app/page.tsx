@@ -384,21 +384,27 @@ export default function HomePage() {
           <a href="#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SUMMITS</a>
           <a href="#sponsorship" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SPONSORSHIP</a>
           <a href="#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SCHEDULE</a>
-          <Link href="/indian-registers" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">REGISTER</Link>
+          <Link href="/indian-registers" className="hover:text-[#1E40AF] font-bold border-b-2 border-transparent hover:border-[#1E40AF] pb-1 transition-all duration-300 text-amber-600">REGISTER (RAZORPAY ₹)</Link>
+          <Link href="/international-registers" className="hover:text-[#1E40AF] font-bold border-b-2 border-transparent hover:border-[#1E40AF] pb-1 transition-all duration-300 text-[#1E40AF]">REGISTER (PAYPAL $)</Link>
           <Link href="/policies" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">POLICIES</Link>
           <Link href="/cancellation-policy" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">CANCELLATION POLICY</Link>
           <Link href="/terms-of-use" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">TERMS OF USE</Link>
           <a href="#contact" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">CONTACT</a>
         </div>
 
-        <div className="hidden lg:flex items-center gap-4">
-          <button 
-            type="button" 
-            onClick={() => setSponsorshipModalOpen(true)}
-            className="px-6 py-2.5 bg-gradient-to-r from-accent-gold via-amber-400 to-yellow-500 text-black text-xs font-extrabold rounded-full hover:shadow-lg hover:shadow-accent-blue/25 hover:scale-[1.02] transition duration-300 uppercase tracking-wider shadow-md"
+        <div className="hidden lg:flex items-center gap-3">
+          <Link
+            href="/indian-registers"
+            className="px-4 py-2 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 text-[11px] font-black rounded-full hover:scale-[1.02] transition duration-300 uppercase tracking-wider shadow-md"
           >
-            Sponsorship
-          </button>
+            Razorpay ₹
+          </Link>
+          <Link
+            href="/international-registers"
+            className="px-4 py-2 bg-[#1E40AF] hover:bg-blue-800 text-white text-[11px] font-black rounded-full hover:scale-[1.02] transition duration-300 uppercase tracking-wider shadow-md"
+          >
+            PayPal $
+          </Link>
         </div>
 
         {/* Mobile menu trigger */}
@@ -421,7 +427,8 @@ export default function HomePage() {
             <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SUMMITS</a>
             <a href="#sponsorship" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SPONSORSHIP</a>
             <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SCHEDULE</a>
-            <Link href="/indian-registers" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">REGISTER</Link>
+            <Link href="/indian-registers" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-amber-700 font-bold text-xs tracking-wider transition-colors">REGISTER INDIA (RAZORPAY ₹)</Link>
+            <Link href="/international-registers" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-[#1E40AF] font-bold text-xs tracking-wider transition-colors">REGISTER INTL (PAYPAL $)</Link>
             <Link href="/policies" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">POLICIES</Link>
             <Link href="/cancellation-policy" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">CANCELLATION POLICY</Link>
             <div className="flex flex-col gap-3 mt-4">
