@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { 
   Calendar, MapPin, DollarSign, Award, ArrowLeft, 
-  ChevronRight, Mic, Layers, Clock, CheckCircle, Sparkles, UserCheck, CreditCard, Globe
+  ChevronRight, Mic, Layers, Clock, CheckCircle, Sparkles, UserCheck 
 } from "lucide-react";
 import api from "../../../lib/api";
 
@@ -44,6 +44,7 @@ export default function PublicSummitDetailPage() {
   useEffect(() => {
     let resolvedSummit = { ...summit };
 
+    // 1. Try resolving from localStorage custom_summits
     try {
       const savedStr = localStorage.getItem("custom_summits");
       if (savedStr) {
@@ -61,6 +62,7 @@ export default function PublicSummitDetailPage() {
       console.error(e);
     }
 
+    // 2. Load speakers specifically tagged for this summit acronym from custom_speakers
     try {
       const savedSpeakersStr = localStorage.getItem("custom_speakers");
       if (savedSpeakersStr) {
@@ -77,6 +79,7 @@ export default function PublicSummitDetailPage() {
       console.error(e);
     }
 
+    // 3. Try resolving from Backend API
     const fetchApiData = async () => {
       try {
         const res = await api.get(`/conferences/public/all`);
@@ -102,21 +105,12 @@ export default function PublicSummitDetailPage() {
         <Link href="/" className="flex items-center gap-2 text-xs font-bold text-[#1E40AF] hover:underline">
           <ArrowLeft className="w-4 h-4" /> Back to D&V Global Summits
         </Link>
-        
-        <div className="flex items-center gap-3">
-          <Link
-            href="/indian-registers"
-            className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md transition"
-          >
-            🇮🇳 Razorpay (INR)
-          </Link>
-          <Link
-            href="/international-registers"
-            className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md transition"
-          >
-            🌐 PayPal (USD)
-          </Link>
-        </div>
+        <Link
+          href="/indian-registers"
+          className="px-6 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md hover:scale-[1.02] transition duration-300"
+        >
+          Register For Summit
+        </Link>
       </nav>
 
       {/* Hero Banner */}
@@ -159,15 +153,9 @@ export default function PublicSummitDetailPage() {
           <div className="pt-4 flex flex-wrap gap-4">
             <Link
               href="/indian-registers"
-              className="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg flex items-center gap-2"
+              className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
             >
-              🇮🇳 Pay via Razorpay (INR ₹) <ChevronRight className="w-4 h-4 stroke-[3]" />
-            </Link>
-            <Link
-              href="/international-registers"
-              className="px-6 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg flex items-center gap-2"
-            >
-              🌐 Pay via PayPal (USD $) <ChevronRight className="w-4 h-4 stroke-[3]" />
+              Register Now <ChevronRight className="w-4 h-4 stroke-[3]" />
             </Link>
           </div>
         </div>
@@ -185,61 +173,48 @@ export default function PublicSummitDetailPage() {
           </p>
         </section>
 
-        {/* Pricing & Fees Section with Dual Gateway Selector */}
+        {/* Pricing & Fees Section */}
         <section className="space-y-6">
           <h2 className="text-xl font-bold text-[#0D1117] flex items-center gap-2">
-            <DollarSign className="w-5 h-5 text-emerald-600" /> Registration Categories & Payment Options
+            <DollarSign className="w-5 h-5 text-emerald-600" /> Registration Categories & Fees
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 rounded-3xl bg-white border border-[#1E40AF]/10 space-y-3 shadow-sm hover:border-[#1E40AF]/30 transition">
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Author Registration</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeAuthor || 499} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Includes paper presentation slot, conference proceedings indexation, and all summit passes.</p>
-              <div className="grid grid-cols-2 gap-2 pt-2">
-                <Link href="/indian-registers" className="text-center py-2 rounded-xl bg-blue-600 text-white text-[11px] font-bold">
-                  Razorpay (INR)
-                </Link>
-                <Link href="/international-registers" className="text-center py-2 rounded-xl bg-amber-500 text-slate-950 text-[11px] font-bold">
-                  PayPal (USD)
-                </Link>
-              </div>
+              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+                Register as Author
+              </Link>
             </div>
 
             <div className="p-6 rounded-3xl bg-white border border-[#1E40AF]/10 space-y-3 shadow-sm hover:border-[#1E40AF]/30 transition">
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Delegate / Listener</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeListener || 299} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Full access to keynote sessions, panel discussions, networking lunch, and attendance certificate.</p>
-              <div className="grid grid-cols-2 gap-2 pt-2">
-                <Link href="/indian-registers" className="text-center py-2 rounded-xl bg-blue-600 text-white text-[11px] font-bold">
-                  Razorpay (INR)
-                </Link>
-                <Link href="/international-registers" className="text-center py-2 rounded-xl bg-amber-500 text-slate-950 text-[11px] font-bold">
-                  PayPal (USD)
-                </Link>
-              </div>
+              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+                Register as Listener
+              </Link>
             </div>
 
             <div className="p-6 rounded-3xl bg-white border border-[#1E40AF]/10 space-y-3 shadow-sm hover:border-[#1E40AF]/30 transition">
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Student Registration</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeStudent || 199} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Discounted pass for verified undergraduate and graduate research students.</p>
-              <div className="grid grid-cols-2 gap-2 pt-2">
-                <Link href="/indian-registers" className="text-center py-2 rounded-xl bg-blue-600 text-white text-[11px] font-bold">
-                  Razorpay (INR)
-                </Link>
-                <Link href="/international-registers" className="text-center py-2 rounded-xl bg-amber-500 text-slate-950 text-[11px] font-bold">
-                  PayPal (USD)
-                </Link>
-              </div>
+              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+                Register as Student
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* Keynote Speakers Section */}
+        {/* Keynote Speakers Section specifically for THIS summit */}
         <section className="space-y-6">
-          <h2 className="text-xl font-bold text-[#0D1117] flex items-center gap-2">
-            <Mic className="w-5 h-5 text-[#1E40AF]" /> Keynote Speakers ({summit.acronym || "DVGS2026"})
-          </h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold text-[#0D1117] flex items-center gap-2">
+              <Mic className="w-5 h-5 text-[#1E40AF]" /> Keynote Speakers ({summit.acronym || "DVGS2026"})
+            </h2>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {speakers.map((sp, idx) => (
@@ -267,20 +242,12 @@ export default function PublicSummitDetailPage() {
           <p className="text-xs text-gray-300 max-w-lg mx-auto leading-relaxed">
             Reserve your seat, submit your research paper, or network with global industry pioneers.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/indian-registers"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg hover:scale-[1.02] transition duration-300"
-            >
-              🇮🇳 Pay via Razorpay (INR ₹)
-            </Link>
-            <Link
-              href="/international-registers"
-              className="inline-flex items-center gap-2 px-8 py-3.5 bg-amber-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg hover:scale-[1.02] transition duration-300"
-            >
-              🌐 Pay via PayPal (USD $)
-            </Link>
-          </div>
+          <Link
+            href="/indian-registers"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg hover:scale-[1.02] transition duration-300"
+          >
+            Complete Registration Now <ChevronRight className="w-4 h-4 stroke-[3]" />
+          </Link>
         </section>
       </div>
     </div>

@@ -185,33 +185,20 @@ export default function InternationalRegistersPage() {
         <Link href="/" className="flex items-center group">
           <img src="/images/logo.png" alt="D&V Global Logo" className="h-20 md:h-24 w-auto object-contain transition duration-300" />
         </Link>
-        <div className="flex items-center gap-3 text-xs font-bold text-black">
+        <div className="flex items-center gap-2 text-xs font-bold text-black">
           <Link href="/" className="hover:text-black transition flex items-center gap-1"><Home className="w-3.5 h-3.5 text-black" /> Home</Link>
           <ChevronRight className="w-3 h-3 text-black" />
-          <Link href="/indian-registers" className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-extrabold flex items-center gap-1">
-            🇮🇳 Switch to Razorpay (INR ₹)
-          </Link>
+          <span className="text-black font-bold">International Registration</span>
         </div>
       </nav>
-
-      {/* Gateway Switcher Banner */}
-      <div className="bg-[#003087] text-white py-3 px-6 text-center text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-3">
-        <span>Payment Method Selected: <strong className="text-amber-300">PayPal International (USD $)</strong></span>
-        <Link
-          href="/indian-registers"
-          className="px-4 py-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-black text-[11px] uppercase tracking-wider flex items-center gap-1"
-        >
-          🇮🇳 Looking for Razorpay (INR ₹)? Click Here
-        </Link>
-      </div>
 
       {/* Header */}
       <div className="relative py-14 px-6 text-center border-b border-slate-200 bg-gradient-to-b from-amber-50/50 to-transparent">
         <span className="text-xs uppercase font-extrabold tracking-widest text-amber-700 mb-3 block font-mono">International Delegates & Authors</span>
         <h1 className="font-bold text-4xl md:text-5xl text-[#0D1117] mb-3">
-          International <span className="text-amber-600">Registration (PayPal USD $)</span>
+          International <span className="text-amber-600">Registration (USD $)</span>
         </h1>
-        <p className="text-gray-600 text-sm max-w-lg mx-auto">PayPal checkout available for global international credit cards, debit cards, and PayPal wallets.</p>
+        <p className="text-gray-600 text-sm max-w-lg mx-auto">Complete the form below to secure your seat. PayPal checkout available for global international credit cards, debit cards, and PayPal wallets.</p>
       </div>
 
       {/* Form */}
@@ -318,18 +305,11 @@ export default function InternationalRegistersPage() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-10 flex justify-center">
             <button type="submit"
-              className="px-10 py-4 font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center gap-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-xl hover:scale-[1.02] transition">
+              className="px-12 py-4 font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center gap-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-xl hover:scale-[1.02] transition">
               <Globe className="w-4 h-4 stroke-[3]" /> Proceed to PayPal Checkout <ChevronRight className="w-4 h-4 stroke-[3]" />
             </button>
-
-            <Link
-              href="/indian-registers"
-              className="px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md transition"
-            >
-              🇮🇳 Pay via Razorpay Instead
-            </Link>
           </div>
         </section>
       </form>
@@ -338,6 +318,7 @@ export default function InternationalRegistersPage() {
       {isPaypalModalOpen && (
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-md w-full bg-white rounded-3xl border border-amber-300 shadow-2xl overflow-hidden space-y-0">
+            {/* PayPal Modal Header */}
             <div className="bg-[#003087] p-6 text-white flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-mono font-bold text-amber-300 block tracking-widest uppercase">PAYPAL CHECKOUT GATEWAY</span>
