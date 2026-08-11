@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ChevronRight, RefreshCw, Home, CheckCircle, CreditCard, Lock, ShieldCheck, X } from "lucide-react";
+import { ChevronRight, RefreshCw, Home, CheckCircle, CreditCard, Lock, ShieldCheck, X, Globe } from "lucide-react";
 
 // ── Indian INR Fee data ───────────────────────────────────────────────────────
 const categories = [
@@ -189,12 +189,25 @@ export default function IndianRegistersPage() {
         <Link href="/" className="flex items-center group">
           <img src="/images/logo.png" alt="D&V Global Logo" className="h-20 md:h-24 w-auto object-contain transition duration-300" />
         </Link>
-        <div className="flex items-center gap-2 text-xs font-bold text-black">
+        <div className="flex items-center gap-3 text-xs font-bold text-black">
           <Link href="/" className="hover:text-black transition flex items-center gap-1"><Home className="w-3.5 h-3.5 text-black" /> Home</Link>
           <ChevronRight className="w-3 h-3 text-black" />
-          <span className="text-black font-bold">Indian Delegates Registration</span>
+          <Link href="/international-registers" className="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-xs font-extrabold flex items-center gap-1">
+            <Globe className="w-3.5 h-3.5" /> Switch to PayPal (USD $)
+          </Link>
         </div>
       </nav>
+
+      {/* Gateway Switcher Banner */}
+      <div className="bg-[#02042B] text-white py-3 px-6 text-center text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-3">
+        <span>Payment Method Selected: <strong className="text-blue-400">Razorpay (Indian INR ₹)</strong></span>
+        <Link
+          href="/international-registers"
+          className="px-4 py-1 rounded-full bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-[11px] uppercase tracking-wider flex items-center gap-1"
+        >
+          <Globe className="w-3.5 h-3.5" /> Looking for PayPal (USD $)? Click Here
+        </Link>
+      </div>
 
       {/* Header */}
       <div className="relative py-14 px-6 text-center border-b border-slate-200 bg-gradient-to-b from-blue-50/50 to-transparent">
@@ -202,7 +215,7 @@ export default function IndianRegistersPage() {
         <h1 className="font-bold text-4xl md:text-5xl text-[#0D1117] mb-3">
           Indian Conference <span className="text-[#1E40AF]">Registration (INR ₹)</span>
         </h1>
-        <p className="text-gray-600 text-sm max-w-lg mx-auto">Complete the form below to secure your seat. Razorpay checkout available for Indian debit cards, credit cards, UPI, and Netbanking.</p>
+        <p className="text-gray-600 text-sm max-w-lg mx-auto">Razorpay checkout available for Indian debit cards, credit cards, UPI, and Netbanking.</p>
       </div>
 
       {/* Form */}
@@ -282,48 +295,9 @@ export default function IndianRegistersPage() {
           </div>
         </section>
 
-        {/* 3 — Accommodation */}
+        {/* 3 — Verification & Razorpay Checkout Summary */}
         <section className={panelCls} style={panelStyle}>
-          <SectionTitle n="3" color="cyan">Accommodation Fee <span className="text-xs font-normal text-gray-500 ml-1">(Optional)</span></SectionTitle>
-          <div className="overflow-x-auto rounded-xl border border-[#1E40AF]/15 bg-white mt-6">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-[#1E40AF]/15 bg-slate-100">
-                  <th className="text-left px-5 py-3.5 text-xs font-bold text-gray-600 uppercase tracking-wider">Nights</th>
-                  <th className="text-center px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-[#1E40AF]">Single Occupancy</th>
-                  <th className="text-center px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-[#1E40AF]">Double Occupancy</th>
-                  <th className="text-center px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-emerald-800">Triple Occupancy</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                {accommodation.map(row => (
-                  <tr key={row.nights}>
-                    <td className="px-5 py-4 font-semibold text-[#0D1117]">{row.nights}</td>
-                    {(["single", "double", "triple"] as const).map(type => {
-                      const active = selAccom?.nights === row.nights && selAccom?.type === type;
-                      return (
-                        <td key={type} className="px-5 py-4 text-center">
-                          <button type="button"
-                            onClick={() => { setSelAccom(active ? null : { nights: row.nights, type }); setSelPkg(""); }}
-                            className="px-4 py-2 rounded-lg font-mono font-bold text-xs transition duration-200"
-                            style={active
-                              ? { background: "#1E40AF", color: "#FFFFFF" }
-                              : { background: "rgba(30,64,175,0.05)", border: "1px solid rgba(30,64,175,0.15)", color: "#1E40AF" }}>
-                            {fmt(row[type])}
-                          </button>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* 4 — Verification & Razorpay Checkout Summary */}
-        <section className={panelCls} style={panelStyle}>
-          <SectionTitle n="4" color="cyan">Verification & Razorpay Payment</SectionTitle>
+          <SectionTitle n="3" color="cyan">Verification & Razorpay Payment</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-end mt-6">
             <div>
               <label className={labelCls}>Verification Code <Req /></label>
@@ -348,11 +322,18 @@ export default function IndianRegistersPage() {
             </div>
           </div>
 
-          <div className="mt-10 flex justify-center">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button type="submit"
-              className="px-12 py-4 font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center gap-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-xl hover:scale-[1.02] transition">
+              className="px-10 py-4 font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center gap-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-xl hover:scale-[1.02] transition">
               <CreditCard className="w-4 h-4 stroke-[3]" /> Proceed to Razorpay Payment <ChevronRight className="w-4 h-4 stroke-[3]" />
             </button>
+            
+            <Link
+              href="/international-registers"
+              className="px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 shadow-md transition"
+            >
+              <Globe className="w-4 h-4" /> Pay via PayPal Instead
+            </Link>
           </div>
         </section>
       </form>
@@ -361,7 +342,6 @@ export default function IndianRegistersPage() {
       {isRazorpayModalOpen && (
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-md w-full bg-white rounded-3xl border border-blue-300 shadow-2xl overflow-hidden space-y-0">
-            {/* Razorpay Modal Header */}
             <div className="bg-[#02042B] p-6 text-white flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-mono font-bold text-blue-400 block tracking-widest uppercase">RAZORPAY CHECKOUT GATEWAY</span>
@@ -382,31 +362,9 @@ export default function IndianRegistersPage() {
                   <span className="text-slate-500">Payer Email:</span>
                   <span className="font-bold text-slate-800">{form.email}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-500">Payer Phone:</span>
-                  <span className="font-bold text-slate-800">{form.whatsapp}</span>
-                </div>
                 <div className="flex justify-between border-t border-slate-200 pt-2 text-sm">
                   <span className="font-bold text-slate-700">Amount (INR):</span>
                   <span className="font-black text-blue-700">{fmt(total)}</span>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <span className="text-slate-700 font-bold block text-[11px] uppercase">Select Indian Payment Method:</span>
-                <div className="grid grid-cols-2 gap-2 font-bold">
-                  <div className="p-3 rounded-xl border border-blue-600 bg-blue-50 text-blue-900 text-center cursor-pointer">
-                    UPI / GPay / PhonePe
-                  </div>
-                  <div className="p-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-center cursor-pointer">
-                    Credit / Debit Card
-                  </div>
-                  <div className="p-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-center cursor-pointer">
-                    Netbanking (SBI/HDFC)
-                  </div>
-                  <div className="p-3 rounded-xl border border-slate-300 bg-white text-slate-800 text-center cursor-pointer">
-                    Wallets / CRED
-                  </div>
                 </div>
               </div>
 
@@ -416,7 +374,7 @@ export default function IndianRegistersPage() {
                   onClick={handleCompleteRazorpayPayment}
                   className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2"
                 >
-                  <ShieldCheck className="w-4 h-4" /> Pay {fmt(total)} via Razorpay
+                  <ShieldCheck className="w-4 h-4" /> Authorize {fmt(total)} via Razorpay
                 </button>
               </div>
             </div>
