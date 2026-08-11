@@ -4,15 +4,15 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronRight, RefreshCw, Home, CheckCircle, CreditCard, Lock, ShieldCheck, X, Globe } from "lucide-react";
 
-// ── International USD Fee data ────────────────────────────────────────────────
+// ── Fee data ──────────────────────────────────────────────────────────────────
 const categories = [
-  { id: "oral",      label: "Oral Talk",           earlyBird: 699, superEarly: 799, standard: 899 },
-  { id: "invited",   label: "Invited Talk",         earlyBird: 699, superEarly: 799, standard: 899 },
-  { id: "poster",    label: "Poster",               earlyBird: 499, superEarly: 599, standard: 699 },
-  { id: "student",   label: "Student Delegate",     earlyBird: 399, superEarly: 499, standard: 599 },
-  { id: "industry",  label: "Industry Delegate",    earlyBird: 899, superEarly: 999, standard: 1099 },
-  { id: "virtual",   label: "Virtual Registration", earlyBird: 199, superEarly: 299, standard: 399 },
-  { id: "accompany", label: "Accompanying Person",  earlyBird: 299, superEarly: 299, standard: 299 },
+  { id: "oral",      label: "Oral Talk",           earlyBird: 699, superEarly: 799, standard: 899, inr: 49900 },
+  { id: "invited",   label: "Invited Talk",         earlyBird: 699, superEarly: 799, standard: 899, inr: 49900 },
+  { id: "poster",    label: "Poster",               earlyBird: 499, superEarly: 599, standard: 699, inr: 34900 },
+  { id: "student",   label: "Student Delegate",     earlyBird: 399, superEarly: 499, standard: 599, inr: 27900 },
+  { id: "industry",  label: "Industry Delegate",    earlyBird: 899, superEarly: 999, standard: 1099, inr: 64900 },
+  { id: "virtual",   label: "Virtual Registration", earlyBird: 199, superEarly: 299, standard: 399, inr: 14900 },
+  { id: "accompany", label: "Accompanying Person",  earlyBird: 299, superEarly: 299, standard: 299, inr: 19900 },
 ];
 
 const accommodation = [
@@ -70,15 +70,16 @@ export default function InternationalRegistersPage() {
   const [selPkg, setSelPkg] = useState("");
   const [captcha, setCaptcha] = useState(genCaptcha);
   const [captchaIn, setCaptchaIn] = useState("");
-  
-  // PayPal Modal & Confirmation State
+
+  // Gateway Modals
+  const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState(false);
   const [isPaypalModalOpen, setIsPaypalModalOpen] = useState(false);
   const [paymentDone, setPaymentDone] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
 
   const refreshCaptcha = () => { setCaptcha(genCaptcha()); setCaptchaIn(""); };
 
-  const total = (() => {
+  const totalUSD = (() => {
     if (selPkg) return packages.find(p => p.id === selPkg)?.price ?? 0;
     const cat = categories.find(c => c.id === selCat);
     const catFee = cat ? cat[feeType] : 0;
@@ -87,32 +88,45 @@ export default function InternationalRegistersPage() {
     return catFee + accomFee;
   })();
 
-  const fmt = (n: number) => `$ ${n.toLocaleString("en-US")}`;
+  const totalINR = Math.round(totalUSD * 83);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleInitiatePayment = (gateway: "RAZORPAY" | "PAYPAL", e: React.MouseEvent) => {
     e.preventDefault();
-    if (captchaIn.toUpperCase() !== captcha) {
-      alert("Verification code does not match. Please try again."); refreshCaptcha(); return;
+    if (!form.firstName || !form.lastName || !form.email) {
+      alert("Please fill in your Personal Information (Name, Email) before proceeding.");
+      return;
     }
-    // Open PayPal Checkout Modal
-    setIsPaypalModalOpen(true);
+    if (captchaIn.toUpperCase() !== captcha) {
+      alert("Verification code does not match. Please enter the correct captcha code.");
+      refreshCaptcha();
+      return;
+    }
+
+    if (gateway === "RAZORPAY") {
+      setIsRazorpayModalOpen(true);
+    } else {
+      setIsPaypalModalOpen(true);
+    }
   };
 
-  const handleCompletePaypalPayment = () => {
-    const txnId = `PAYPAL-CAP-${Math.floor(100000000 + Math.random() * 900000000)}`;
+  const handleCompletePayment = (gateway: "RAZORPAY" | "PAYPAL") => {
+    const isRazorpay = gateway === "RAZORPAY";
+    const txnId = isRazorpay
+      ? `pay_Rzp${Math.floor(100000000 + Math.random() * 900000000)}`
+      : `PAYPAL-CAP-${Math.floor(100000000 + Math.random() * 900000000)}`;
+
     const newPaymentObj = {
       id: Date.now(),
       transactionId: txnId,
       user: { firstName: form.firstName, lastName: form.lastName, email: form.email, whatsapp: form.whatsapp },
       conference: { acronym: "DVGS2026", title: "D&V Global Summit 2026" },
-      amount: total,
-      currency: "USD",
-      paymentGateway: "PAYPAL",
+      amount: isRazorpay ? totalINR : totalUSD,
+      currency: isRazorpay ? "INR" : "USD",
+      paymentGateway: gateway,
       status: "SUCCESS",
       createdAt: new Date().toISOString().substring(0, 10),
     };
 
-    // Save transaction to localStorage registration_payments
     try {
       const existingStr = localStorage.getItem("registration_payments");
       const existing = existingStr ? JSON.parse(existingStr) : [];
@@ -123,6 +137,7 @@ export default function InternationalRegistersPage() {
     }
 
     setReceiptData(newPaymentObj);
+    setIsRazorpayModalOpen(false);
     setIsPaypalModalOpen(false);
     setPaymentDone(true);
   };
@@ -135,18 +150,20 @@ export default function InternationalRegistersPage() {
         </div>
 
         <div>
-          <span className="px-3 py-1 bg-amber-100 text-amber-800 font-mono font-bold text-xs rounded-full border border-amber-300">
-            PAYPAL PAYMENT SUCCESSFUL
+          <span className={`px-3 py-1 font-mono font-bold text-xs rounded-full border ${
+            receiptData.paymentGateway === "RAZORPAY" ? "bg-blue-100 text-blue-800 border-blue-300" : "bg-amber-100 text-amber-800 border-amber-300"
+          }`}>
+            {receiptData.paymentGateway} PAYMENT SUCCESSFUL
           </span>
           <h2 className="font-extrabold text-3xl text-[#0D1117] mt-3">International Registration Confirmed!</h2>
           <p className="text-slate-600 text-xs mt-1">
-            PayPal official receipt & conference pass sent to <span className="text-[#1E40AF] font-bold">{receiptData.user?.email}</span>
+            Payment receipt & ticket details sent to <span className="text-[#1E40AF] font-bold">{receiptData.user?.email}</span>
           </p>
         </div>
 
         <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-left space-y-3 font-mono text-xs">
           <div className="flex justify-between border-b border-slate-200 pb-2">
-            <span className="text-slate-500">Capture ID:</span>
+            <span className="text-slate-500">Transaction ID:</span>
             <span className="font-bold text-[#1E40AF]">{receiptData.transactionId}</span>
           </div>
           <div className="flex justify-between border-b border-slate-200 pb-2">
@@ -158,8 +175,10 @@ export default function InternationalRegistersPage() {
             <span className="font-bold text-slate-800">{receiptData.conference?.title}</span>
           </div>
           <div className="flex justify-between pt-1">
-            <span className="text-slate-500">Total Paid (USD):</span>
-            <span className="font-black text-emerald-700 text-base">{fmt(receiptData.amount)}</span>
+            <span className="text-slate-500">Total Paid ({receiptData.currency}):</span>
+            <span className="font-black text-emerald-700 text-base">
+              {receiptData.currency === "INR" ? `₹ ${receiptData.amount.toLocaleString()}` : `$ ${receiptData.amount}`}
+            </span>
           </div>
         </div>
 
@@ -194,15 +213,15 @@ export default function InternationalRegistersPage() {
 
       {/* Header */}
       <div className="relative py-14 px-6 text-center border-b border-slate-200 bg-gradient-to-b from-amber-50/50 to-transparent">
-        <span className="text-xs uppercase font-extrabold tracking-widest text-amber-700 mb-3 block font-mono">International Delegates & Authors</span>
+        <span className="text-xs uppercase font-extrabold tracking-widest text-amber-700 mb-3 block font-mono">International & Global Delegates</span>
         <h1 className="font-bold text-4xl md:text-5xl text-[#0D1117] mb-3">
-          International <span className="text-amber-600">Registration (USD $)</span>
+          International <span className="text-amber-600">Registration</span>
         </h1>
-        <p className="text-gray-600 text-sm max-w-lg mx-auto">Complete the form below to secure your seat. PayPal checkout available for global international credit cards, debit cards, and PayPal wallets.</p>
+        <p className="text-gray-600 text-sm max-w-lg mx-auto">Complete the form below to secure your seat. Razorpay (for Indian transactions) and PayPal (for International transactions) available.</p>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleFormSubmit} className="max-w-5xl mx-auto px-4 md:px-6 py-14 space-y-10">
+      <form onSubmit={(e) => e.preventDefault()} className="max-w-5xl mx-auto px-4 md:px-6 py-14 space-y-10">
 
         {/* 1 — Personal Info */}
         <section className={panelCls} style={panelStyle}>
@@ -264,9 +283,9 @@ export default function InternationalRegistersPage() {
                           {cat.label}
                         </span>
                       </td>
-                      <td className="px-5 py-4 text-right font-mono font-bold text-[#1E40AF]">{fmt(cat.earlyBird)}</td>
-                      <td className="px-5 py-4 text-right font-mono font-bold text-[#1E40AF]">{fmt(cat.superEarly)}</td>
-                      <td className="px-5 py-4 text-right font-mono font-bold text-emerald-800">{fmt(cat.standard)}</td>
+                      <td className="px-5 py-4 text-right font-mono font-bold text-[#1E40AF]">$ {cat.earlyBird}</td>
+                      <td className="px-5 py-4 text-right font-mono font-bold text-[#1E40AF]">$ {cat.superEarly}</td>
+                      <td className="px-5 py-4 text-right font-mono font-bold text-emerald-800">$ {cat.standard}</td>
                       <td className="px-5 py-4 text-right">
                         {active && <span className="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-100 text-[#1E40AF]">Selected</span>}
                       </td>
@@ -278,9 +297,9 @@ export default function InternationalRegistersPage() {
           </div>
         </section>
 
-        {/* 3 — Captcha & PayPal Checkout Summary */}
+        {/* 3 — Verification & Summary */}
         <section className={panelCls} style={panelStyle}>
-          <SectionTitle n="3">Verification & PayPal Payment</SectionTitle>
+          <SectionTitle n="3">Verification & Payment Options</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-end mt-6">
             <div>
               <label className={labelCls}>Verification Code <Req /></label>
@@ -295,33 +314,93 @@ export default function InternationalRegistersPage() {
                 className={inputCls + " tracking-widest font-mono font-bold"} />
             </div>
 
-            <div className="rounded-2xl p-6 border border-amber-200 bg-amber-50/40 space-y-3">
+            <div className="rounded-2xl p-6 border border-slate-200 bg-slate-50 space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-bold uppercase text-gray-600">Total Payable Amount:</span>
-                <span className="px-2.5 py-0.5 rounded bg-amber-500 text-slate-950 font-mono font-black text-[10px]">PAYPAL (USD)</span>
               </div>
-              <div className="text-3xl font-black text-[#0D1117] font-mono">{fmt(total)}</div>
-              <p className="text-[11px] text-slate-600 font-medium">Includes international summit pass, keynote sessions, proceedings indexation, and lunch pass.</p>
+              <div className="text-3xl font-black text-[#0D1117] font-mono">$ {totalUSD.toLocaleString()} <span className="text-sm font-normal text-slate-500">(₹ {totalINR.toLocaleString()})</span></div>
+              <p className="text-[11px] text-slate-600 font-medium">Select your preferred payment gateway below to proceed.</p>
             </div>
           </div>
 
-          <div className="mt-10 flex justify-center">
-            <button type="submit"
-              className="px-12 py-4 font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center gap-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-xl hover:scale-[1.02] transition">
-              <Globe className="w-4 h-4 stroke-[3]" /> Proceed to PayPal Checkout <ChevronRight className="w-4 h-4 stroke-[3]" />
+          {/* TWO PAYMENT BUTTONS AT THE BOTTOM WITH FAVICONS / FLAGS */}
+          <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* 1. Razorpay Button with India Flag Favicon */}
+            <button
+              type="button"
+              onClick={(e) => handleInitiatePayment("RAZORPAY", e)}
+              className="w-full sm:w-auto px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center gap-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-xl hover:scale-[1.02] transition border border-amber-300 cursor-pointer"
+            >
+              <span className="text-xl">🇮🇳</span>
+              <span className="font-extrabold">PROCEED TO RAZORPAY PAYMENT (INDIAN TRANSACTIONS ₹)</span>
+              <ChevronRight className="w-4 h-4 stroke-[3]" />
+            </button>
+
+            {/* 2. PayPal Button with PayPal / Globe Favicon */}
+            <button
+              type="button"
+              onClick={(e) => handleInitiatePayment("PAYPAL", e)}
+              className="w-full sm:w-auto px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center gap-3 bg-[#003087] hover:bg-[#002568] text-white shadow-xl hover:scale-[1.02] transition border border-blue-400 cursor-pointer"
+            >
+              <span className="text-xl">🌐</span>
+              <span className="font-extrabold">PROCEED TO PAYPAL PAYMENT (INTERNATIONAL TRANSACTIONS $)</span>
+              <ChevronRight className="w-4 h-4 stroke-[3]" />
             </button>
           </div>
         </section>
       </form>
 
+      {/* Razorpay Official Checkout Simulator Modal */}
+      {isRazorpayModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="max-w-md w-full bg-white rounded-3xl border border-blue-300 shadow-2xl overflow-hidden space-y-0">
+            <div className="bg-[#02042B] p-6 text-white flex items-center justify-between">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-blue-400 block tracking-widest uppercase">RAZORPAY CHECKOUT GATEWAY (🇮🇳 INDIA)</span>
+                <h3 className="font-extrabold text-base text-white mt-0.5">D&V Global Summits 2026</h3>
+              </div>
+              <button onClick={() => setIsRazorpayModalOpen(false)} className="text-slate-400 hover:text-white">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4 text-xs">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 font-mono">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Payer Name:</span>
+                  <span className="font-bold text-[#0D1117]">{form.title} {form.firstName} {form.lastName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Payer Email:</span>
+                  <span className="font-bold text-slate-800">{form.email}</span>
+                </div>
+                <div className="flex justify-between border-t border-slate-200 pt-2 text-sm">
+                  <span className="font-bold text-slate-700">Amount (INR):</span>
+                  <span className="font-black text-blue-700">₹ {totalINR.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => handleCompletePayment("RAZORPAY")}
+                  className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2"
+                >
+                  <ShieldCheck className="w-4 h-4" /> Authorize ₹ {totalINR.toLocaleString()} via Razorpay
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* PayPal Official Checkout Simulator Modal */}
       {isPaypalModalOpen && (
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-md w-full bg-white rounded-3xl border border-amber-300 shadow-2xl overflow-hidden space-y-0">
-            {/* PayPal Modal Header */}
             <div className="bg-[#003087] p-6 text-white flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold text-amber-300 block tracking-widest uppercase">PAYPAL CHECKOUT GATEWAY</span>
+                <span className="text-[10px] font-mono font-bold text-amber-300 block tracking-widest uppercase">PAYPAL CHECKOUT GATEWAY (🌐 INTERNATIONAL)</span>
                 <h3 className="font-extrabold text-base text-white mt-0.5">D&V Global Summits 2026</h3>
               </div>
               <button onClick={() => setIsPaypalModalOpen(false)} className="text-slate-400 hover:text-white">
@@ -341,23 +420,23 @@ export default function InternationalRegistersPage() {
                 </div>
                 <div className="flex justify-between border-t border-slate-200 pt-2 text-sm">
                   <span className="font-bold text-slate-700">Amount (USD):</span>
-                  <span className="font-black text-amber-700">{fmt(total)}</span>
+                  <span className="font-black text-amber-700">$ {totalUSD.toLocaleString()}</span>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <span className="text-slate-700 font-bold block text-[11px] uppercase">Select International Payment Method:</span>
+                <span className="text-slate-700 font-bold block text-[11px] uppercase">International Payment Option:</span>
                 <div className="space-y-2">
                   <button
                     type="button"
-                    onClick={handleCompletePaypalPayment}
+                    onClick={() => handleCompletePayment("PAYPAL")}
                     className="w-full py-3.5 rounded-xl bg-[#FFC439] hover:bg-yellow-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2"
                   >
-                    PayPal Checkout ({fmt(total)})
+                    PayPal Checkout ($ {totalUSD.toLocaleString()})
                   </button>
                   <button
                     type="button"
-                    onClick={handleCompletePaypalPayment}
+                    onClick={() => handleCompletePayment("PAYPAL")}
                     className="w-full py-3.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-xs uppercase tracking-wider shadow-md flex items-center justify-center gap-2"
                   >
                     <CreditCard className="w-4 h-4" /> Debit or Credit Card
