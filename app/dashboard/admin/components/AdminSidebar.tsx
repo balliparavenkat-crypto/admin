@@ -7,7 +7,7 @@ import {
   LayoutDashboard, Calendar, Users, FileText, CheckSquare, UserCheck, 
   Mic, Building2, CreditCard, QrCode, Award, Bell, Mail, Image as ImageIcon, 
   Globe, FileSpreadsheet, BarChart3, Shield, History, Settings, 
-  ChevronDown, ChevronRight, X, Sparkles
+  ChevronDown, ChevronRight, X
 } from "lucide-react";
 
 export default function AdminSidebar({
@@ -71,22 +71,18 @@ export default function AdminSidebar({
           isMobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Sidebar Header */}
-        <div className="p-6 border-b border-[#1E40AF]/15 flex items-center justify-between bg-slate-50">
-          <Link href="/dashboard/admin" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0D1117] p-0.5 shadow-md border border-[#1E40AF]/30">
-              <div className="w-full h-full bg-[#0D1117] rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-amber-400" />
-              </div>
-            </div>
-            <div>
-              <span className="font-extrabold text-sm text-[#0D1117] tracking-wider block">D&V GLOBAL</span>
-              <span className="text-[10px] text-[#1E40AF] font-mono tracking-widest uppercase font-bold">Admin Portal</span>
-            </div>
+        {/* Sidebar Header with Official D&V Global Logo */}
+        <div className="p-4 px-6 border-b border-[#1E40AF]/15 flex items-center justify-between bg-slate-50">
+          <Link href="/dashboard/admin" className="flex items-center gap-3 group">
+            <img 
+              src="/images/logo.png" 
+              alt="D&V Global Logo" 
+              className="h-14 w-auto object-contain transition-transform group-hover:scale-105" 
+            />
           </Link>
           <button
             onClick={() => setIsMobileOpen(false)}
-            className="lg:hidden text-slate-600 hover:text-slate-900"
+            className="lg:hidden text-slate-600 hover:text-slate-900 p-1"
           >
             <X className="w-5 h-5" />
           </button>

@@ -21,10 +21,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="flex items-center gap-4 flex-1">
             <button
               onClick={() => setIsMobileOpen(true)}
-              className="lg:hidden p-2 rounded-xl text-slate-800 hover:text-slate-900 bg-slate-100 border border-slate-300"
+              className="lg:hidden p-2 rounded-xl text-slate-800 hover:text-slate-900 bg-slate-100 border border-slate-300 flex items-center gap-2"
             >
               <Menu className="w-5 h-5" />
             </button>
+
+            {/* Mobile Header Logo */}
+            <Link href="/dashboard/admin" className="lg:hidden flex items-center">
+              <img src="/images/logo.png" alt="D&V Global Logo" className="h-10 w-auto object-contain" />
+            </Link>
 
             {/* Quick Search */}
             <div className="relative max-w-md w-full hidden sm:block">
