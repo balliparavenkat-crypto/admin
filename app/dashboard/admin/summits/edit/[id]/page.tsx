@@ -6,6 +6,7 @@ import { ArrowLeft, Save, Sparkles, Calendar, DollarSign, FileText, Image as Ima
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 import api from "../../../../../../lib/api";
+import { getCountryCode } from "@/lib/country";
 
 export default function EditSummitPage() {
   const router = useRouter();
@@ -120,6 +121,8 @@ export default function EditSummitPage() {
     e.preventDefault();
     setLoading(true);
 
+    const calculatedCountryCode = getCountryCode(formData.country, formData.city);
+
     const updatedObj = {
       id: summitId,
       title: formData.title,
@@ -132,6 +135,7 @@ export default function EditSummitPage() {
       venueName: formData.venueName,
       city: formData.city,
       country: formData.country,
+      countryCode: calculatedCountryCode,
       status: formData.status,
       registrationFeeAuthor: parseFloat(formData.registrationFeeAuthor) || 499.0,
       registrationFeeListener: parseFloat(formData.registrationFeeListener) || 299.0,

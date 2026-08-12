@@ -420,3 +420,13 @@
   pointer-events: none;
   z-index: 3;
 }
+
+/* Hide Next.js Dev Indicator Overlay Badge ('N' logo) */
+nextjs-portal,
+[data-nextjs-toast-wrapper],
+[data-nextjs-dev-overlay] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

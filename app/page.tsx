@@ -8,6 +8,7 @@ import {
   QrCode, Menu, X, ArrowUpRight, HelpCircle, Mail, MessageSquare, Phone
 } from "lucide-react";
 import Link from "next/link";
+import { getCountryCode } from "@/lib/country";
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -263,17 +264,21 @@ export default function HomePage() {
       const savedStr = localStorage.getItem("custom_summits");
       if (savedStr) {
         const customList: any[] = JSON.parse(savedStr);
-        const mappedCustom = customList.map((c, i) => ({
-          id: c.id || `custom-${i}`,
-          year: 2026,
-          title: c.title,
-          date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
-          location: `${c.city || "San Francisco"}, ${c.country || "USA"}`,
-          status: c.status || "Registration Open",
-          image: c.bannerUrl || "/images/ai_quantum_summit.png",
-          tag: "Advanced Tech",
-          countryCode: "us",
-        }));
+        const mappedCustom = customList.map((c, i) => {
+          const loc = `${c.city || ""}${c.city && c.country ? ", " : ""}${c.country || ""}` || "San Francisco, USA";
+          const code = c.countryCode || getCountryCode(c.country, c.city, loc);
+          return {
+            id: c.id || `custom-${i}`,
+            year: 2026,
+            title: c.title,
+            date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
+            location: loc,
+            status: c.status || "Registration Open",
+            image: c.bannerUrl || "/images/ai_quantum_summit.png",
+            tag: "Advanced Tech",
+            countryCode: code,
+          };
+        });
         setDynamicConferences(mappedCustom);
       }
     } catch (e) {
@@ -821,8 +826,8 @@ export default function HomePage() {
                         {/* Country flag image top-right corner */}
                         <div className="absolute top-3 right-3 z-10 rounded-md overflow-hidden shadow-xl border-2 border-[#1E40AF]/30" title={conf.location}>
                           <img
-                            src={`https://flagcdn.com/w80/${conf.countryCode}.png`}
-                            srcSet={`https://flagcdn.com/w160/${conf.countryCode}.png 2x`}
+                            src={`https://flagcdn.com/w80/${getCountryCode(undefined, undefined, conf.location || conf.countryCode)}.png`}
+                            srcSet={`https://flagcdn.com/w160/${getCountryCode(undefined, undefined, conf.location || conf.countryCode)}.png 2x`}
                             alt={conf.location}
                             width={56}
                             height={38}
@@ -1467,7 +1472,7 @@ export default function HomePage() {
                       </div>
                       <button
                         type="submit"
-                        className="w-full sm:w-auto px-7 py-3 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-amber-500/20 hover:brightness-110 transition"
+                        className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-[#2554d7] to-[#eab308] text-black font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg shadow-blue-500/20 hover:brightness-110 hover:scale-[1.02] transition-all duration-300"
                       >
                         Submit Reservation
                       </button>

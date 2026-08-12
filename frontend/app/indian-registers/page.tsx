@@ -336,8 +336,8 @@ export default function IndianRegistersPage() {
           </div>
           <div className="mt-10 flex justify-center">
             <button type="submit"
-              className="px-14 py-4 font-bold text-sm uppercase tracking-widest rounded-full flex items-center gap-3 transition duration-300 hover:scale-[1.03]"
-              style={{ background: "linear-gradient(90deg,#1E40AF,#1E3A8A)", color: "#FFFFFF", boxShadow: "0 8px 30px rgba(30,64,175,0.25)" }}>
+              className="px-14 py-4 font-extrabold text-sm uppercase tracking-widest rounded-full flex items-center gap-3 transition duration-300 hover:scale-[1.03]"
+              style={{ background: "linear-gradient(90deg, #2554d7 0%, #eab308 100%)", color: "#000000", boxShadow: "0 8px 30px rgba(37,84,215,0.3)" }}>
               Register Now <ChevronRight className="w-5 h-5" />
             </button>
           </div>

@@ -1496,7 +1496,7 @@ export default function HomePage() {
                       </div>
                       <button
                         type="submit"
-                        className="w-full sm:w-auto px-7 py-3 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-amber-500/20 hover:brightness-110 transition"
+                        className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-[#2554d7] to-[#eab308] text-black font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg shadow-blue-500/20 hover:brightness-110 hover:scale-[1.02] transition-all duration-300"
                       >
                         Submit Reservation
                       </button>

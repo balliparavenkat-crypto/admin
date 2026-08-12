@@ -329,7 +329,7 @@ export default function InternationalRegistersPage() {
             <button
               type="button"
               onClick={(e) => handleInitiatePayment("RAZORPAY", e)}
-              className="w-full sm:w-auto px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center gap-3 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-xl hover:scale-[1.02] transition border border-amber-300 cursor-pointer"
+              className="w-full sm:w-auto px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#2554d7] to-[#eab308] text-black shadow-xl hover:scale-[1.02] transition border border-amber-300/30 cursor-pointer"
             >
               <span className="text-xl">🇮🇳</span>
               <span className="font-extrabold">PROCEED TO RAZORPAY PAYMENT (INDIAN TRANSACTIONS ₹)</span>
@@ -340,7 +340,7 @@ export default function InternationalRegistersPage() {
             <button
               type="button"
               onClick={(e) => handleInitiatePayment("PAYPAL", e)}
-              className="w-full sm:w-auto px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center gap-3 bg-[#003087] hover:bg-[#002568] text-white shadow-xl hover:scale-[1.02] transition border border-blue-400 cursor-pointer"
+              className="w-full sm:w-auto px-8 py-4 font-extrabold text-xs uppercase tracking-wider rounded-full flex items-center justify-center gap-3 bg-gradient-to-r from-[#2554d7] to-[#eab308] text-black shadow-xl hover:scale-[1.02] transition border border-amber-300/30 cursor-pointer"
             >
               <span className="text-xl">🌐</span>
               <span className="font-extrabold">PROCEED TO PAYPAL PAYMENT (INTERNATIONAL TRANSACTIONS $)</span>
