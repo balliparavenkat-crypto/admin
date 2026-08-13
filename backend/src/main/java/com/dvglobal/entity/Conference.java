@@ -30,11 +30,29 @@ public class Conference {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "banner_url", columnDefinition = "TEXT")
+    private String bannerUrl;
+
+    @Column(name = "short_description", columnDefinition = "TEXT")
+    private String shortDescription;
+
+    @Column(name = "website_url", length = 255)
+    private String websiteUrl;
+
     @Column(name = "start_date", nullable = false)
     private Instant startDate;
 
     @Column(name = "end_date", nullable = false)
     private Instant endDate;
+
+    @Column(name = "start_time", length = 20)
+    private String startTime;
+
+    @Column(name = "end_time", length = 20)
+    private String endTime;
+
+    @Column(name = "timezone", length = 50)
+    private String timezone;
 
     @Column(name = "venue_name", length = 255)
     private String venueName;
@@ -45,12 +63,30 @@ public class Conference {
     @Column(name = "city", length = 100)
     private String city;
 
+    @Column(name = "state", length = 100)
+    private String state;
+
     @Column(name = "country", length = 100)
     private String country;
 
+    @Column(name = "country_code", length = 10)
+    private String countryCode;
+
+    @Column(name = "event_type", length = 50)
+    private String eventType;
+
     @Column(nullable = false, length = 30)
     @Builder.Default
-    private String status = "DRAFT"; // DRAFT, UPCOMING, ACTIVE, COMPLETED
+    private String status = "DRAFT"; // DRAFT, UPCOMING, ACTIVE, COMPLETED, ARCHIVED
+
+    @Column(name = "registration_open_date")
+    private Instant registrationOpenDate;
+
+    @Column(name = "registration_close_date")
+    private Instant registrationCloseDate;
+
+    @Column(name = "early_bird_deadline")
+    private Instant earlyBirdDeadline;
 
     @Column(name = "registration_fee_author")
     private Double registrationFeeAuthor;
@@ -58,9 +94,24 @@ public class Conference {
     @Column(name = "registration_fee_listener")
     private Double registrationFeeListener;
 
+    @Column(name = "registration_fee_student")
+    private Double registrationFeeStudent;
+
     @Column(name = "currency", length = 10)
     @Builder.Default
     private String currency = "USD";
+
+    @Column(name = "tax_rate")
+    private Double taxRate;
+
+    @Column(name = "submission_open_date")
+    private Instant submissionOpenDate;
+
+    @Column(name = "submission_deadline")
+    private Instant submissionDeadline;
+
+    @Column(name = "review_deadline")
+    private Instant reviewDeadline;
 
     @OneToMany(mappedBy = "conference", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default

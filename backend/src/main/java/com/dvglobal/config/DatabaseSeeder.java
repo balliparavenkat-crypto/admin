@@ -169,10 +169,19 @@ public class DatabaseSeeder implements CommandLineRunner {
             // Seed Sessions
             Session session1 = Session.builder()
                     .title("Keynote: The Future of Large Language Models")
-                    .description("Opening keynote speech by Dr. Christopher Manning focusing on the scaling laws and multi-agent consensus networks.")
+                    .description("Opening keynote speech by Dr. Christopher Manning focusing on scaling laws and multi-agent systems.")
                     .startTime(conf.getStartDate().plus(9, ChronoUnit.HOURS))
                     .endTime(conf.getStartDate().plus(10, ChronoUnit.HOURS).plus(30, ChronoUnit.MINUTES))
                     .location("Auditorium A")
+                    .conference(conf)
+                    .build();
+
+            Session session2 = Session.builder()
+                    .title("Panel Discussion: Ethics and Safety in Next-Gen AI Systems")
+                    .description("Distinguished panel discussion featuring industry leaders and academic researchers.")
+                    .startTime(conf.getStartDate().plus(11, ChronoUnit.HOURS))
+                    .endTime(conf.getStartDate().plus(12, ChronoUnit.HOURS).plus(30, ChronoUnit.MINUTES))
+                    .location("Auditorium B")
                     .conference(conf)
                     .build();
 
