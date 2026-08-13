@@ -10,237 +10,244 @@ import {
 import Link from "next/link";
 import { getCountryCode } from "@/lib/country";
 
+const sponsorshipTiers = [
+  {
+    id: "platinum",
+    name: "Platinum Sponsor",
+    priceINR: "₹5,19,168",
+    priceUSD: "$5,999",
+    badge: "Exclusive Tier",
+    popular: true,
+    border: "border-blue-400/80 hover:border-blue-500",
+    bg: "bg-gradient-to-b from-blue-50 via-white to-white shadow-blue-500/5",
+    includes: [
+      "Prime booth location and exclusive branding across the event",
+      "Keynote speaking opportunity to showcase your expertise",
+      "Featured logo placement on event materials, website, and attendee lanyards",
+      "Dedicated email blast to event participants"
+    ]
+  },
+  {
+    id: "diamond",
+    name: "Diamond Sponsor",
+    priceINR: "₹4,32,625",
+    priceUSD: "$4,999",
+    badge: "Premium Tier",
+    popular: false,
+    border: "border-slate-200 hover:border-blue-400",
+    bg: "bg-gradient-to-b from-slate-50 via-white to-white",
+    includes: [
+      "Premium booth location and branding throughout the event",
+      "Opportunity to participate in a panel discussion or workshop",
+      "Logo placement on event website and select printed materials",
+      "Social media shootouts and recognition"
+    ]
+  },
+  {
+    id: "gold",
+    name: "Gold Sponsor",
+    priceINR: "₹3,46,102",
+    priceUSD: "$3,999",
+    badge: "High Visibility",
+    popular: false,
+    border: "border-slate-200 hover:border-blue-400",
+    bg: "bg-gradient-to-b from-slate-50 via-white to-white",
+    includes: [
+      "High-visibility booth space to engage attendees",
+      "Logo placement on event website and conference program",
+      "Inclusion in sponsor recognition announcements and emails",
+      "Opportunity to contribute branded materials in the attendee bag"
+    ]
+  },
+  {
+    id: "silver",
+    name: "Silver Sponsor",
+    priceINR: "₹2,59,555",
+    priceUSD: "$2,999",
+    badge: "Standard Visibility",
+    popular: false,
+    border: "border-slate-200 hover:border-blue-400",
+    bg: "bg-gradient-to-b from-slate-50 via-white to-white",
+    includes: [
+      "Standard booth space in the main exhibit hall",
+      "Logo placement on event website and printed booklet",
+      "Recognition in opening and closing ceremony announcements",
+      "2 complimentary sponsor delegate passes"
+    ]
+  },
+  {
+    id: "exhibitor",
+    name: "Exhibitor",
+    priceINR: "₹1,72,625",
+    priceUSD: "$1,999",
+    badge: "Exhibit Space",
+    popular: false,
+    border: "border-slate-200 hover:border-blue-400/80",
+    bg: "bg-gradient-to-b from-slate-50 via-white to-white",
+    includes: [
+      "Exhibit booth space in a high-traffic area",
+      "Listing on event website and program",
+      "Access to networking sessions and attendee engagement opportunities",
+      "Dedicated email blast to event participants"
+    ]
+  }
+];
+
+const initialStaticSlides = [
+  {
+    summitName: "AI & Quantum Summit",
+    eyebrow: "⚡ ADVANCED COMPUTATION & QUANTUM TRACKS",
+    image: "/images/ai_quantum_summit.png",
+    location: "San Francisco, USA",
+    date: "Oct 12-14, 2026",
+    title: (
+      <>
+        Connecting Researchers.<br />
+        Inspiring <span className="text-accent-blue font-extrabold">Innovation.</span><br />
+        Impacting the <span className="text-cyan-400 font-extrabold">World.</span>
+      </>
+    ),
+    description: "D&V Global AI & Quantum Summit brings together physicists, computer scientists, and tech pioneers to solve complex computational limits.",
+    stats: [
+      { value: "120+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+      { value: "15K+", label: "Researchers", icon: Users, iconColor: "text-accent-blue" },
+      { value: "500+", label: "Universities", icon: Building, iconColor: "text-accent-blue" },
+      { value: "250+", label: "Conferences", icon: Calendar, iconColor: "text-accent-blue" },
+    ]
+  },
+  {
+    summitName: "Bio-Medicine Congress",
+    eyebrow: "🧬 DECIPHERING GENOMICS & MOLECULAR PATHWAYS",
+    image: "/images/biomedicine_congress.png",
+    location: "Geneva, Switzerland",
+    date: "Nov 08-11, 2026",
+    title: (
+      <>
+        Decoding Genomes.<br />
+        Advanced <span className="text-accent-blue font-extrabold">Care.</span><br />
+        Healing <span className="text-yellow-300 font-extrabold">Humanity.</span>
+      </>
+    ),
+    description: "Explore breakthroughs in gene splicing, double-blind clinical trials, molecular pathology, and fast-track Scopus indexations.",
+    stats: [
+      { value: "80+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+      { value: "6K+", label: "MD Specialists", icon: Users, iconColor: "text-accent-blue" },
+      { value: "220+", label: "Research Labs", icon: Building, iconColor: "text-accent-blue" },
+      { value: "80+", label: "Tracks Registered", icon: Calendar, iconColor: "text-accent-blue" },
+    ]
+  },
+  {
+    summitName: "Clean Energy Summit",
+    eyebrow: "🍃 CLEAN ENERGY & SUSTAINABLE CLIMATE SOLUTIONS",
+    image: "/images/clean_energy_summit.png",
+    location: "Tokyo, Japan",
+    date: "Dec 03-05, 2026",
+    title: (
+      <>
+        Accelerating Net-Zero.<br />
+        Clean <span className="text-accent-blue font-extrabold">Energy.</span><br />
+        Green <span className="text-emerald-400 font-extrabold">Innovation.</span>
+      </>
+    ),
+    description: "Uniting environmental scientists, policy makers, and renewable tech developers to build scalable carbon-neutral infrastructures.",
+    stats: [
+      { value: "95+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+      { value: "8K+", label: "Delegates", icon: Users, iconColor: "text-accent-blue" },
+      { value: "310+", label: "CleanTech Labs", icon: Building, iconColor: "text-accent-blue" },
+      { value: "60+", label: "Green Tracks", icon: Calendar, iconColor: "text-accent-blue" },
+    ]
+  },
+  {
+    summitName: "Robotics & IoT Summit",
+    eyebrow: "🤖 ROBOTICS, AUTONOMOUS SYSTEMS & NEXT-GEN IOT",
+    image: "/images/robotics_summit.png",
+    location: "Munich, Germany",
+    date: "Apr 18-20, 2027",
+    title: (
+      <>
+        Empowering Automation.<br />
+        Robotics <span className="text-accent-blue font-extrabold">Leads.</span><br />
+        Smart <span className="text-cyan-400 font-extrabold">Cities.</span>
+      </>
+    ),
+    description: "Gathering cybernetic engineers and IoT architects to demonstrate autonomous drone fleets and industrial automation.",
+    stats: [
+      { value: "75+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+      { value: "5K+", label: "Robotics Chairs", icon: Users, iconColor: "text-accent-blue" },
+      { value: "180+", label: "Tech Hubs", icon: Building, iconColor: "text-accent-blue" },
+      { value: "50+", label: "Live Demos", icon: Calendar, iconColor: "text-accent-blue" },
+    ]
+  },
+  {
+    summitName: "Brain Genomics Congress",
+    eyebrow: "🧠 NEURO-ONCOLOGY & BRAIN GENOMICS DISCOVERIES",
+    image: "/images/brain_genomics.png",
+    location: "Boston, USA",
+    date: "May 22-25, 2027",
+    title: (
+      <>
+        Mapping Neural Pathways.<br />
+        Brain <span className="text-accent-blue font-extrabold">Genomics.</span><br />
+        Precision <span className="text-purple-400 font-extrabold">Therapy.</span>
+      </>
+    ),
+    description: "Bringing together neuroscientists and computational oncologists to revolutionize brain tumor targeting and neural mapping.",
+    stats: [
+      { value: "70+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+      { value: "4.5K+", label: "Neuro Specialists", icon: Users, iconColor: "text-accent-blue" },
+      { value: "160+", label: "Medical Labs", icon: Building, iconColor: "text-accent-blue" },
+      { value: "40+", label: "Specialist Tracks", icon: Calendar, iconColor: "text-accent-blue" },
+    ]
+  },
+  {
+    summitName: "Smart Cities Forum",
+    eyebrow: "🏙️ SUSTAINABLE INFRASTRUCTURE & SMART CITIES",
+    image: "/images/smart_cities.png",
+    location: "Singapore",
+    date: "Sep 14-16, 2027",
+    title: (
+      <>
+        Building Future Cities.<br />
+        Resilient <span className="text-accent-blue font-extrabold">Urban Grids.</span><br />
+        Green <span className="text-emerald-400 font-extrabold">Infrastructure.</span>
+      </>
+    ),
+    description: "Designing next-generation sustainable urban environments, resilient power networks, and zero-emission transportation systems.",
+    stats: [
+      { value: "85+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+      { value: "7K+", label: "Urban Planners", icon: Users, iconColor: "text-accent-blue" },
+      { value: "240+", label: "Smart Hubs", icon: Building, iconColor: "text-accent-blue" },
+      { value: "55+", label: "Future Tracks", icon: Calendar, iconColor: "text-accent-blue" },
+    ]
+  }
+];
+
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [prevImage, setPrevImage] = useState("/images/ai_quantum_summit.png");
+  const [slides, setSlides] = useState<any[]>(initialStaticSlides);
   const [selectedYear, setSelectedYear] = useState<2026 | 2027>(2026);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [sponsorshipModalOpen, setSponsorshipModalOpen] = useState(false);
   const [selectedSponsorshipTier, setSelectedSponsorshipTier] = useState<string>("Platinum Sponsor");
   const [sponsorFormData, setSponsorFormData] = useState({ company: "", name: "", email: "", phone: "", message: "" });
   const [sponsorSubmitted, setSponsorSubmitted] = useState(false);
-  const sponsorshipTiers = [
-    {
-      id: "platinum",
-      name: "Platinum Sponsor",
-      priceINR: "₹5,19,168",
-      priceUSD: "$5,999",
-      badge: "Exclusive Tier",
-      popular: true,
-      border: "border-blue-400/80 hover:border-blue-500",
-      bg: "bg-gradient-to-b from-blue-50 via-white to-white shadow-blue-500/5",
-      includes: [
-        "Prime booth location and exclusive branding across the event",
-        "Keynote speaking opportunity to showcase your expertise",
-        "Featured logo placement on event materials, website, and attendee lanyards",
-        "Dedicated email blast to event participants"
-      ]
-    },
-    {
-      id: "diamond",
-      name: "Diamond Sponsor",
-      priceINR: "₹4,32,625",
-      priceUSD: "$4,999",
-      badge: "Premium Tier",
-      popular: false,
-      border: "border-slate-200 hover:border-blue-400",
-      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
-      includes: [
-        "Premium booth location and branding throughout the event",
-        "Opportunity to participate in a panel discussion or workshop",
-        "Logo placement on event website and select printed materials",
-        "Social media shootouts and recognition"
-      ]
-    },
-    {
-      id: "gold",
-      name: "Gold Sponsor",
-      priceINR: "₹3,46,102",
-      priceUSD: "$3,999",
-      badge: "High Visibility",
-      popular: false,
-      border: "border-slate-200 hover:border-blue-400",
-      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
-      includes: [
-        "High-visibility booth space to engage attendees",
-        "Logo placement on event website and conference program",
-        "Inclusion in sponsor recognition announcements and emails",
-        "Opportunity to contribute branded materials in the attendee bag"
-      ]
-    },
-    {
-      id: "silver",
-      name: "Silver Sponsor",
-      priceINR: "₹2,59,555",
-      priceUSD: "$2,999",
-      badge: "Standard Visibility",
-      popular: false,
-      border: "border-slate-200 hover:border-blue-400",
-      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
-      includes: [
-        "Standard booth space in the main exhibit hall",
-        "Logo placement on event website and printed booklet",
-        "Recognition in opening and closing ceremony announcements",
-        "2 complimentary sponsor delegate passes"
-      ]
-    },
-    {
-      id: "exhibitor",
-      name: "Exhibitor",
-      priceINR: "₹1,72,625",
-      priceUSD: "$1,999",
-      badge: "Exhibit Space",
-      popular: false,
-      border: "border-slate-200 hover:border-blue-400/80",
-      bg: "bg-gradient-to-b from-slate-50 via-white to-white",
-      includes: [
-        "Exhibit booth space in a high-traffic area",
-        "Listing on event website and program",
-        "Access to networking sessions and attendee engagement opportunities",
-        "Dedicated email blast to event participants"
-      ]
-    }
-  ];
-
-
-  const slides = [
-    {
-      summitName: "AI & Quantum Summit",
-      eyebrow: "⚡ ADVANCED COMPUTATION & QUANTUM TRACKS",
-      image: "/images/ai_quantum_summit.png",
-      location: "San Francisco, USA",
-      date: "Oct 12-14, 2026",
-      title: (
-        <>
-          Connecting Researchers.<br />
-          Inspiring <span className="text-accent-blue font-extrabold">Innovation.</span><br />
-          Impacting the <span className="text-cyan-400 font-extrabold">World.</span>
-        </>
-      ),
-      description: "D&V Global AI & Quantum Summit brings together physicists, computer scientists, and tech pioneers to solve complex computational limits.",
-      stats: [
-        { value: "120+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
-        { value: "15K+", label: "Researchers", icon: Users, iconColor: "text-accent-blue" },
-        { value: "500+", label: "Universities", icon: Building, iconColor: "text-accent-blue" },
-        { value: "250+", label: "Conferences", icon: Calendar, iconColor: "text-accent-blue" },
-      ]
-    },
-    {
-      summitName: "Bio-Medicine Congress",
-      eyebrow: "🧬 DECIPHERING GENOMICS & MOLECULAR PATHWAYS",
-      image: "/images/biomedicine_congress.png",
-      location: "Geneva, Switzerland",
-      date: "Nov 08-11, 2026",
-      title: (
-        <>
-          Decoding Genomes.<br />
-          Advanced <span className="text-accent-blue font-extrabold">Care.</span><br />
-          Healing <span className="text-yellow-300 font-extrabold">Humanity.</span>
-        </>
-      ),
-      description: "Explore breakthroughs in gene splicing, double-blind clinical trials, molecular pathology, and fast-track Scopus indexations.",
-      stats: [
-        { value: "80+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
-        { value: "6K+", label: "MD Specialists", icon: Users, iconColor: "text-accent-blue" },
-        { value: "220+", label: "Research Labs", icon: Building, iconColor: "text-accent-blue" },
-        { value: "80+", label: "Tracks Registered", icon: Calendar, iconColor: "text-accent-blue" },
-      ]
-    },
-    {
-      summitName: "Clean Energy Summit",
-      eyebrow: "🍃 CLEAN ENERGY & SUSTAINABLE CLIMATE SOLUTIONS",
-      image: "/images/clean_energy_summit.png",
-      location: "Tokyo, Japan",
-      date: "Dec 03-05, 2026",
-      title: (
-        <>
-          Accelerating Net-Zero.<br />
-          Clean <span className="text-accent-blue font-extrabold">Energy.</span><br />
-          Green <span className="text-emerald-400 font-extrabold">Innovation.</span>
-        </>
-      ),
-      description: "Uniting environmental scientists, policy makers, and renewable tech developers to build scalable carbon-neutral infrastructures.",
-      stats: [
-        { value: "95+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
-        { value: "8K+", label: "Delegates", icon: Users, iconColor: "text-accent-blue" },
-        { value: "310+", label: "CleanTech Labs", icon: Building, iconColor: "text-accent-blue" },
-        { value: "60+", label: "Green Tracks", icon: Calendar, iconColor: "text-accent-blue" },
-      ]
-    },
-    {
-      summitName: "Robotics & IoT Summit",
-      eyebrow: "🤖 ROBOTICS, AUTONOMOUS SYSTEMS & NEXT-GEN IOT",
-      image: "/images/robotics_summit.png",
-      location: "Munich, Germany",
-      date: "Apr 18-20, 2027",
-      title: (
-        <>
-          Empowering Automation.<br />
-          Robotics <span className="text-accent-blue font-extrabold">Leads.</span><br />
-          Smart <span className="text-cyan-400 font-extrabold">Cities.</span>
-        </>
-      ),
-      description: "Gathering cybernetic engineers and IoT architects to demonstrate autonomous drone fleets and industrial automation.",
-      stats: [
-        { value: "75+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
-        { value: "5K+", label: "Robotics Chairs", icon: Users, iconColor: "text-accent-blue" },
-        { value: "180+", label: "Tech Hubs", icon: Building, iconColor: "text-accent-blue" },
-        { value: "50+", label: "Live Demos", icon: Calendar, iconColor: "text-accent-blue" },
-      ]
-    },
-    {
-      summitName: "Brain Genomics Congress",
-      eyebrow: "🧠 NEURO-ONCOLOGY & BRAIN GENOMICS DISCOVERIES",
-      image: "/images/brain_genomics.png",
-      location: "Boston, USA",
-      date: "May 22-25, 2027",
-      title: (
-        <>
-          Mapping Neural Pathways.<br />
-          Brain <span className="text-accent-blue font-extrabold">Genomics.</span><br />
-          Precision <span className="text-purple-400 font-extrabold">Therapy.</span>
-        </>
-      ),
-      description: "Bringing together neuroscientists and computational oncologists to revolutionize brain tumor targeting and neural mapping.",
-      stats: [
-        { value: "70+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
-        { value: "4.5K+", label: "Neuro Specialists", icon: Users, iconColor: "text-accent-blue" },
-        { value: "160+", label: "Medical Labs", icon: Building, iconColor: "text-accent-blue" },
-        { value: "40+", label: "Specialist Tracks", icon: Calendar, iconColor: "text-accent-blue" },
-      ]
-    },
-    {
-      summitName: "Smart Cities Forum",
-      eyebrow: "🏙️ SUSTAINABLE INFRASTRUCTURE & SMART CITIES",
-      image: "/images/smart_cities.png",
-      location: "Singapore",
-      date: "Sep 14-16, 2027",
-      title: (
-        <>
-          Building Future Cities.<br />
-          Resilient <span className="text-accent-blue font-extrabold">Urban Grids.</span><br />
-          Green <span className="text-emerald-400 font-extrabold">Infrastructure.</span>
-        </>
-      ),
-      description: "Designing next-generation sustainable urban environments, resilient power networks, and zero-emission transportation systems.",
-      stats: [
-        { value: "85+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
-        { value: "7K+", label: "Urban Planners", icon: Users, iconColor: "text-accent-blue" },
-        { value: "240+", label: "Smart Hubs", icon: Building, iconColor: "text-accent-blue" },
-        { value: "55+", label: "Future Tracks", icon: Calendar, iconColor: "text-accent-blue" },
-      ]
-    }
-  ];
+  const [prevImage, setPrevImage] = useState<string>("/images/ai_quantum_summit.png");
 
   const handleNextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setSlides((currentSlides) => {
+      setCurrentSlide((prev) => (prev + 1) % currentSlides.length);
+      return currentSlides;
+    });
   };
 
   const handlePrevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setSlides((currentSlides) => {
+      setCurrentSlide((prev) => (prev - 1 + currentSlides.length) % currentSlides.length);
+      return currentSlides;
+    });
   };
 
   useEffect(() => {
@@ -249,12 +256,15 @@ export default function HomePage() {
     }, 8000);
     return () => clearInterval(timer);
   }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setPrevImage(slides[currentSlide].image);
+      if (slides[currentSlide]) {
+        setPrevImage(slides[currentSlide].image);
+      }
     }, 850);
     return () => clearTimeout(timer);
-  }, [currentSlide]);
+  }, [currentSlide, slides]);
 
 
   const [dynamicConferences, setDynamicConferences] = useState<any[]>([]);
@@ -280,6 +290,28 @@ export default function HomePage() {
           };
         });
         setDynamicConferences(mappedCustom);
+
+        const mappedCustomSlides = customList.map((c, i) => ({
+          summitName: c.title || `Summit ${i + 1}`,
+          eyebrow: `🌐 ${(c.acronym || 'GLOBAL SUMMIT').toUpperCase()} • ${(c.city || 'LOCATION').toUpperCase()}`,
+          image: c.bannerUrl || "/images/ai_quantum_summit.png",
+          location: `${c.city || 'San Francisco'}${c.city && c.country ? ', ' : ''}${c.country || 'USA'}`,
+          date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
+          title: (
+            <>
+              {c.title}
+            </>
+          ),
+          description: c.shortDescription || c.description || "Join international researchers, keynote speakers, and industry leaders at this premier global summit.",
+          stats: [
+            { value: "95+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+            { value: "8K+", label: "Delegates", icon: Users, iconColor: "text-accent-blue" },
+            { value: "300+", label: "Keynotes", icon: Building, iconColor: "text-accent-blue" },
+            { value: "50+", label: "Tracks", icon: Calendar, iconColor: "text-accent-blue" },
+          ]
+        }));
+
+        setSlides([...mappedCustomSlides, ...initialStaticSlides]);
       }
     } catch (e) {
       console.error(e);
