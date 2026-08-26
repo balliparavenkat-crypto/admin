@@ -6,30 +6,34 @@ import { ChevronRight, RefreshCw, Home, CheckCircle } from "lucide-react";
 
 // ── Fee data ──────────────────────────────────────────────────────────────────
 const categories = [
-  { id: "oral",      label: "Oral Talk",           earlyBird: 699, superEarly: 799, standard: 899 },
-  { id: "invited",   label: "Invited Talk",         earlyBird: 699, superEarly: 799, standard: 899 },
-  { id: "poster",    label: "Poster",               earlyBird: 499, superEarly: 599, standard: 699 },
-  { id: "student",   label: "Student Delegate",     earlyBird: 399, superEarly: 499, standard: 599 },
-  { id: "industry",  label: "Industry Delegate",    earlyBird: 899, superEarly: 999, standard: 1099 },
-  { id: "virtual",   label: "Virtual Registration", earlyBird: 199, superEarly: 299, standard: 399 },
-  { id: "accompany", label: "Accompanying Person",  earlyBird: 299, superEarly: 299, standard: 299 },
+  { id: "speaker",           label: "Speaker Presentation (In-Person)", earlyBird: 799,  superEarly: 899,  standard: 999 },
+  { id: "delegate",          label: "Delegate / Listener (In-Person)", earlyBird: 899,  superEarly: 999,  standard: 1099 },
+  { id: "student",           label: "Student (In-Person)",             earlyBird: 399,  superEarly: 499,  standard: 599 },
+  { id: "poster",            label: "Poster (In-Person)",              earlyBird: 499,  superEarly: 599,  standard: 699 },
+  { id: "virtual",           label: "Virtual Registration",            earlyBird: 299,  superEarly: 399,  standard: 499 },
+  { id: "accompany", label: "Accompanying Person",             earlyBird: 249,  superEarly: 249,  standard: 249 },
+  { id: "elite",             label: "Elite Sponsor",                   earlyBird: 4500, superEarly: 5000, standard: 5500 },
+  { id: "gold",              label: "Gold Sponsor",                    earlyBird: 3500, superEarly: 4000, standard: 4500 },
+  { id: "silver",            label: "Silver Sponsor",                  earlyBird: 2700, superEarly: 3200, standard: 3700 },
+  { id: "exhibition",        label: "Exhibition",                      earlyBird: 2000, superEarly: 3000, standard: 4000 },
+  { id: "virtualExhibition", label: "Virtual Exhibition",              earlyBird: 449,  superEarly: 599,  standard: 799 },
 ];
 
 const accommodation = [
-  { nights: "1 Night",  single: 180, double: 190, triple: 200 },
-  { nights: "2 Nights", single: 360, double: 380, triple: 400 },
-  { nights: "3 Nights", single: 540, double: 570, triple: 600 },
-  { nights: "4 Nights", single: 720, double: 760, triple: 800 },
-  { nights: "5 Nights", single: 900, double: 950, triple: 1000 },
+  { nights: "1 Night",  single: 220, double: 250, triple: 280 },
+  { nights: "2 Nights", single: 440, double: 500, triple: 560 },
+  { nights: "3 Nights", single: 660, double: 750, triple: 840 },
+  { nights: "4 Nights", single: 880, double: 1000, triple: 1120 },
+  { nights: "5 Nights", single: 1100, double: 1250, triple: 1400 },
 ];
 
 const packages = [
-  { id: "pkgA", label: "Package A", price: 1050,  desc: "Registration + 2 Nights Single Occupancy" },
-  { id: "pkgB", label: "Package B", price: 1200, desc: "Registration + 3 Nights Single Occupancy" },
-  { id: "pkgC", label: "Package C", price: 1400, desc: "Registration + 4 Nights Single Occupancy" },
-  { id: "pkgD", label: "Package D", price: 1060,  desc: "Registration + 2 Nights Double Occupancy" },
-  { id: "pkgE", label: "Package E", price: 1220, desc: "Registration + 3 Nights Double Occupancy" },
-  { id: "pkgF", label: "Package F", price: 1420, desc: "Registration + 4 Nights Double Occupancy" },
+  { id: "pkgA", label: "Package A", price: 1239, desc: "Registration + 2 Nights Single Occupancy" },
+  { id: "pkgB", label: "Package B", price: 1459, desc: "Registration + 3 Nights Single Occupancy" },
+  { id: "pkgC", label: "Package C", price: 1679, desc: "Registration + 4 Nights Single Occupancy" },
+  { id: "pkgD", label: "Package D", price: 1299, desc: "Registration + 2 Nights Double Occupancy" },
+  { id: "pkgE", label: "Package E", price: 1549, desc: "Registration + 3 Nights Double Occupancy" },
+  { id: "pkgF", label: "Package F", price: 1799, desc: "Registration + 4 Nights Double Occupancy" },
 ];
 
 // ── Captcha ───────────────────────────────────────────────────────────────────

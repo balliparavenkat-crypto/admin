@@ -421,7 +421,7 @@ export default function HomePage() {
           <a href="#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SUMMITS</a>
           <a href="#sponsorship" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SPONSORSHIP</a>
           <a href="#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SCHEDULE</a>
-          <Link href="/indian-registers" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">REGISTER</Link>
+          <Link href="/register" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">REGISTER</Link>
           <Link href="/policies" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">POLICIES</Link>
           <Link href="/cancellation-policy" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">CANCELLATION POLICY</Link>
           <Link href="/terms-of-use" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">TERMS OF USE</Link>
@@ -458,7 +458,7 @@ export default function HomePage() {
             <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SUMMITS</a>
             <a href="#sponsorship" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SPONSORSHIP</a>
             <a href="#conferences" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">SCHEDULE</a>
-            <Link href="/indian-registers" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">REGISTER</Link>
+            <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">REGISTER</Link>
             <Link href="/policies" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">POLICIES</Link>
             <Link href="/cancellation-policy" onClick={() => setMobileMenuOpen(false)} className="py-2 border-b border-[#1E40AF]/10 text-gray-700/80 hover:text-accent-blue hover:border-accent-blue/40 font-semibold text-xs tracking-wider transition-colors">CANCELLATION POLICY</Link>
             <div className="flex flex-col gap-3 mt-4">
@@ -603,7 +603,7 @@ export default function HomePage() {
                 transition={{ duration: 0.35, delay: 0.15 }}
                 className="flex flex-wrap gap-6 pt-2"
               >
-                {slides[currentSlide].stats.map((stat, i) => {
+                {slides[currentSlide].stats.map((stat: any, i: number) => {
                   const Icon = stat.icon;
                   return (
                     <div key={i} className="flex items-center gap-2">

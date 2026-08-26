@@ -106,7 +106,7 @@ export default function PublicSummitDetailPage() {
           <ArrowLeft className="w-4 h-4" /> Back to D&V Global Summits
         </Link>
         <Link
-          href="/indian-registers"
+          href="/register"
           className="px-6 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md hover:scale-[1.02] transition duration-300"
         >
           Register For Summit
@@ -152,7 +152,7 @@ export default function PublicSummitDetailPage() {
 
           <div className="pt-4 flex flex-wrap gap-4">
             <Link
-              href="/indian-registers"
+              href="/register"
               className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
             >
               Register Now <ChevronRight className="w-4 h-4 stroke-[3]" />
@@ -183,7 +183,7 @@ export default function PublicSummitDetailPage() {
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Author Registration</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeAuthor || 499} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Includes paper presentation slot, conference proceedings indexation, and all summit passes.</p>
-              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+              <Link href="/register" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
                 Register as Author
               </Link>
             </div>
@@ -192,7 +192,7 @@ export default function PublicSummitDetailPage() {
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Delegate / Listener</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeListener || 299} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Full access to keynote sessions, panel discussions, networking lunch, and attendance certificate.</p>
-              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+              <Link href="/register" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
                 Register as Listener
               </Link>
             </div>
@@ -201,7 +201,7 @@ export default function PublicSummitDetailPage() {
               <span className="text-xs font-mono font-bold text-[#1E40AF] uppercase block">Student Registration</span>
               <span className="text-3xl font-black text-[#0D1117] block">${summit.registrationFeeStudent || 199} <span className="text-xs font-normal text-gray-500">USD</span></span>
               <p className="text-xs text-gray-500">Discounted pass for verified undergraduate and graduate research students.</p>
-              <Link href="/indian-registers" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
+              <Link href="/register" className="block text-center py-2.5 rounded-xl bg-[#1E40AF] text-white text-xs font-bold uppercase tracking-wider mt-4">
                 Register as Student
               </Link>
             </div>
@@ -243,7 +243,7 @@ export default function PublicSummitDetailPage() {
             Reserve your seat, submit your research paper, or network with global industry pioneers.
           </p>
           <Link
-            href="/indian-registers"
+            href="/register"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg hover:scale-[1.02] transition duration-300"
           >
             Complete Registration Now <ChevronRight className="w-4 h-4 stroke-[3]" />
