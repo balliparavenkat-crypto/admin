@@ -150,12 +150,21 @@ export default function PublicSummitDetailPage() {
             </span>
           </div>
 
-          <div className="pt-4 flex flex-wrap gap-4">
+          <div className="pt-4 flex flex-wrap items-center gap-4">
+            {/* Pink / Magenta SUBMIT ABSTRACT Button */}
+            <Link
+              href="/register"
+              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md transition duration-300 shadow-lg cursor-pointer"
+            >
+              SUBMIT ABSTRACT
+            </Link>
+
+            {/* Golden Amber REGISTER NOW > Button */}
             <Link
               href="/register"
               className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
             >
-              Register Now <ChevronRight className="w-4 h-4 stroke-[3]" />
+              REGISTER NOW <ChevronRight className="w-4 h-4 stroke-[3]" />
             </Link>
           </div>
         </div>
@@ -242,12 +251,20 @@ export default function PublicSummitDetailPage() {
           <p className="text-xs text-gray-300 max-w-lg mx-auto leading-relaxed">
             Reserve your seat, submit your research paper, or network with global industry pioneers.
           </p>
-          <Link
-            href="/register"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg hover:scale-[1.02] transition duration-300"
-          >
-            Complete Registration Now <ChevronRight className="w-4 h-4 stroke-[3]" />
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <Link
+              href="/register"
+              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md transition duration-300 shadow-lg cursor-pointer"
+            >
+              SUBMIT ABSTRACT
+            </Link>
+            <Link
+              href="/register"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg hover:scale-[1.02] transition duration-300"
+            >
+              REGISTER NOW <ChevronRight className="w-4 h-4 stroke-[3]" />
+            </Link>
+          </div>
         </section>
       </div>
     </div>
