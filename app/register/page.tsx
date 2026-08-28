@@ -87,10 +87,30 @@ export default function UnifiedRegisterPage() {
   
   const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState(false);
   const [isPaypalModalOpen, setIsPaypalModalOpen] = useState(false);
+  const [isAbstractModalOpen, setIsAbstractModalOpen] = useState(false);
+  const [abstractSubmitted, setAbstractSubmitted] = useState(false);
+  const [abstractForm, setAbstractForm] = useState({
+    authorName: "",
+    email: "",
+    whatsapp: "",
+    title: "",
+    track: "Artificial Intelligence & Robotics",
+    abstractText: "",
+  });
+
   const [paymentDone, setPaymentDone] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
 
   const refreshCaptcha = () => { setCaptchaText(genCaptcha()); setCaptchaInput(""); };
+
+  const handleAbstractSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!abstractForm.authorName || !abstractForm.email || !abstractForm.title || !abstractForm.abstractText) {
+      alert("Please fill in all required abstract submission fields.");
+      return;
+    }
+    setAbstractSubmitted(true);
+  };
 
   const currentOptionObj = allSelectableOptions.find(o => o.value === selectedOption) || allSelectableOptions[0];
   const regPriceSingle = currentOptionObj.price;
@@ -195,19 +215,40 @@ export default function UnifiedRegisterPage() {
 
       {/* ── Header Banner ──────────────────────────────────────────────────── */}
       <div className="relative py-16 px-6 text-center border-b border-slate-200 bg-gradient-to-b from-amber-50/60 via-blue-50/30 to-transparent">
-        <div className="max-w-4xl mx-auto space-y-3">
+        <div className="max-w-4xl mx-auto space-y-4">
           <span className="text-xs uppercase font-extrabold tracking-widest text-[#1E40AF] block font-mono">D&V GLOBAL SUMMITS 2026</span>
           <h1 className="font-extrabold text-4xl md:text-5xl text-[#0D1117] tracking-tight">
             Summit <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E40AF] via-blue-600 to-amber-500">Registration</span>
           </h1>
           <p className="text-slate-600 text-sm max-w-xl mx-auto font-medium">
-            Fill out the form below to secure your seat. Instant confirmation, Razorpay (₹ INR) & PayPal ($ USD) checkout options available.
+            Fill out the form below to secure your seat or submit your abstract research paper.
           </p>
+
+          {/* Action Buttons beside registration form */}
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+            {/* Pink / Magenta SUBMIT ABSTRACT Button */}
+            <button
+              type="button"
+              onClick={() => setIsAbstractModalOpen(true)}
+              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md transition duration-300 shadow-lg cursor-pointer"
+            >
+              SUBMIT ABSTRACT
+            </button>
+
+            {/* Golden Amber REGISTER NOW > Button */}
+            <a
+              href="#registration-form"
+              className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-lg hover:scale-[1.03] transition duration-300 flex items-center gap-2 cursor-pointer"
+            >
+              <span>REGISTER NOW</span>
+              <ChevronRight className="w-4 h-4 stroke-[3]" />
+            </a>
+          </div>
         </div>
       </div>
 
       {/* ── Main Form Container ────────────────────────────────────────────── */}
-      <main className="max-w-5xl mx-auto px-4 md:px-6 py-12 space-y-10">
+      <main id="registration-form" className="max-w-5xl mx-auto px-4 md:px-6 py-12 space-y-10">
         <form onSubmit={(e) => e.preventDefault()} className="space-y-10">
 
           {/* 1 — Delegate Information Card */}
@@ -652,6 +693,125 @@ export default function UnifiedRegisterPage() {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      {/* ── Submit Abstract Modal ─────────────────────────────────────────── */}
+      {isAbstractModalOpen && (
+        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="max-w-lg w-full bg-white rounded-3xl border border-pink-300 shadow-2xl overflow-hidden">
+            <div className="bg-[#E63980] p-6 text-white flex items-center justify-between">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-pink-200 block tracking-widest uppercase">RESEARCH PAPER SUBMISSION</span>
+                <h3 className="font-extrabold text-base text-white mt-0.5">Submit Research Abstract</h3>
+              </div>
+              <button onClick={() => { setIsAbstractModalOpen(false); setAbstractSubmitted(false); }} className="text-pink-100 hover:text-white">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {abstractSubmitted ? (
+              <div className="p-8 text-center space-y-4">
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                  <CheckCircle className="w-8 h-8" />
+                </div>
+                <h4 className="text-xl font-bold text-slate-900">Abstract Submitted Successfully!</h4>
+                <p className="text-xs text-slate-600">
+                  Your research abstract has been queued for peer review. A confirmation email has been sent to <span className="font-bold text-[#E63980]">{abstractForm.email}</span>.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => { setIsAbstractModalOpen(false); setAbstractSubmitted(false); }}
+                  className="px-6 py-2.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition"
+                >
+                  Close Window
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleAbstractSubmit} className="p-6 space-y-4 text-xs">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Author Name *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Dr. / Prof. Full Name"
+                    value={abstractForm.authorName}
+                    onChange={(e) => setAbstractForm({ ...abstractForm, authorName: e.target.value })}
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="author@university.edu"
+                      value={abstractForm.email}
+                      onChange={(e) => setAbstractForm({ ...abstractForm, email: e.target.value })}
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp / Mobile</label>
+                    <input
+                      type="tel"
+                      placeholder="+1 (555) 000-0000"
+                      value={abstractForm.whatsapp}
+                      onChange={(e) => setAbstractForm({ ...abstractForm, whatsapp: e.target.value })}
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Paper Title *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Enter Title of Research Paper"
+                    value={abstractForm.title}
+                    onChange={(e) => setAbstractForm({ ...abstractForm, title: e.target.value })}
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Scientific Track *</label>
+                  <select
+                    value={abstractForm.track}
+                    onChange={(e) => setAbstractForm({ ...abstractForm, track: e.target.value })}
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#E63980]"
+                  >
+                    <option value="Artificial Intelligence & Robotics">Artificial Intelligence & Robotics</option>
+                    <option value="Biomedicine & Healthcare">Biomedicine & Healthcare</option>
+                    <option value="Clean Energy & Sustainability">Clean Energy & Sustainability</option>
+                    <option value="Quantum Computing & Physics">Quantum Computing & Physics</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">Abstract Summary (Max 300 words) *</label>
+                  <textarea
+                    rows={4}
+                    required
+                    placeholder="Paste research abstract summary here..."
+                    value={abstractForm.abstractText}
+                    onChange={(e) => setAbstractForm({ ...abstractForm, abstractText: e.target.value })}
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                  />
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition cursor-pointer"
+                  >
+                    Submit Abstract For Review
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}
