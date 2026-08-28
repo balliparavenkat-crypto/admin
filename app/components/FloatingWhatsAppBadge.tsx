@@ -11,7 +11,7 @@ export default function FloatingWhatsAppBadge() {
   }
 
   return (
-    <div className="fixed bottom-6 left-6 z-[9999]">
+    <div className="fixed bottom-6 right-6 z-[9999]">
       <a
         href="https://wa.me/919666896607?text=Hello%20D%26V%20Global%20Summit%20Team%2C%20I%20have%20a%20query."
         target="_blank"
