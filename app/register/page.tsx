@@ -221,7 +221,7 @@ export default function UnifiedRegisterPage() {
             Summit <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E40AF] via-blue-600 to-amber-500">Registration</span>
           </h1>
           <p className="text-slate-600 text-sm max-w-xl mx-auto font-medium">
-            Fill out the form below to secure your seat or submit your abstract research paper.
+            Fill out the form below to secure your seat.
           </p>
 
           {/* Action Button */}
