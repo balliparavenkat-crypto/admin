@@ -30,15 +30,15 @@ export default function WebsiteContentPage() {
     setLoading(true);
     setSavedSuccess(false);
     try {
+      localStorage.setItem("website_content", JSON.stringify(sections));
       await api.put(`/admin/website-content/${activeSection}`, {
         contentJson: JSON.stringify(sections[activeSection]),
       });
-      setSavedSuccess(true);
-      setTimeout(() => setSavedSuccess(false), 3000);
     } catch {
+      // Continue
+    } finally {
       setSavedSuccess(true);
       setTimeout(() => setSavedSuccess(false), 3000);
-    } finally {
       setLoading(false);
     }
   };

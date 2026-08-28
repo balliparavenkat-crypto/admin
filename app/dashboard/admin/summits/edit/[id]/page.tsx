@@ -146,11 +146,14 @@ export default function EditSummitPage() {
     // Update in localStorage custom_summits
     try {
       const savedStr = localStorage.getItem("custom_summits");
-      const existing = savedStr ? JSON.parse(savedStr) : [];
-      const updatedList = existing.map((s: any) =>
-        String(s.id) === String(summitId) ? { ...s, ...updatedObj } : s
-      );
-      localStorage.setItem("custom_summits", JSON.stringify(updatedList));
+      const existing: any[] = savedStr ? JSON.parse(savedStr) : [];
+      const matchIndex = existing.findIndex((s: any) => String(s.id) === String(summitId));
+      if (matchIndex >= 0) {
+        existing[matchIndex] = { ...existing[matchIndex], ...updatedObj };
+      } else {
+        existing.push(updatedObj);
+      }
+      localStorage.setItem("custom_summits", JSON.stringify(existing));
     } catch {
       // Continue
     }
