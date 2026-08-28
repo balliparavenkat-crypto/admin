@@ -195,6 +195,9 @@ export default function EditSummitPage() {
         existing.push(updatedObj);
       }
       localStorage.setItem("custom_summits", JSON.stringify(existing));
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("custom_summits_updated"));
+      }
     } catch {
       // Continue
     }

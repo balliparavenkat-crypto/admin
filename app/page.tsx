@@ -291,52 +291,68 @@ export default function HomePage() {
   const [dynamicConferences, setDynamicConferences] = useState<any[]>([]);
 
   useEffect(() => {
-    try {
-      const savedStr = localStorage.getItem("custom_summits");
-      if (savedStr) {
-        const customList: any[] = JSON.parse(savedStr);
-        const mappedCustom = customList.map((c, i) => {
-          const loc = `${c.city || ""}${c.city && c.country ? ", " : ""}${c.country || ""}` || "San Francisco, USA";
-          const code = c.countryCode || getCountryCode(c.country, c.city, loc);
-          return {
-            id: c.id || `custom-${i}`,
-            year: 2026,
-            title: c.title,
-            date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
-            location: loc,
-            status: c.status || "Registration Open",
+    const loadCustomSummits = () => {
+      try {
+        const savedStr = localStorage.getItem("custom_summits");
+        if (savedStr) {
+          const customList: any[] = JSON.parse(savedStr);
+          const mappedCustom = customList.map((c, i) => {
+            const loc = `${c.city || ''}${c.city && c.country ? ', ' : ''}${c.country || ''}` || 'Online';
+            const code = c.countryCode || getCountryCode(c.country, c.city, loc);
+            return {
+              id: c.id || `custom-${i}`,
+              year: 2026,
+              title: c.title,
+              date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
+              location: loc,
+              status: c.status || "Registration Open",
+              image: c.bannerUrl || "/images/ai_quantum_summit.png",
+              tag: "Advanced Tech",
+              countryCode: code,
+            };
+          });
+          setDynamicConferences(mappedCustom);
+
+          const mappedCustomSlides = customList.map((c, i) => ({
+            summitName: c.title || `Summit ${i + 1}`,
+            eyebrow: `🌐 ${(c.acronym || 'GLOBAL SUMMIT').toUpperCase()} • ${(c.city || 'LOCATION').toUpperCase()}`,
             image: c.bannerUrl || "/images/ai_quantum_summit.png",
-            tag: "Advanced Tech",
-            countryCode: code,
-          };
-        });
-        setDynamicConferences(mappedCustom);
+            location: `${c.city || 'San Francisco'}${c.city && c.country ? ', ' : ''}${c.country || 'USA'}`,
+            date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
+            title: (
+              <>
+                {c.title}
+              </>
+            ),
+            description: c.shortDescription || c.description || "Join international researchers, keynote speakers, and industry leaders at this premier global summit.",
+            stats: [
+              { value: "95+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+              { value: "8K+", label: "Delegates", icon: Users, iconColor: "text-accent-blue" },
+              { value: "300+", label: "Keynotes", icon: Building, iconColor: "text-accent-blue" },
+              { value: "50+", label: "Tracks", icon: Calendar, iconColor: "text-accent-blue" },
+            ]
+          }));
 
-        const mappedCustomSlides = customList.map((c, i) => ({
-          summitName: c.title || `Summit ${i + 1}`,
-          eyebrow: `🌐 ${(c.acronym || 'GLOBAL SUMMIT').toUpperCase()} • ${(c.city || 'LOCATION').toUpperCase()}`,
-          image: c.bannerUrl || "/images/ai_quantum_summit.png",
-          location: `${c.city || 'San Francisco'}${c.city && c.country ? ', ' : ''}${c.country || 'USA'}`,
-          date: `${c.startDate?.substring(0, 10) || "Oct 15, 2026"} - ${c.endDate?.substring(0, 10) || "Oct 18, 2026"}`,
-          title: (
-            <>
-              {c.title}
-            </>
-          ),
-          description: c.shortDescription || c.description || "Join international researchers, keynote speakers, and industry leaders at this premier global summit.",
-          stats: [
-            { value: "95+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
-            { value: "8K+", label: "Delegates", icon: Users, iconColor: "text-accent-blue" },
-            { value: "300+", label: "Keynotes", icon: Building, iconColor: "text-accent-blue" },
-            { value: "50+", label: "Tracks", icon: Calendar, iconColor: "text-accent-blue" },
-          ]
-        }));
-
-        setSlides([...mappedCustomSlides, ...initialStaticSlides]);
+          setSlides([...mappedCustomSlides, ...initialStaticSlides]);
+        }
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
+    };
+
+    loadCustomSummits();
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("custom_summits_updated", loadCustomSummits);
+      window.addEventListener("storage", loadCustomSummits);
     }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("custom_summits_updated", loadCustomSummits);
+        window.removeEventListener("storage", loadCustomSummits);
+      }
+    };
   }, []);
 
   const defaultConferences = [
