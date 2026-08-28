@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Home, 
@@ -26,6 +26,42 @@ export default function ContactPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  const [contactContent, setContactContent] = useState<any>({
+    phone: "+91 9666896607",
+    whatsapp: "+919666896607",
+    email: "info@dvglobalsummits.com",
+    address: "World Trade Tower, Tech Hub District, India",
+    officeHours: "Mon - Fri from 9:00 AM to 6:00 PM IST",
+  });
+
+  useEffect(() => {
+    const loadContent = () => {
+      try {
+        const saved = localStorage.getItem("website_content");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.CONTACT) {
+            setContactContent((prev: any) => ({ ...prev, ...parsed.CONTACT }));
+          }
+        }
+      } catch {
+        // Continue
+      }
+    };
+
+    loadContent();
+    if (typeof window !== "undefined") {
+      window.addEventListener("website_content_updated", loadContent);
+      window.addEventListener("storage", loadContent);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("website_content_updated", loadContent);
+        window.removeEventListener("storage", loadContent);
+      }
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,8 +138,8 @@ export default function ContactPage() {
             </div>
             <h3 className="font-bold text-lg text-[#0D1117] mb-1">Email Us</h3>
             <p className="text-xs text-gray-500 mb-3">Our team is here to help</p>
-            <a href="mailto:info@dvglobalsummits.com" className="text-sm font-bold text-[#1E40AF] hover:underline">
-              info@dvglobalsummits.com
+            <a href={`mailto:${contactContent.email || "info@dvglobalsummits.com"}`} className="text-sm font-bold text-[#1E40AF] hover:underline">
+              {contactContent.email || "info@dvglobalsummits.com"}
             </a>
           </div>
 
@@ -112,9 +148,9 @@ export default function ContactPage() {
               <Phone className="w-6 h-6" />
             </div>
             <h3 className="font-bold text-lg text-[#0D1117] mb-1">Call Us</h3>
-            <p className="text-xs text-gray-500 mb-3">Mon - Fri from 9am to 6pm IST</p>
-            <a href="tel:+911234567890" className="text-sm font-bold text-[#0D1117] hover:text-[#1E40AF]">
-              +91 (0) 123 456 7890
+            <p className="text-xs text-gray-500 mb-3">{contactContent.officeHours || "Mon - Fri from 9am to 6pm IST"}</p>
+            <a href={`tel:${contactContent.phone || "+919666896607"}`} className="text-sm font-bold text-[#0D1117] hover:text-[#1E40AF]">
+              {contactContent.phone || "+91 9666896607"}
             </a>
           </div>
 
@@ -125,7 +161,7 @@ export default function ContactPage() {
             <h3 className="font-bold text-lg text-[#0D1117] mb-1">Headquarters</h3>
             <p className="text-xs text-gray-500 mb-3">D&V SUMMITS PVT LTD</p>
             <span className="text-sm font-semibold text-gray-700">
-              World Trade Tower, Tech Hub District, India
+              {contactContent.address || "World Trade Tower, Tech Hub District, India"}
             </span>
           </div>
         </div>
