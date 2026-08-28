@@ -47,6 +47,14 @@ export default function EditSummitPage() {
     submissionDeadline: "2026-08-30",
     reviewDeadline: "2026-09-15",
     status: "ACTIVE",
+    // Extended Editable Fields for Summit Landing Page
+    chairName: "Dr. Seshubabu Desu",
+    chairTitle: "Chief Technology Officer",
+    chairInstitution: "4DS Memory Limited, USA",
+    earlyBirdDate: "December 30, 2025",
+    abstractDeadline: "February 28, 2026",
+    scientificTrackLeft: "Next-Generation Nanomaterials\n2D Materials and Heterostructures\nAdvanced Functional Materials\nHigh-Performance Composite Materials\nSmart Polymers and Responsive Materials\nMaterials for Energy Storage & Conversion",
+    scientificTrackRight: "Materials for Quantum, AI & Neuromorphic Devices\nBioinspired & Biomimetic Materials\nMaterials for Biomedical Applications\nAdditive Manufacturing & 4D Printing\nArtificial Intelligence in Materials Discovery",
   });
 
   useEffect(() => {
@@ -75,6 +83,13 @@ export default function EditSummitPage() {
             registrationFeeListener: String(match.registrationFeeListener || prev.registrationFeeListener),
             registrationFeeStudent: String(match.registrationFeeStudent || prev.registrationFeeStudent),
             status: match.status || prev.status,
+            chairName: match.chairName || prev.chairName,
+            chairTitle: match.chairTitle || prev.chairTitle,
+            chairInstitution: match.chairInstitution || prev.chairInstitution,
+            earlyBirdDate: match.earlyBirdDate || prev.earlyBirdDate,
+            abstractDeadline: match.abstractDeadline || prev.abstractDeadline,
+            scientificTrackLeft: match.scientificTrackLeft || prev.scientificTrackLeft,
+            scientificTrackRight: match.scientificTrackRight || prev.scientificTrackRight,
           }));
         }
       }
@@ -141,6 +156,13 @@ export default function EditSummitPage() {
       registrationFeeListener: parseFloat(formData.registrationFeeListener) || 299.0,
       registrationFeeStudent: parseFloat(formData.registrationFeeStudent) || 199.0,
       currency: formData.currency,
+      chairName: formData.chairName,
+      chairTitle: formData.chairTitle,
+      chairInstitution: formData.chairInstitution,
+      earlyBirdDate: formData.earlyBirdDate,
+      abstractDeadline: formData.abstractDeadline,
+      scientificTrackLeft: formData.scientificTrackLeft,
+      scientificTrackRight: formData.scientificTrackRight,
     };
 
     // Update in localStorage custom_summits
@@ -432,7 +454,90 @@ export default function EditSummitPage() {
 
         {activeStep === 4 && (
           <div className="space-y-6">
-            <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Status & Publishing</h3>
+            <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Conference Chair & Key Details</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Conference Chair Name</label>
+                <input
+                  type="text"
+                  name="chairName"
+                  value={formData.chairName}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Chair Designation / Role</label>
+                <input
+                  type="text"
+                  name="chairTitle"
+                  value={formData.chairTitle}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Chair Institution / Company</label>
+                <input
+                  type="text"
+                  name="chairInstitution"
+                  value={formData.chairInstitution}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Early Bird Registration Date</label>
+                <input
+                  type="text"
+                  name="earlyBirdDate"
+                  value={formData.earlyBirdDate}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Abstract Submission Deadline Date</label>
+                <input
+                  type="text"
+                  name="abstractDeadline"
+                  value={formData.abstractDeadline}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Scientific Tracks (Left Column - 1 per line)</label>
+                <textarea
+                  name="scientificTrackLeft"
+                  rows={4}
+                  value={formData.scientificTrackLeft}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Scientific Tracks (Right Column - 1 per line)</label>
+                <textarea
+                  name="scientificTrackRight"
+                  rows={4}
+                  value={formData.scientificTrackRight}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+            </div>
 
             <div>
               <label className="text-xs font-extrabold text-[#0D1117] block mb-2">Publication Status</label>

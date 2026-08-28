@@ -308,14 +308,14 @@ export default function PublicSummitDetailPage() {
         <div className="relative pt-12 max-w-lg mx-auto">
           {/* Overlapping Avatar Circle */}
           <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" alt="Dr. Seshubabu Desu" className="w-full h-full object-cover" />
+            <img src={summit.chairImage || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"} alt={summit.chairName || "Conference Chair"} className="w-full h-full object-cover" />
           </div>
 
           <div className="bg-white rounded-3xl p-8 pt-16 border border-[#1E40AF]/15 shadow-xl text-center space-y-3 relative z-10 border-t-4 border-t-[#1E40AF]">
             <span className="text-xs font-extrabold uppercase tracking-widest text-[#1E40AF] block">Conference Chair</span>
-            <h3 className="text-lg font-extrabold text-[#0D1117]">Dr. Seshubabu Desu</h3>
-            <p className="text-xs text-slate-600 font-medium">Chief Technology Officer</p>
-            <p className="text-xs text-slate-500 font-medium">4DS Memory Limited, USA</p>
+            <h3 className="text-lg font-extrabold text-[#0D1117]">{summit.chairName || "Dr. Seshubabu Desu"}</h3>
+            <p className="text-xs text-slate-600 font-medium">{summit.chairTitle || "Chief Technology Officer"}</p>
+            <p className="text-xs text-slate-500 font-medium">{summit.chairInstitution || "4DS Memory Limited, USA"}</p>
 
             <div className="pt-4">
               <span className="px-6 py-2.5 bg-[#1E40AF] text-white text-xs font-bold rounded-lg shadow inline-block hover:bg-blue-800 transition cursor-pointer">
@@ -360,11 +360,11 @@ export default function PublicSummitDetailPage() {
                 </div>
                 <div className="p-4 bg-slate-50">
                   <span className="font-extrabold text-[#0D1117] block">Early Bird Registration</span>
-                  <span className="text-[#1E40AF] font-semibold">December 30, 2025</span>
+                  <span className="text-[#1E40AF] font-semibold">{summit.earlyBirdDate || "December 30, 2025"}</span>
                 </div>
                 <div className="p-4 bg-slate-50">
                   <span className="font-extrabold text-[#0D1117] block">Abstract Submission Deadline</span>
-                  <span className="text-[#1E40AF] font-semibold">February 28, 2026</span>
+                  <span className="text-[#1E40AF] font-semibold">{summit.abstractDeadline || "February 28, 2026"}</span>
                 </div>
                 <div className="p-4">
                   <span className="font-extrabold text-[#0D1117] block">Conference Venue</span>
