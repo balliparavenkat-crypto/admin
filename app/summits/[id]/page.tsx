@@ -451,20 +451,28 @@ export default function PublicSummitDetailPage() {
         {/* Young Research Fellows */}
         <div className="space-y-10 text-center">
           <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0D1117] tracking-tight">YOUNG RESEARCH FELLOWS</h2>
-          <div className="max-w-xs mx-auto relative pt-10">
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
-              <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&h=120&fit=crop" alt="Mr. Alfie Mcmeeking" className="w-full h-full object-cover" />
-            </div>
-            <div className="bg-white rounded-2xl p-6 pt-12 border border-[#1E40AF]/15 shadow-md text-center space-y-2 border-t-4 border-t-[#1E40AF]">
-              <h3 className="font-extrabold text-sm text-[#0D1117]">Mr. Alfie Mcmeeking</h3>
-              <p className="text-[11px] text-slate-600">Imperial College London</p>
-              <p className="text-[11px] text-slate-500">United Kingdom</p>
-              <div className="pt-3">
-                <button className="px-4 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white text-[10px] font-bold rounded uppercase tracking-wider transition">
-                  More Info
-                </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {(speakers.filter((s) => s.type === "Fellow").length > 0
+              ? speakers.filter((s) => s.type === "Fellow")
+              : [
+                  { name: "Mr. Alfie Mcmeeking", institution: "Imperial College London, UK", imageUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&h=120&fit=crop" }
+                ]
+            ).map((sp: any, idx: number) => (
+              <div key={idx} className="relative pt-10">
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
+                  <img src={sp.imageUrl || sp.img} alt={sp.name} className="w-full h-full object-cover" />
+                </div>
+                <div className="bg-white rounded-2xl p-6 pt-12 border border-[#1E40AF]/15 shadow-md text-center space-y-2 border-t-4 border-t-[#1E40AF]">
+                  <h3 className="font-extrabold text-sm text-[#0D1117]">{sp.name}</h3>
+                  <p className="text-[11px] text-slate-600">{sp.institution}</p>
+                  <div className="pt-3">
+                    <button className="px-4 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white text-[10px] font-bold rounded uppercase tracking-wider transition">
+                      More Info
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
