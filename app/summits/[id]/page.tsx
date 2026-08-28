@@ -175,32 +175,38 @@ export default function PublicSummitDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0D1117] font-sans selection:bg-[#1E40AF]/20">
-      {/* ── Top Header Navigation Bar ─────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 bg-[#0D1117]/95 backdrop-blur-md border-b border-[#1E40AF]/20 py-3.5 px-6 md:px-12 flex justify-between items-center text-white">
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/images/logo.png" alt="D&V Global Summits" className="h-12 w-auto object-contain" />
+      {/* ── Homepage Style Header Navigation Bar ─────────────────────────────── */}
+      <nav className="sticky top-0 z-50 w-full glass-panel border-b border-[#1E40AF]/15 py-3 px-6 md:px-12 flex justify-between items-center bg-[#F8FAFC]/95 backdrop-blur-md shadow-sm">
+        <Link href="/" className="flex items-center group relative">
+          <img 
+            src="/images/logo.png" 
+            alt="D&V Global Logo" 
+            className="h-16 md:h-20 w-auto object-contain transition duration-300"
+          />
         </Link>
 
-        {/* Desktop Menu Links */}
-        <div className="hidden xl:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-200">
-          <Link href="/" className="hover:text-amber-400 transition">HOME</Link>
-          <Link href="/submit-abstract" className="hover:text-amber-400 transition">SUBMISSIONS</Link>
-          <a href="#speakers" className="hover:text-amber-400 transition">ORGANIZING COMMITTEE</a>
-          <a href="#speakers" className="hover:text-amber-400 transition">SPEAKERS</a>
-          <Link href="/register" className="hover:text-amber-400 transition">REGISTRATION-INR</Link>
-          <a href="#sponsorship" className="hover:text-amber-400 transition">SPONSORSHIP</a>
-          <a href="#dates" className="hover:text-amber-400 transition">AWARDS</a>
-          <Link href="/policies" className="hover:text-amber-400 transition">MORE INFO</Link>
-          <Link href="/contact" className="hover:text-amber-400 transition">CONTACT</Link>
+        {/* Desktop Menu Links (Homepage Light UI Style) */}
+        <div className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs font-bold tracking-wider text-black font-sans">
+          <Link href="/" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">HOME</Link>
+          <Link href="/#about" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">ABOUT US</Link>
+          <Link href="/#conferences" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SUMMITS</Link>
+          <Link href="/submit-abstract" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SUBMISSIONS</Link>
+          <a href="#speakers" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SPEAKERS</a>
+          <a href="#schedule" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">SCHEDULE</a>
+          <Link href="/register" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">REGISTER</Link>
+          <Link href="/policies" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">POLICIES</Link>
+          <Link href="/contact" className="hover:text-black border-b-2 border-transparent hover:border-black pb-1 transition-all duration-300">CONTACT</Link>
         </div>
 
-        {/* Top Right Royal Navy Registration Button */}
-        <Link
-          href="/register"
-          className="px-7 py-3 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest shadow-md transition duration-300 rounded-md"
-        >
-          REGISTRATION
-        </Link>
+        {/* Top Right Golden Amber Registration Button */}
+        <div className="flex items-center gap-4">
+          <Link
+            href="/register"
+            className="px-6 py-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md hover:shadow-lg hover:scale-[1.02] transition duration-300"
+          >
+            REGISTRATION
+          </Link>
+        </div>
       </nav>
 
       {/* ── Full-Bleed Hero Banner ────────────────────────────────────────── */}
