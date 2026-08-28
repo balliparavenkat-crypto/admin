@@ -114,58 +114,70 @@ export default function PublicSummitDetailPage() {
       </nav>
 
       {/* Hero Banner */}
-      <div className="relative bg-gradient-to-b from-[#0D1117] via-[#050b1a] to-[#0D1117] text-white py-20 px-6 md:px-12 border-b border-[#1E40AF]/20 overflow-hidden">
-        {summit.bannerUrl && (
-          <>
-            <img
-              src={summit.bannerUrl}
-              alt={summit.title}
-              className="absolute inset-0 w-full h-full object-cover opacity-25 filter blur-sm"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/80 via-[#050b1a]/90 to-[#0D1117]" />
-          </>
+      <div className="relative text-white py-16 md:py-24 px-6 md:px-12 border-b border-[#1E40AF]/20 overflow-hidden bg-[#0D1117]">
+        {/* Visible Background Banner Image */}
+        {summit.bannerUrl ? (
+          <img
+            src={summit.bannerUrl}
+            alt={summit.title}
+            className="absolute inset-0 w-full h-full object-cover opacity-80 scale-105 transition-all duration-700"
+          />
+        ) : (
+          <img
+            src="/images/ai_quantum_summit.png"
+            alt={summit.title}
+            className="absolute inset-0 w-full h-full object-cover opacity-80 scale-105 transition-all duration-700"
+          />
         )}
-        <div className="max-w-6xl mx-auto space-y-6 relative z-10">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3 py-1 bg-amber-500/20 text-amber-300 font-mono font-bold text-xs rounded-full border border-amber-500/30">
-              {summit.acronym || "DVGS2026"}
-            </span>
-            <span className="px-3 py-1 bg-emerald-500/20 text-emerald-300 font-mono font-bold text-xs rounded-full border border-emerald-500/30 uppercase">
-              {summit.status || "Registration Open"}
-            </span>
-          </div>
 
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight max-w-4xl text-white">
-            {summit.title}
-          </h1>
+        {/* Outer Vignette Darkening for Edge Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1117]/90 via-[#0D1117]/40 to-[#0D1117]/90 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/60 via-transparent to-[#0D1117] pointer-events-none" />
 
-          <div className="flex flex-wrap gap-6 text-sm text-gray-300 font-medium">
-            <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-amber-400" />
-              {summit.startDate?.substring(0, 10)} - {summit.endDate?.substring(0, 10)}
-            </span>
-            <span className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-amber-400" />
-              {summit.venueName ? `${summit.venueName}, ` : ""}{summit.city}, {summit.country}
-            </span>
-          </div>
+        {/* Text Container with Frosted Glass Backdrop Panel */}
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="max-w-4xl p-8 md:p-10 rounded-3xl bg-[#0D1117]/80 backdrop-blur-md border border-white/15 shadow-2xl space-y-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="px-3.5 py-1 bg-amber-500/20 text-amber-300 font-mono font-bold text-xs rounded-full border border-amber-500/30">
+                {summit.acronym || "DVGS2026"}
+              </span>
+              <span className="px-3.5 py-1 bg-emerald-500/20 text-emerald-300 font-mono font-bold text-xs rounded-full border border-emerald-500/30 uppercase">
+                {summit.status || "Registration Open"}
+              </span>
+            </div>
 
-          <div className="pt-4 flex flex-wrap items-center gap-4">
-            {/* Project Theme SUBMIT ABSTRACT Button */}
-            <Link
-              href="/submit-abstract"
-              className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest rounded-xl shadow-lg border border-blue-400/20 hover:scale-[1.02] transition duration-300 cursor-pointer"
-            >
-              SUBMIT ABSTRACT
-            </Link>
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white drop-shadow-md">
+              {summit.title}
+            </h1>
 
-            {/* Golden Amber REGISTER NOW > Button */}
-            <Link
-              href="/register"
-              className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
-            >
-              REGISTER NOW <ChevronRight className="w-4 h-4 stroke-[3]" />
-            </Link>
+            <div className="flex flex-wrap gap-6 text-sm text-slate-200 font-semibold">
+              <span className="flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-white/10">
+                <Calendar className="w-4 h-4 text-amber-400" />
+                {summit.startDate?.substring(0, 10)} - {summit.endDate?.substring(0, 10)}
+              </span>
+              <span className="flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-white/10">
+                <MapPin className="w-4 h-4 text-amber-400" />
+                {summit.venueName ? `${summit.venueName}, ` : ""}{summit.city}, {summit.country}
+              </span>
+            </div>
+
+            <div className="pt-4 flex flex-wrap items-center gap-4">
+              {/* Project Theme SUBMIT ABSTRACT Button */}
+              <Link
+                href="/submit-abstract"
+                className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest rounded-xl shadow-lg border border-blue-400/20 hover:scale-[1.02] transition duration-300 cursor-pointer"
+              >
+                SUBMIT ABSTRACT
+              </Link>
+
+              {/* Golden Amber REGISTER NOW > Button */}
+              <Link
+                href="/register"
+                className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
+              >
+                REGISTER NOW <ChevronRight className="w-4 h-4 stroke-[3]" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
