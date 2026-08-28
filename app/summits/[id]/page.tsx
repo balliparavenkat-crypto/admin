@@ -98,6 +98,36 @@ export default function PublicSummitDetailPage() {
     fetchApiData();
   }, [summitId]);
 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 48,
+    hours: 14,
+    minutes: 31,
+    seconds: 8
+  });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const targetDate = summit?.startDate ? new Date(summit.startDate).getTime() : new Date("2026-10-15").getTime();
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    calculateTimeLeft();
+    const interval = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(interval);
+  }, [summit?.startDate]);
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0D1117] font-sans selection:bg-[#1E40AF]/20">
       {/* Header Bar */}
@@ -176,7 +206,7 @@ export default function PublicSummitDetailPage() {
           </div>
         </div>
 
-        {/* Bottom Bar: Venue Badge & Countdown Timer */}
+        {/* Bottom Bar: Venue Badge & Real-Time Countdown Timer */}
         <div className="w-full max-w-6xl mx-auto pt-12 relative z-10 flex flex-wrap items-center justify-between gap-6 border-t border-white/10 mt-10">
           <div className="flex items-center gap-3 text-xs md:text-sm font-semibold text-slate-200">
             <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 text-white shadow-md">
@@ -185,22 +215,22 @@ export default function PublicSummitDetailPage() {
             <span className="drop-shadow">About {summit.venueName || summit.city}, {summit.country}</span>
           </div>
 
-          {/* Countdown Timer Blocks */}
-          <div className="flex items-center gap-4 text-center font-mono">
-            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
-              <span className="text-xl md:text-2xl font-black text-white block">0-110</span>
+          {/* Real-time Countdown Timer Blocks */}
+          <div className="flex items-center gap-3 md:gap-4 text-center font-mono">
+            <div className="px-3.5 md:px-5 py-2.5 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
+              <span className="text-xl md:text-2xl font-black text-white block">0-{timeLeft.days}</span>
               <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">DAYS</span>
             </div>
-            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
-              <span className="text-xl md:text-2xl font-black text-white block">0-14</span>
+            <div className="px-3.5 md:px-5 py-2.5 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
+              <span className="text-xl md:text-2xl font-black text-white block">0-{String(timeLeft.hours).padStart(2, '0')}</span>
               <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">HOURS</span>
             </div>
-            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
-              <span className="text-xl md:text-2xl font-black text-white block">0-31</span>
+            <div className="px-3.5 md:px-5 py-2.5 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
+              <span className="text-xl md:text-2xl font-black text-white block">0-{String(timeLeft.minutes).padStart(2, '0')}</span>
               <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">MINUTES</span>
             </div>
-            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
-              <span className="text-xl md:text-2xl font-black text-white block">0-8</span>
+            <div className="px-3.5 md:px-5 py-2.5 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15 shadow-lg">
+              <span className="text-xl md:text-2xl font-black text-amber-400 block animate-pulse">0-{String(timeLeft.seconds).padStart(2, '0')}</span>
               <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">SECONDS</span>
             </div>
           </div>
