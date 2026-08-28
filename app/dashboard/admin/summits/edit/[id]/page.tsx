@@ -58,11 +58,17 @@ export default function EditSummitPage() {
   });
 
   const [speakersList, setSpeakersList] = useState<any[]>([
-    { name: "Dr. Christopher Manning", designation: "Professor of Computer Science", institution: "Stanford University", imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop", type: "Plenary" },
-    { name: "Dr. Fei-Fei Li", designation: "Co-Director of HAI", institution: "Stanford University", imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop", type: "Plenary" },
-    { name: "Prof. Luca Spiridigliozzi", designation: "Professor", institution: "Universitas Mercatorum, Italy", imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop", type: "Invited" },
-    { name: "Dr. Sergey Prikhodko", designation: "Research Scholar", institution: "UCLA, USA", imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop", type: "Invited" },
+    { id: 1, name: "Dr. Christopher Manning", designation: "Professor of Computer Science", institution: "Stanford University", imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop", type: "Plenary" },
+    { id: 2, name: "Dr. Fei-Fei Li", designation: "Co-Director of HAI", institution: "Stanford University", imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop", type: "Plenary" },
+    { id: 3, name: "Prof. Luca Spiridigliozzi", designation: "Professor", institution: "Universitas Mercatorum, Italy", imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop", type: "Invited" },
+    { id: 4, name: "Dr. Sergey Prikhodko", designation: "Research Scholar", institution: "UCLA, USA", imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop", type: "Invited" },
+    { id: 5, name: "Albin Kaeclin", designation: "Managing Director", institution: "Epeaswitzerland GMBH, Switzerland", imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop", type: "Invited" },
+    { id: 6, name: "Dr. Elena Rostova", designation: "Senior Scientist", institution: "ETH Zurich, Switzerland", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop", type: "Invited" },
+    { id: 7, name: "Mr. Alfie Mcmeeking", designation: "Research Fellow", institution: "Imperial College London, UK", imageUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&h=120&fit=crop", type: "Fellow" },
   ]);
+
+  const [editingSpeakerIndex, setEditingSpeakerIndex] = useState<number | null>(null);
+  const [editingSpeakerData, setEditingSpeakerData] = useState<any | null>(null);
 
   const [newSpeaker, setNewSpeaker] = useState({
     name: "",
@@ -594,18 +600,30 @@ export default function EditSummitPage() {
                       <p className="text-[10px] text-[#1E40AF] font-bold">{sp.designation}</p>
                       <p className="text-[10px] text-slate-500">{sp.institution}</p>
                       <span className="inline-block mt-1 px-2 py-0.5 bg-amber-100 text-amber-900 text-[9px] font-bold rounded">
-                        {sp.type || "Plenary"}
+                        {sp.type === "Fellow" ? "Young Fellow" : sp.type || "Plenary"}
                       </span>
                     </div>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setSpeakersList(speakersList.filter((_, i) => i !== idx))}
-                    className="p-2 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold"
-                  >
-                    Remove
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingSpeakerIndex(idx);
+                        setEditingSpeakerData({ ...sp });
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 hover:bg-amber-200 text-xs font-bold transition"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSpeakersList(speakersList.filter((_, i) => i !== idx))}
+                      className="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold transition"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -725,6 +743,114 @@ export default function EditSummitPage() {
           )}
         </div>
       </form>
+
+      {/* Inline Speaker Edit Modal */}
+      {editingSpeakerIndex !== null && editingSpeakerData && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="max-w-lg w-full p-6 rounded-3xl bg-white border border-[#1E40AF]/20 shadow-2xl space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+              <h3 className="text-base font-extrabold text-[#0D1117]">Edit Speaker Information</h3>
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingSpeakerIndex(null);
+                  setEditingSpeakerData(null);
+                }}
+                className="text-slate-500 hover:text-slate-800 font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-extrabold text-[#0D1117] block mb-1">Speaker Name *</label>
+                <input
+                  type="text"
+                  value={editingSpeakerData.name}
+                  onChange={(e) => setEditingSpeakerData({ ...editingSpeakerData, name: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-extrabold text-[#0D1117] block mb-1">Designation / Role</label>
+                  <input
+                    type="text"
+                    value={editingSpeakerData.designation}
+                    onChange={(e) => setEditingSpeakerData({ ...editingSpeakerData, designation: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-extrabold text-[#0D1117] block mb-1">Institution / University</label>
+                  <input
+                    type="text"
+                    value={editingSpeakerData.institution}
+                    onChange={(e) => setEditingSpeakerData({ ...editingSpeakerData, institution: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-extrabold text-[#0D1117] block mb-1">Speaker Category</label>
+                  <select
+                    value={editingSpeakerData.type || "Plenary"}
+                    onChange={(e) => setEditingSpeakerData({ ...editingSpeakerData, type: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                  >
+                    <option value="Plenary">Plenary Speaker</option>
+                    <option value="Invited">Invited Speaker</option>
+                    <option value="Fellow">Young Research Fellow</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-extrabold text-[#0D1117] block mb-1">Photo Image URL</label>
+                  <input
+                    type="text"
+                    value={editingSpeakerData.imageUrl}
+                    onChange={(e) => setEditingSpeakerData({ ...editingSpeakerData, imageUrl: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 pt-3 border-t border-slate-200">
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingSpeakerIndex(null);
+                  setEditingSpeakerData(null);
+                }}
+                className="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (editingSpeakerIndex !== null && editingSpeakerData) {
+                    const updated = [...speakersList];
+                    updated[editingSpeakerIndex] = editingSpeakerData;
+                    setSpeakersList(updated);
+                    setEditingSpeakerIndex(null);
+                    setEditingSpeakerData(null);
+                  }
+                }}
+                className="px-5 py-2 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white text-xs font-bold shadow-md"
+              >
+                Update Speaker
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }
