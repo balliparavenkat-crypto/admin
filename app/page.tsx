@@ -95,6 +95,27 @@ const sponsorshipTiers = [
 
 const initialStaticSlides = [
   {
+    summitName: "ISIRS 2026",
+    eyebrow: "🎓 INTERNATIONAL STUDENT INNOVATION & RESEARCH SUMMIT 2026",
+    image: "/images/ai_quantum_summit.png",
+    location: "London, United Kingdom",
+    date: "Nov 12-15, 2026",
+    title: (
+      <>
+        Empowering Student Researchers.<br />
+        Global <span className="text-accent-blue font-extrabold">Innovation.</span><br />
+        Transforming <span className="text-amber-400 font-extrabold">Tomorrow.</span>
+      </>
+    ),
+    description: "ISIRS 2026 brings together young scholars, student innovators, and academic pioneers worldwide to present high-impact research.",
+    stats: [
+      { value: "110+", label: "Countries", icon: Globe, iconColor: "text-accent-blue" },
+      { value: "12K+", label: "Students & Authors", icon: Users, iconColor: "text-accent-blue" },
+      { value: "450+", label: "Universities", icon: Building, iconColor: "text-accent-blue" },
+      { value: "180+", label: "Research Tracks", icon: Calendar, iconColor: "text-accent-blue" },
+    ]
+  },
+  {
     summitName: "AI & Quantum Summit",
     eyebrow: "⚡ ADVANCED COMPUTATION & QUANTUM TRACKS",
     image: "/images/ai_quantum_summit.png",
@@ -319,6 +340,17 @@ export default function HomePage() {
   }, []);
 
   const defaultConferences = [
+    {
+      id: 3,
+      year: 2026,
+      title: "INTERNATIONAL STUDENT INNOVATION AND RESEARCH SUMMIT-2026 (ISIRS 2026)",
+      date: "Nov 12-15, 2026",
+      location: "London, United Kingdom",
+      status: "Call for Abstracts",
+      image: "/images/ai_quantum_summit.png",
+      tag: "Advanced Tech",
+      countryCode: "gb"
+    },
     {
       id: 1,
       year: 2026,

@@ -56,6 +56,19 @@ export default function SummitsListPage() {
           status: "ACTIVE",
           registrationsCount: 8,
         },
+        {
+          id: 3,
+          title: "INTERNATIONAL STUDENT INNOVATION AND RESEARCH SUMMIT-2026",
+          acronym: "ISIRS 2026",
+          city: "London",
+          country: "United Kingdom",
+          startDate: "2026-11-12",
+          endDate: "2026-11-15",
+          registrationFeeAuthor: 399.00,
+          registrationFeeListener: 299.00,
+          status: "ACTIVE",
+          registrationsCount: 19,
+        },
       ];
     }
 

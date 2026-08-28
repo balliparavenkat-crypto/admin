@@ -235,6 +235,7 @@ export default function SubmitAbstractPage() {
                       className={inputCls}
                     >
                       <option value="">Select Topic of Interest</option>
+                      <option value="INTERNATIONAL STUDENT INNOVATION AND RESEARCH SUMMIT-2026 (ISIRS 2026)">ISIRS 2026: Student Innovation & Research</option>
                       <option value="Artificial Intelligence & Robotics">Artificial Intelligence & Robotics</option>
                       <option value="Biomedicine & Healthcare">Biomedicine & Healthcare</option>
                       <option value="Clean Energy & Sustainability">Clean Energy & Sustainability</option>
