@@ -20,6 +20,7 @@ export default function SpeakersPage() {
     bio: "",
     imageUrl: "",
     conferenceAcronym: "DVGS2026",
+    type: "Plenary",
   });
 
   const loadData = () => {
@@ -60,6 +61,7 @@ export default function SpeakersPage() {
           bio: "World-renowned leader in Natural Language Processing and deep learning.",
           imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop",
           conferenceAcronym: "DVGS2026",
+          type: "Plenary",
         },
         {
           id: 2,
@@ -71,6 +73,7 @@ export default function SpeakersPage() {
           bio: "Pioneer in computer vision and creator of ImageNet.",
           imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop",
           conferenceAcronym: "DVGS2026",
+          type: "Plenary",
         },
         {
           id: 3,
@@ -82,6 +85,7 @@ export default function SpeakersPage() {
           bio: "Former US Secretary of Energy and Climate Action Pioneer.",
           imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop",
           conferenceAcronym: "ICSCS2026",
+          type: "Invited",
         },
       ];
       try {
@@ -119,6 +123,7 @@ export default function SpeakersPage() {
       bio: "",
       imageUrl: "",
       conferenceAcronym: summitsList[0]?.acronym || "DVGS2026",
+      type: "Plenary",
     });
     setIsModalOpen(true);
   };
@@ -134,8 +139,35 @@ export default function SpeakersPage() {
       bio: sp.bio || "",
       imageUrl: sp.imageUrl || "",
       conferenceAcronym: sp.conferenceAcronym || "DVGS2026",
+      type: sp.type || "Plenary",
     });
     setIsModalOpen(true);
+  };
+
+  const syncSpeakersToSummits = (updatedSpeakers: any[]) => {
+    try {
+      const savedSummitsStr = localStorage.getItem("custom_summits");
+      if (savedSummitsStr) {
+        const summits: any[] = JSON.parse(savedSummitsStr);
+        const updatedSummits = summits.map((summit) => {
+          const matching = updatedSpeakers.filter(
+            (sp) => sp.conferenceAcronym === summit.acronym || String(sp.conferenceAcronym) === String(summit.id)
+          );
+          if (matching.length > 0) {
+            return { ...summit, speakers: matching };
+          }
+          return summit;
+        });
+        localStorage.setItem("custom_summits", JSON.stringify(updatedSummits));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("custom_speakers_updated"));
+      window.dispatchEvent(new Event("custom_summits_updated"));
+    }
   };
 
   const handleDeleteSpeaker = (id: number) => {
@@ -146,6 +178,7 @@ export default function SpeakersPage() {
     } catch (e) {
       console.error(e);
     }
+    syncSpeakersToSummits(updated);
   };
 
   const handleSaveSpeaker = (e: React.FormEvent) => {
@@ -167,6 +200,7 @@ export default function SpeakersPage() {
     } catch (e) {
       console.error(e);
     }
+    syncSpeakersToSummits(updatedList);
     setIsModalOpen(false);
   };
 
@@ -227,6 +261,9 @@ export default function SpeakersPage() {
                     <span className="text-[10px] font-mono font-black text-[#1E40AF] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
                       {s.conferenceAcronym}
                     </span>
+                    <span className="text-[10px] font-bold text-amber-900 bg-amber-100 px-2.5 py-1 rounded-md">
+                      {s.type || "Plenary"}
+                    </span>
                     <button
                       onClick={() => handleOpenEdit(s)}
                       className="p-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200"
@@ -266,19 +303,34 @@ export default function SpeakersPage() {
             </div>
 
             <form onSubmit={handleSaveSpeaker} className="space-y-4">
-              <div>
-                <label className="text-xs font-bold text-[#0D1117] block mb-1">Assign To Summit *</label>
-                <select
-                  value={formData.conferenceAcronym}
-                  onChange={(e) => setFormData({ ...formData, conferenceAcronym: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
-                >
-                  {summitsList.map((summit, idx) => (
-                    <option key={idx} value={summit.acronym}>
-                      {summit.acronym} — {summit.title}
-                    </option>
-                  ))}
-                </select>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-bold text-[#0D1117] block mb-1">Assign To Summit *</label>
+                  <select
+                    value={formData.conferenceAcronym}
+                    onChange={(e) => setFormData({ ...formData, conferenceAcronym: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                  >
+                    {summitsList.map((summit, idx) => (
+                      <option key={idx} value={summit.acronym}>
+                        {summit.acronym} — {summit.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-[#0D1117] block mb-1">Speaker Category *</label>
+                  <select
+                    value={formData.type}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                  >
+                    <option value="Plenary">Plenary Speaker</option>
+                    <option value="Invited">Invited Speaker</option>
+                    <option value="Fellow">Young Research Fellow</option>
+                  </select>
+                </div>
               </div>
 
               <div>
