@@ -194,10 +194,10 @@ export default function PublicSummitDetailPage() {
           <Link href="/contact" className="hover:text-amber-400 transition">CONTACT</Link>
         </div>
 
-        {/* Top Right Pink Registration Button */}
+        {/* Top Right Royal Navy Registration Button */}
         <Link
           href="/register"
-          className="px-7 py-3 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest shadow-md transition duration-300 rounded-sm"
+          className="px-7 py-3 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest shadow-md transition duration-300 rounded-md"
         >
           REGISTRATION
         </Link>
@@ -241,25 +241,25 @@ export default function PublicSummitDetailPage() {
             </span>
           </div>
 
-          {/* Action Buttons Row */}
+          {/* Action Buttons Row with Official Project UI Palette */}
           <div className="pt-6 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/submit-abstract"
-              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+              className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest rounded-lg shadow-xl hover:scale-105 transition duration-300 cursor-pointer border border-blue-400/20"
             >
               SUBMIT ABSTRACT
             </Link>
 
             <Link
               href="/register"
-              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+              className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-lg shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
             >
               REGISTER NOW
             </Link>
 
             <Link
               href="/contact"
-              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+              className="px-8 py-3.5 bg-[#1E293B] hover:bg-slate-800 text-white font-extrabold text-xs uppercase tracking-widest rounded-lg shadow-xl border border-white/20 hover:scale-105 transition duration-300 cursor-pointer"
             >
               SUGGEST COLLEAGUE
             </Link>
@@ -326,9 +326,9 @@ export default function PublicSummitDetailPage() {
           {/* Left Column: About Conference (7 cols) */}
           <div className="lg:col-span-7 space-y-4">
             <h2 className="text-3xl font-black uppercase text-[#0D1117] tracking-tight">ABOUT CONFERENCE</h2>
-            <p className="text-sm font-bold text-[#E63980]">D&V Global Meet on {summit.title}</p>
+            <p className="text-sm font-bold text-[#1E40AF]">D&V Global Meet on {summit.title}</p>
 
-            <div className="p-8 rounded-3xl bg-white border-2 border-[#E63980]/40 shadow-xl text-xs leading-relaxed text-slate-700 space-y-4">
+            <div className="p-8 rounded-3xl bg-white border-2 border-[#1E40AF]/30 shadow-xl text-xs leading-relaxed text-slate-700 space-y-4">
               <p>
                 <strong>The D&V Global Meet on {summit.title}</strong>, scheduled for <strong>{summit.startDate}</strong> in <strong>{summit.city}, {summit.country}</strong>, is a premier international gathering designed to spotlight breakthroughs in research and next-generation technologies.
               </p>
@@ -345,24 +345,24 @@ export default function PublicSummitDetailPage() {
           <div className="lg:col-span-5 space-y-8">
             <div className="space-y-4">
               <h2 className="text-3xl font-black uppercase text-[#0D1117] tracking-tight">IMPORTANT DATES</h2>
-              <p className="text-sm font-bold text-[#E63980]">Conference Updates</p>
+              <p className="text-sm font-bold text-[#1E40AF]">Conference Updates</p>
 
               <div className="bg-white rounded-2xl border border-slate-300 shadow-md divide-y divide-slate-200 text-xs">
                 <div className="p-4">
                   <span className="font-extrabold text-[#0D1117] block">Conference Dates</span>
-                  <span className="text-[#E63980] font-semibold">{summit.startDate} - {summit.endDate}</span>
+                  <span className="text-[#1E40AF] font-semibold">{summit.startDate} - {summit.endDate}</span>
                 </div>
                 <div className="p-4 bg-slate-50">
                   <span className="font-extrabold text-[#0D1117] block">Early Bird Registration</span>
-                  <span className="text-[#E63980] font-semibold">December 30, 2025</span>
+                  <span className="text-[#1E40AF] font-semibold">December 30, 2025</span>
                 </div>
                 <div className="p-4 bg-slate-50">
                   <span className="font-extrabold text-[#0D1117] block">Abstract Submission Deadline</span>
-                  <span className="text-[#E63980] font-semibold">February 28, 2026</span>
+                  <span className="text-[#1E40AF] font-semibold">February 28, 2026</span>
                 </div>
                 <div className="p-4">
                   <span className="font-extrabold text-[#0D1117] block">Conference Venue</span>
-                  <span className="text-[#E63980] font-semibold">{summit.venueName || "Convention Center"}, {summit.city}, {summit.country}</span>
+                  <span className="text-[#1E40AF] font-semibold">{summit.venueName || "Convention Center"}, {summit.city}, {summit.country}</span>
                 </div>
               </div>
             </div>
@@ -478,7 +478,7 @@ export default function PublicSummitDetailPage() {
                 <li className="flex items-center gap-2">➔ Carbon Capture, Utilization & Storage (CCUS)</li>
               </ul>
               <div className="pt-4">
-                <Link href="/submit-abstract" className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-wider rounded-md inline-block shadow-lg">
+                <Link href="/submit-abstract" className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-md inline-block shadow-lg">
                   SUBMIT ABSTRACT
                 </Link>
               </div>
@@ -551,8 +551,8 @@ export default function PublicSummitDetailPage() {
             </button>
           </div>
 
-          {/* Timetable Rows with Pink Border Frame */}
-          <div className="p-4 md:p-6 rounded-3xl border-2 border-[#E63980]/80 bg-slate-900/60 backdrop-blur-md shadow-2xl space-y-3 text-left max-w-4xl mx-auto">
+          {/* Timetable Rows with Royal Navy Frame */}
+          <div className="p-4 md:p-6 rounded-3xl border-2 border-[#1E40AF]/60 bg-slate-900/60 backdrop-blur-md shadow-2xl space-y-3 text-left max-w-4xl mx-auto">
             {scheduleData[selectedScheduleDay].map((row, idx) => (
               <div
                 key={idx}
