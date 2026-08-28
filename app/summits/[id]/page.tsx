@@ -128,6 +128,51 @@ export default function PublicSummitDetailPage() {
     return () => clearInterval(interval);
   }, [summit?.startDate]);
 
+  const [selectedScheduleDay, setSelectedScheduleDay] = useState<"day1" | "day2" | "day3">("day1");
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const [subscribedDone, setSubscribedDone] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!subscribeEmail.trim()) return;
+    setSubscribedDone(true);
+    setTimeout(() => {
+      setSubscribeEmail("");
+      setSubscribedDone(false);
+    }, 4000);
+  };
+
+  const scheduleData = {
+    day1: [
+      { time: "08:00 Am - 09:00 Am", title: "Registration", dark: false },
+      { time: "09:00Am - 09:30 Am", title: "Opening Ceremony and Introduction", dark: true },
+      { time: "09:30 Am - 10:30 Am", title: "Keynote Session I", dark: false },
+      { time: "10:30 Am - 11:00 Am", title: "Refreshment Break", dark: true },
+      { time: "11:00 Am - 12:30 Am", title: "Keynote Session II", dark: false },
+      { time: "12:30Pm - 13:30 Pm", title: "Lunch", dark: true },
+      { time: "13:30Pm - 15:00 Pm", title: "Break Out Session I", dark: false },
+      { time: "15:00Pm - 15:30 Pm", title: "Refreshment Break", dark: true },
+      { time: "15:30Pm - 18:00 Pm", title: "Break Out Session II", dark: false },
+    ],
+    day2: [
+      { time: "08:30 Am - 09:30 Am", title: "Plenary Session III - Next-Gen AI & Robotics", dark: false },
+      { time: "09:30 Am - 10:30 Am", title: "Invited Speakers Panel & Q/A", dark: true },
+      { time: "10:30 Am - 11:00 Am", title: "Networking & Coffee Break", dark: false },
+      { time: "11:00 Am - 13:00 Pm", title: "Parallel Oral Paper Presentations (Tracks 1-4)", dark: true },
+      { time: "13:00 Pm - 14:00 Pm", title: "Conference Networking Lunch", dark: false },
+      { time: "14:00 Pm - 16:00 Pm", title: "Poster Presentation & Exhibition Showcase", dark: true },
+      { time: "16:00 Pm - 17:30 Pm", title: "Industry Panel: AI Commercialization & Scale", dark: false },
+    ],
+    day3: [
+      { time: "09:00 Am - 10:30 Am", title: "Young Research Fellows Symposium", dark: false },
+      { time: "10:30 Am - 11:00 Am", title: "Tea / Coffee Refreshment Break", dark: true },
+      { time: "11:00 Am - 12:30 Pm", title: "Special Workshop: Scopus & IEEE Paper Publishing", dark: false },
+      { time: "12:30 Pm - 13:30 Pm", title: "Networking Lunch", dark: true },
+      { time: "13:30 Pm - 15:30 Pm", title: "Best Presentation Awards & Valedictory Ceremony", dark: false },
+      { time: "15:30 Pm - 17:00 Pm", title: "Closing Remarks & Vote of Thanks", dark: true },
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0D1117] font-sans selection:bg-[#1E40AF]/20">
       {/* ── Top Header Navigation Bar ─────────────────────────────────────── */}
@@ -459,6 +504,101 @@ export default function PublicSummitDetailPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── Event Schedule Timetable Section ──────────────────────────────── */}
+      <section id="schedule" className="py-20 px-6 bg-[#0D1117] text-white border-t border-white/10">
+        <div className="max-w-6xl mx-auto space-y-10 text-center">
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-white">EVENT SCHEDULE</h2>
+            <p className="text-xs md:text-sm font-semibold text-slate-300">
+              Welcome to the dedicated to building remarkable Schedule!
+            </p>
+          </div>
+
+          {/* Schedule Day Tabs */}
+          <div className="bg-white rounded-2xl p-2 max-w-2xl mx-auto grid grid-cols-3 gap-2 shadow-xl border border-slate-200">
+            <button
+              onClick={() => setSelectedScheduleDay("day1")}
+              className={`py-3 rounded-xl text-xs font-black uppercase tracking-wider transition ${
+                selectedScheduleDay === "day1"
+                  ? "bg-amber-500 text-slate-950 shadow-md"
+                  : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
+              }`}
+            >
+              FIRST <span className="font-normal text-[10px]">DAY</span>
+            </button>
+            <button
+              onClick={() => setSelectedScheduleDay("day2")}
+              className={`py-3 rounded-xl text-xs font-black uppercase tracking-wider transition ${
+                selectedScheduleDay === "day2"
+                  ? "bg-amber-500 text-slate-950 shadow-md"
+                  : "text-[#D4AF37] hover:text-amber-600 hover:bg-slate-100"
+              }`}
+            >
+              SECOND <span className="font-normal text-[10px]">DAY</span>
+            </button>
+            <button
+              onClick={() => setSelectedScheduleDay("day3")}
+              className={`py-3 rounded-xl text-xs font-black uppercase tracking-wider transition ${
+                selectedScheduleDay === "day3"
+                  ? "bg-amber-500 text-slate-950 shadow-md"
+                  : "text-[#D4AF37] hover:text-amber-600 hover:bg-slate-100"
+              }`}
+            >
+              THIRD <span className="font-normal text-[10px]">DAY</span>
+            </button>
+          </div>
+
+          {/* Timetable Rows with Pink Border Frame */}
+          <div className="p-4 md:p-6 rounded-3xl border-2 border-[#E63980]/80 bg-slate-900/60 backdrop-blur-md shadow-2xl space-y-3 text-left max-w-4xl mx-auto">
+            {scheduleData[selectedScheduleDay].map((row, idx) => (
+              <div
+                key={idx}
+                className={`flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl text-xs font-semibold transition ${
+                  row.dark
+                    ? "bg-[#1E293B] text-slate-100 border border-slate-700/60"
+                    : "bg-white text-slate-900 border border-slate-200"
+                }`}
+              >
+                <span className="font-mono font-bold text-xs tracking-wider opacity-90 sm:w-1/3">{row.time}</span>
+                <span className="font-bold text-sm sm:w-2/3 pt-1 sm:pt-0">{row.title}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Subscribe to Get Updates Section ────────────────────────────── */}
+      <section className="py-16 px-6 bg-[#F1F5F9] text-slate-900 border-t border-slate-300">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#0D1117]">
+            SUBSCRIBE TO GET UPDATES FROM CONFERENCE
+          </h2>
+
+          {subscribedDone ? (
+            <div className="p-4 bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-xl max-w-md mx-auto">
+              ✓ Subscribed successfully! You will receive official conference updates.
+            </div>
+          ) : (
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-center justify-center max-w-2xl mx-auto gap-0 shadow-lg rounded-xl overflow-hidden border border-slate-300">
+              <input
+                type="email"
+                required
+                placeholder="Enter your email Address ..."
+                value={subscribeEmail}
+                onChange={(e) => setSubscribeEmail(e.target.value)}
+                className="w-full sm:flex-1 px-6 py-4 bg-white text-xs font-medium text-slate-800 focus:outline-none placeholder-slate-400"
+              />
+              <button
+                type="submit"
+                className="w-full sm:w-auto px-10 py-4 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs uppercase tracking-wider transition cursor-pointer"
+              >
+                SUBSCRIBE
+              </button>
+            </form>
+          )}
         </div>
       </section>
     </div>
