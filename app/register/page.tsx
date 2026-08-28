@@ -224,17 +224,8 @@ export default function UnifiedRegisterPage() {
             Fill out the form below to secure your seat or submit your abstract research paper.
           </p>
 
-          {/* Action Buttons beside registration form */}
+          {/* Action Button */}
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-            {/* Pink / Magenta SUBMIT ABSTRACT Button */}
-            <button
-              type="button"
-              onClick={() => setIsAbstractModalOpen(true)}
-              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md transition duration-300 shadow-lg cursor-pointer"
-            >
-              SUBMIT ABSTRACT
-            </button>
-
             {/* Golden Amber REGISTER NOW > Button */}
             <a
               href="#registration-form"
