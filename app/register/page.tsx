@@ -692,12 +692,12 @@ export default function UnifiedRegisterPage() {
       {isAbstractModalOpen && (
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="max-w-lg w-full bg-white rounded-3xl border border-pink-300 shadow-2xl overflow-hidden">
-            <div className="bg-[#E63980] p-6 text-white flex items-center justify-between">
+            <div className="bg-[#1E40AF] p-6 text-white flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold text-pink-200 block tracking-widest uppercase">RESEARCH PAPER SUBMISSION</span>
+                <span className="text-[10px] font-mono font-bold text-blue-200 block tracking-widest uppercase">RESEARCH PAPER SUBMISSION</span>
                 <h3 className="font-extrabold text-base text-white mt-0.5">Submit Research Abstract</h3>
               </div>
-              <button onClick={() => { setIsAbstractModalOpen(false); setAbstractSubmitted(false); }} className="text-pink-100 hover:text-white">
+              <button onClick={() => { setIsAbstractModalOpen(false); setAbstractSubmitted(false); }} className="text-blue-100 hover:text-white">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -709,12 +709,12 @@ export default function UnifiedRegisterPage() {
                 </div>
                 <h4 className="text-xl font-bold text-slate-900">Abstract Submitted Successfully!</h4>
                 <p className="text-xs text-slate-600">
-                  Your research abstract has been queued for peer review. A confirmation email has been sent to <span className="font-bold text-[#E63980]">{abstractForm.email}</span>.
+                  Your research abstract has been queued for peer review. A confirmation email has been sent to <span className="font-bold text-[#1E40AF]">{abstractForm.email}</span>.
                 </p>
                 <button
                   type="button"
                   onClick={() => { setIsAbstractModalOpen(false); setAbstractSubmitted(false); }}
-                  className="px-6 py-2.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition"
+                  className="px-6 py-2.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition"
                 >
                   Close Window
                 </button>
@@ -729,7 +729,7 @@ export default function UnifiedRegisterPage() {
                     placeholder="Dr. / Prof. Full Name"
                     value={abstractForm.authorName}
                     onChange={(e) => setAbstractForm({ ...abstractForm, authorName: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#1E40AF]"
                   />
                 </div>
 
@@ -742,7 +742,7 @@ export default function UnifiedRegisterPage() {
                       placeholder="author@university.edu"
                       value={abstractForm.email}
                       onChange={(e) => setAbstractForm({ ...abstractForm, email: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#1E40AF]"
                     />
                   </div>
                   <div>
@@ -752,7 +752,7 @@ export default function UnifiedRegisterPage() {
                       placeholder="+1 (555) 000-0000"
                       value={abstractForm.whatsapp}
                       onChange={(e) => setAbstractForm({ ...abstractForm, whatsapp: e.target.value })}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#1E40AF]"
                     />
                   </div>
                 </div>
@@ -765,7 +765,7 @@ export default function UnifiedRegisterPage() {
                     placeholder="Enter Title of Research Paper"
                     value={abstractForm.title}
                     onChange={(e) => setAbstractForm({ ...abstractForm, title: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#1E40AF]"
                   />
                 </div>
 
@@ -774,7 +774,7 @@ export default function UnifiedRegisterPage() {
                   <select
                     value={abstractForm.track}
                     onChange={(e) => setAbstractForm({ ...abstractForm, track: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#E63980]"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#1E40AF]"
                   >
                     <option value="Artificial Intelligence & Robotics">Artificial Intelligence & Robotics</option>
                     <option value="Biomedicine & Healthcare">Biomedicine & Healthcare</option>
@@ -791,14 +791,14 @@ export default function UnifiedRegisterPage() {
                     placeholder="Paste research abstract summary here..."
                     value={abstractForm.abstractText}
                     onChange={(e) => setAbstractForm({ ...abstractForm, abstractText: e.target.value })}
-                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#E63980]"
+                    className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-[#1E40AF]"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition cursor-pointer"
+                    className="w-full py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition cursor-pointer"
                   >
                     Submit Abstract For Review
                   </button>

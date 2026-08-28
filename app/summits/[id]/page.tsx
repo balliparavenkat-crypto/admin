@@ -151,10 +151,10 @@ export default function PublicSummitDetailPage() {
           </div>
 
           <div className="pt-4 flex flex-wrap items-center gap-4">
-            {/* Pink / Magenta SUBMIT ABSTRACT Button */}
+            {/* Project Theme SUBMIT ABSTRACT Button */}
             <Link
               href="/register"
-              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md transition duration-300 shadow-lg cursor-pointer"
+              className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest rounded-xl shadow-lg border border-blue-400/20 hover:scale-[1.02] transition duration-300 cursor-pointer"
             >
               SUBMIT ABSTRACT
             </Link>
@@ -254,7 +254,7 @@ export default function PublicSummitDetailPage() {
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link
               href="/register"
-              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md transition duration-300 shadow-lg cursor-pointer"
+              className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest rounded-xl shadow-lg border border-blue-400/20 hover:scale-[1.02] transition duration-300 cursor-pointer"
             >
               SUBMIT ABSTRACT
             </Link>
