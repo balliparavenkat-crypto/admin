@@ -57,6 +57,21 @@ export default function EditSummitPage() {
     scientificTrackRight: "Materials for Quantum, AI & Neuromorphic Devices\nBioinspired & Biomimetic Materials\nMaterials for Biomedical Applications\nAdditive Manufacturing & 4D Printing\nArtificial Intelligence in Materials Discovery",
   });
 
+  const [speakersList, setSpeakersList] = useState<any[]>([
+    { name: "Dr. Christopher Manning", designation: "Professor of Computer Science", institution: "Stanford University", imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop", type: "Plenary" },
+    { name: "Dr. Fei-Fei Li", designation: "Co-Director of HAI", institution: "Stanford University", imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop", type: "Plenary" },
+    { name: "Prof. Luca Spiridigliozzi", designation: "Professor", institution: "Universitas Mercatorum, Italy", imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop", type: "Invited" },
+    { name: "Dr. Sergey Prikhodko", designation: "Research Scholar", institution: "UCLA, USA", imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop", type: "Invited" },
+  ]);
+
+  const [newSpeaker, setNewSpeaker] = useState({
+    name: "",
+    designation: "",
+    institution: "",
+    imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
+    type: "Plenary",
+  });
+
   useEffect(() => {
     if (!summitId) return;
 
@@ -91,6 +106,9 @@ export default function EditSummitPage() {
             scientificTrackLeft: match.scientificTrackLeft || prev.scientificTrackLeft,
             scientificTrackRight: match.scientificTrackRight || prev.scientificTrackRight,
           }));
+          if (match.speakers && match.speakers.length > 0) {
+            setSpeakersList(match.speakers);
+          }
         }
       }
     } catch {
@@ -163,6 +181,7 @@ export default function EditSummitPage() {
       abstractDeadline: formData.abstractDeadline,
       scientificTrackLeft: formData.scientificTrackLeft,
       scientificTrackRight: formData.scientificTrackRight,
+      speakers: speakersList,
     };
 
     // Update in localStorage custom_summits
@@ -221,7 +240,8 @@ export default function EditSummitPage() {
           { step: 1, label: "Basic Info & Banner", icon: FileText },
           { step: 2, label: "Schedule & Location", icon: Calendar },
           { step: 3, label: "Pricing Categories", icon: DollarSign },
-          { step: 4, label: "Deadlines & Status", icon: Sparkles },
+          { step: 4, label: "Chair & Tracks", icon: Sparkles },
+          { step: 5, label: "Keynote Speakers", icon: Sparkles },
         ].map((s) => (
           <button
             key={s.step}
@@ -556,6 +576,122 @@ export default function EditSummitPage() {
           </div>
         )}
 
+        {activeStep === 5 && (
+          <div className="space-y-6">
+            <h3 className="text-base font-bold text-[#0D1117] tracking-wide border-b border-slate-200 pb-3">Summit Keynote & Plenary Speakers</h3>
+
+            {/* List of Active Speakers */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {speakersList.map((sp, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <img src={sp.imageUrl} alt={sp.name} className="w-12 h-12 rounded-xl object-cover border border-slate-300" />
+                    <div>
+                      <h4 className="font-extrabold text-xs text-[#0D1117]">{sp.name}</h4>
+                      <p className="text-[10px] text-[#1E40AF] font-bold">{sp.designation}</p>
+                      <p className="text-[10px] text-slate-500">{sp.institution}</p>
+                      <span className="inline-block mt-1 px-2 py-0.5 bg-amber-100 text-amber-900 text-[9px] font-bold rounded">
+                        {sp.type || "Plenary"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSpeakersList(speakersList.filter((_, i) => i !== idx))}
+                    className="p-2 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Add New Speaker Form */}
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-300 space-y-4">
+              <h4 className="text-xs font-extrabold text-[#0D1117] uppercase tracking-wider">Add New Speaker to Summit</h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Speaker Name *</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Dr. Jane Smith"
+                    value={newSpeaker.name}
+                    onChange={(e) => setNewSpeaker({ ...newSpeaker, name: e.target.value })}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Designation / Role</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Professor & Researcher"
+                    value={newSpeaker.designation}
+                    onChange={(e) => setNewSpeaker({ ...newSpeaker, designation: e.target.value })}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Institution / University</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Oxford University, UK"
+                    value={newSpeaker.institution}
+                    onChange={(e) => setNewSpeaker({ ...newSpeaker, institution: e.target.value })}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Photo Image URL</label>
+                  <input
+                    type="text"
+                    value={newSpeaker.imageUrl}
+                    onChange={(e) => setNewSpeaker({ ...newSpeaker, imageUrl: e.target.value })}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono focus:outline-none focus:border-[#1E40AF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Speaker Category</label>
+                  <select
+                    value={newSpeaker.type}
+                    onChange={(e) => setNewSpeaker({ ...newSpeaker, type: e.target.value })}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold focus:outline-none focus:border-[#1E40AF]"
+                  >
+                    <option value="Plenary">Plenary Speaker</option>
+                    <option value="Invited">Invited Speaker</option>
+                    <option value="Fellow">Young Research Fellow</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (!newSpeaker.name.trim()) return;
+                  setSpeakersList([...speakersList, newSpeaker]);
+                  setNewSpeaker({
+                    name: "",
+                    designation: "",
+                    institution: "",
+                    imageUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop",
+                    type: "Plenary",
+                  });
+                }}
+                className="px-6 py-2.5 rounded-xl bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider shadow-sm"
+              >
+                + Add Speaker to List
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="flex justify-between pt-4 border-t border-slate-200">
           {activeStep > 1 ? (
             <button
@@ -567,7 +703,7 @@ export default function EditSummitPage() {
             </button>
           ) : <div />}
 
-          {activeStep < 4 ? (
+          {activeStep < 5 ? (
             <button
               type="button"
               onClick={() => setActiveStep((prev) => prev + 1)}

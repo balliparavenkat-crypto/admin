@@ -394,7 +394,10 @@ export default function PublicSummitDetailPage() {
           <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0D1117] tracking-tight">PLENARY SPEAKERS</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {speakers.map((sp, idx) => (
+            {(speakers.filter((s) => !s.type || s.type === "Plenary").length > 0
+              ? speakers.filter((s) => !s.type || s.type === "Plenary")
+              : speakers
+            ).map((sp, idx) => (
               <div key={idx} className="relative pt-10">
                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
                   <img src={sp.imageUrl} alt={sp.name} className="w-full h-full object-cover" />
@@ -418,15 +421,18 @@ export default function PublicSummitDetailPage() {
         <div className="space-y-10 text-center">
           <h2 className="text-3xl md:text-4xl font-black uppercase text-[#0D1117] tracking-tight">INVITED SPEAKERS</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { name: "Prof. Luca Spiridigliozzi", institution: "Universitas Mercatorum, Italy", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop" },
-              { name: "Dr. Sergey Prikhodko", institution: "UCLA, USA", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop" },
-              { name: "Albin Kaeclin", institution: "Epeaswitzerland GMBH, Switzerland", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop" },
-              { name: "Dr. Elena Rostova", institution: "ETH Zurich, Switzerland", img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop" },
-            ].map((sp, idx) => (
+            {(speakers.filter((s) => s.type === "Invited").length > 0
+              ? speakers.filter((s) => s.type === "Invited")
+              : [
+                  { name: "Prof. Luca Spiridigliozzi", institution: "Universitas Mercatorum, Italy", imageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop" },
+                  { name: "Dr. Sergey Prikhodko", institution: "UCLA, USA", imageUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop" },
+                  { name: "Albin Kaeclin", institution: "Epeaswitzerland GMBH, Switzerland", imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop" },
+                  { name: "Dr. Elena Rostova", institution: "ETH Zurich, Switzerland", imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop" },
+                ]
+            ).map((sp: any, idx: number) => (
               <div key={idx} className="relative pt-10">
                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
-                  <img src={sp.img} alt={sp.name} className="w-full h-full object-cover" />
+                  <img src={sp.imageUrl || sp.img} alt={sp.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="bg-white rounded-2xl p-6 pt-12 border border-[#1E40AF]/15 shadow-md text-center space-y-2 border-t-4 border-t-[#1E40AF]">
                   <h3 className="font-extrabold text-sm text-[#0D1117]">{sp.name}</h3>
