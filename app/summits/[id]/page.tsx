@@ -113,61 +113,95 @@ export default function PublicSummitDetailPage() {
         </Link>
       </nav>
 
-      {/* Hero Banner */}
-      <div className="relative text-white py-16 md:py-24 px-6 md:px-12 border-b border-[#1E40AF]/20 overflow-hidden bg-[#0D1117]">
-        {/* Visible Background Banner Image */}
+      {/* Full-Bleed Hero Banner */}
+      <div className="relative text-white min-h-[560px] py-20 px-6 md:px-12 border-b border-[#1E40AF]/20 overflow-hidden bg-[#0D1117] flex flex-col justify-center items-center text-center">
+        {/* Visible Full-Bleed Background Image */}
         <img
           src={summit.bannerUrl || (String(summit.id) === "2" ? "/images/clean_energy_summit.png" : String(summit.id) === "3" ? "/images/biomedicine_congress.png" : "/images/ai_quantum_summit.png")}
           alt={summit.title}
-          className="absolute inset-0 w-full h-full object-cover opacity-90 transition-all duration-700"
+          className="absolute inset-0 w-full h-full object-cover opacity-80 filter brightness-[0.85] contrast-[1.05] transition-all duration-700"
         />
 
-        {/* Subtle Bottom Gradient Overlay for High Image Visibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-[#0D1117]/25 to-[#0D1117]/40 pointer-events-none" />
+        {/* Translucent Dark Gradient Overlay for Crisp Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/75 via-[#050B1A]/60 to-[#0D1117]/95 pointer-events-none" />
 
-        {/* Text Container with Frosted Glass Backdrop Panel */}
-        <div className="max-w-6xl mx-auto relative z-10">
-          <div className="max-w-4xl p-8 md:p-10 rounded-3xl bg-[#0D1117]/80 backdrop-blur-md border border-white/15 shadow-2xl space-y-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="px-3.5 py-1 bg-amber-500/20 text-amber-300 font-mono font-bold text-xs rounded-full border border-amber-500/30">
-                {summit.acronym || "DVGS2026"}
-              </span>
-              <span className="px-3.5 py-1 bg-emerald-500/20 text-emerald-300 font-mono font-bold text-xs rounded-full border border-emerald-500/30 uppercase">
-                {summit.status || "Registration Open"}
-              </span>
+        {/* Center Hero Content (Overlaying Background Directly) */}
+        <div className="max-w-5xl mx-auto relative z-10 space-y-5 flex flex-col items-center">
+          <span className="text-xs md:text-sm font-extrabold uppercase tracking-widest text-amber-300 font-mono drop-shadow">
+            D&V Global Meet on
+          </span>
+
+          <h2 className="text-xl md:text-3xl font-extrabold text-white tracking-tight max-w-3xl drop-shadow-md">
+            {summit.title}
+          </h2>
+
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tight text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] font-mono py-1">
+            {summit.acronym || "DVGS2026"}
+          </h1>
+
+          {/* Location & Date Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm md:text-base font-semibold text-white drop-shadow-md pt-2">
+            <span className="flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-amber-400 fill-amber-400/20" />
+              {summit.venueName ? `${summit.venueName}, ` : ""}{summit.city}, {summit.country}
+            </span>
+            <span className="flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-amber-400 fill-amber-400/20" />
+              {summit.startDate?.substring(0, 10)} - {summit.endDate?.substring(0, 10)}
+            </span>
+          </div>
+
+          {/* Action Buttons Row */}
+          <div className="pt-6 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/submit-abstract"
+              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+            >
+              SUBMIT ABSTRACT
+            </Link>
+
+            <Link
+              href="/register"
+              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+            >
+              REGISTER NOW
+            </Link>
+
+            <Link
+              href="/contact"
+              className="px-8 py-3.5 bg-[#E63980] hover:bg-[#D0286F] text-white font-extrabold text-xs uppercase tracking-widest rounded-md shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+            >
+              SUGGEST COLLEAGUE
+            </Link>
+          </div>
+        </div>
+
+        {/* Bottom Bar: Venue Badge & Countdown Timer */}
+        <div className="w-full max-w-6xl mx-auto pt-12 relative z-10 flex flex-wrap items-center justify-between gap-6 border-t border-white/10 mt-10">
+          <div className="flex items-center gap-3 text-xs md:text-sm font-semibold text-slate-200">
+            <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 text-white shadow-md">
+              ▶
             </div>
+            <span className="drop-shadow">About {summit.venueName || summit.city}, {summit.country}</span>
+          </div>
 
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white drop-shadow-md">
-              {summit.title}
-            </h1>
-
-            <div className="flex flex-wrap gap-6 text-sm text-slate-200 font-semibold">
-              <span className="flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-white/10">
-                <Calendar className="w-4 h-4 text-amber-400" />
-                {summit.startDate?.substring(0, 10)} - {summit.endDate?.substring(0, 10)}
-              </span>
-              <span className="flex items-center gap-2 bg-slate-900/50 px-3 py-1.5 rounded-lg border border-white/10">
-                <MapPin className="w-4 h-4 text-amber-400" />
-                {summit.venueName ? `${summit.venueName}, ` : ""}{summit.city}, {summit.country}
-              </span>
+          {/* Countdown Timer Blocks */}
+          <div className="flex items-center gap-4 text-center font-mono">
+            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
+              <span className="text-xl md:text-2xl font-black text-white block">0-110</span>
+              <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">DAYS</span>
             </div>
-
-            <div className="pt-4 flex flex-wrap items-center gap-4">
-              {/* Project Theme SUBMIT ABSTRACT Button */}
-              <Link
-                href="/submit-abstract"
-                className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-widest rounded-xl shadow-lg border border-blue-400/20 hover:scale-[1.02] transition duration-300 cursor-pointer"
-              >
-                SUBMIT ABSTRACT
-              </Link>
-
-              {/* Golden Amber REGISTER NOW > Button */}
-              <Link
-                href="/register"
-                className="px-8 py-3.5 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg hover:scale-[1.02] transition duration-300 flex items-center gap-2"
-              >
-                REGISTER NOW <ChevronRight className="w-4 h-4 stroke-[3]" />
-              </Link>
+            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
+              <span className="text-xl md:text-2xl font-black text-white block">0-14</span>
+              <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">HOURS</span>
+            </div>
+            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
+              <span className="text-xl md:text-2xl font-black text-white block">0-31</span>
+              <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">MINUTES</span>
+            </div>
+            <div className="px-4 py-2 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/15">
+              <span className="text-xl md:text-2xl font-black text-white block">0-8</span>
+              <span className="text-[10px] uppercase text-slate-400 font-bold tracking-widest">SECONDS</span>
             </div>
           </div>
         </div>
