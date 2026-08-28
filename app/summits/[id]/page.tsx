@@ -116,23 +116,14 @@ export default function PublicSummitDetailPage() {
       {/* Hero Banner */}
       <div className="relative text-white py-16 md:py-24 px-6 md:px-12 border-b border-[#1E40AF]/20 overflow-hidden bg-[#0D1117]">
         {/* Visible Background Banner Image */}
-        {summit.bannerUrl ? (
-          <img
-            src={summit.bannerUrl}
-            alt={summit.title}
-            className="absolute inset-0 w-full h-full object-cover opacity-80 scale-105 transition-all duration-700"
-          />
-        ) : (
-          <img
-            src="/images/ai_quantum_summit.png"
-            alt={summit.title}
-            className="absolute inset-0 w-full h-full object-cover opacity-80 scale-105 transition-all duration-700"
-          />
-        )}
+        <img
+          src={summit.bannerUrl || (String(summit.id) === "2" ? "/images/clean_energy_summit.png" : String(summit.id) === "3" ? "/images/biomedicine_congress.png" : "/images/ai_quantum_summit.png")}
+          alt={summit.title}
+          className="absolute inset-0 w-full h-full object-cover opacity-90 transition-all duration-700"
+        />
 
-        {/* Outer Vignette Darkening for Edge Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0D1117]/90 via-[#0D1117]/40 to-[#0D1117]/90 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0D1117]/60 via-transparent to-[#0D1117] pointer-events-none" />
+        {/* Subtle Bottom Gradient Overlay for High Image Visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-[#0D1117]/25 to-[#0D1117]/40 pointer-events-none" />
 
         {/* Text Container with Frosted Glass Backdrop Panel */}
         <div className="max-w-6xl mx-auto relative z-10">
