@@ -176,7 +176,7 @@ export default function PublicSummitDetailPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0D1117] font-sans selection:bg-[#1E40AF]/20">
       {/* ── Top Header Navigation Bar ─────────────────────────────────────── */}
-      <nav className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-white/10 py-3.5 px-6 md:px-12 flex justify-between items-center text-white">
+      <nav className="sticky top-0 z-50 bg-[#0D1117]/95 backdrop-blur-md border-b border-[#1E40AF]/20 py-3.5 px-6 md:px-12 flex justify-between items-center text-white">
         <Link href="/" className="flex items-center gap-2">
           <img src="/images/logo.png" alt="D&V Global Summits" className="h-12 w-auto object-contain" />
         </Link>
@@ -305,14 +305,14 @@ export default function PublicSummitDetailPage() {
             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" alt="Dr. Seshubabu Desu" className="w-full h-full object-cover" />
           </div>
 
-          <div className="bg-white rounded-3xl p-8 pt-16 border border-slate-200 shadow-xl text-center space-y-3 relative z-10 border-t-4 border-t-[#0D1117]">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#0D1117] block">Conference Chair</span>
+          <div className="bg-white rounded-3xl p-8 pt-16 border border-[#1E40AF]/15 shadow-xl text-center space-y-3 relative z-10 border-t-4 border-t-[#1E40AF]">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#1E40AF] block">Conference Chair</span>
             <h3 className="text-lg font-extrabold text-[#0D1117]">Dr. Seshubabu Desu</h3>
             <p className="text-xs text-slate-600 font-medium">Chief Technology Officer</p>
             <p className="text-xs text-slate-500 font-medium">4DS Memory Limited, USA</p>
 
             <div className="pt-4">
-              <span className="px-6 py-2 bg-[#1E293B] text-white text-xs font-bold rounded-md shadow inline-block">
+              <span className="px-6 py-2.5 bg-[#1E40AF] text-white text-xs font-bold rounded-lg shadow inline-block hover:bg-blue-800 transition cursor-pointer">
                 Welcome Message
               </span>
             </div>
@@ -328,7 +328,7 @@ export default function PublicSummitDetailPage() {
             <h2 className="text-3xl font-black uppercase text-[#0D1117] tracking-tight">ABOUT CONFERENCE</h2>
             <p className="text-sm font-bold text-[#1E40AF]">D&V Global Meet on {summit.title}</p>
 
-            <div className="p-8 rounded-3xl bg-white border-2 border-[#1E40AF]/30 shadow-xl text-xs leading-relaxed text-slate-700 space-y-4">
+            <div className="p-8 rounded-3xl bg-white border-2 border-[#1E40AF]/25 shadow-xl text-xs leading-relaxed text-slate-700 space-y-4">
               <p>
                 <strong>The D&V Global Meet on {summit.title}</strong>, scheduled for <strong>{summit.startDate}</strong> in <strong>{summit.city}, {summit.country}</strong>, is a premier international gathering designed to spotlight breakthroughs in research and next-generation technologies.
               </p>
@@ -369,7 +369,7 @@ export default function PublicSummitDetailPage() {
 
             <div className="space-y-3">
               <h3 className="text-xs font-extrabold uppercase tracking-widest text-[#0D1117]">COLLABORATIONS AND EVENT UPDATES</h3>
-              <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-md flex items-center justify-between">
+              <div className="p-4 bg-white rounded-2xl border border-[#1E40AF]/15 shadow-md flex items-center justify-between">
                 <div>
                   <span className="text-xs font-bold text-[#0D1117] block">BEST ORAL PRESENTATION AWARD</span>
                   <span className="text-[10px] text-slate-500 font-mono">Sponsored by Academic Journals & MDPI</span>
@@ -393,12 +393,12 @@ export default function PublicSummitDetailPage() {
                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
                   <img src={sp.imageUrl} alt={sp.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="bg-white rounded-2xl p-6 pt-12 border border-slate-200 shadow-md text-center space-y-2 border-t-4 border-t-[#0D1117]">
+                <div className="bg-white rounded-2xl p-6 pt-12 border border-[#1E40AF]/15 shadow-md text-center space-y-2 border-t-4 border-t-[#1E40AF]">
                   <h3 className="font-extrabold text-sm text-[#0D1117]">{sp.name}</h3>
-                  <p className="text-[11px] text-slate-600">{sp.designation}</p>
+                  <p className="text-[11px] text-[#1E40AF] font-semibold">{sp.designation}</p>
                   <p className="text-[11px] text-slate-500">{sp.institution}</p>
                   <div className="pt-3">
-                    <button className="px-4 py-1.5 bg-[#1E293B] text-white text-[10px] font-bold rounded uppercase tracking-wider">
+                    <button className="px-4 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white text-[10px] font-bold rounded uppercase tracking-wider transition">
                       More Info
                     </button>
                   </div>
@@ -422,11 +422,11 @@ export default function PublicSummitDetailPage() {
                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
                   <img src={sp.img} alt={sp.name} className="w-full h-full object-cover" />
                 </div>
-                <div className="bg-white rounded-2xl p-6 pt-12 border border-slate-200 shadow-md text-center space-y-2 border-t-4 border-t-[#0D1117]">
+                <div className="bg-white rounded-2xl p-6 pt-12 border border-[#1E40AF]/15 shadow-md text-center space-y-2 border-t-4 border-t-[#1E40AF]">
                   <h3 className="font-extrabold text-sm text-[#0D1117]">{sp.name}</h3>
                   <p className="text-[11px] text-slate-600">{sp.institution}</p>
                   <div className="pt-3">
-                    <button className="px-4 py-1.5 bg-[#1E293B] text-white text-[10px] font-bold rounded uppercase tracking-wider">
+                    <button className="px-4 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white text-[10px] font-bold rounded uppercase tracking-wider transition">
                       More Info
                     </button>
                   </div>
@@ -443,12 +443,12 @@ export default function PublicSummitDetailPage() {
             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white shadow-xl overflow-hidden z-20 bg-slate-200">
               <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=120&h=120&fit=crop" alt="Mr. Alfie Mcmeeking" className="w-full h-full object-cover" />
             </div>
-            <div className="bg-white rounded-2xl p-6 pt-12 border border-slate-200 shadow-md text-center space-y-2 border-t-4 border-t-[#0D1117]">
+            <div className="bg-white rounded-2xl p-6 pt-12 border border-[#1E40AF]/15 shadow-md text-center space-y-2 border-t-4 border-t-[#1E40AF]">
               <h3 className="font-extrabold text-sm text-[#0D1117]">Mr. Alfie Mcmeeking</h3>
               <p className="text-[11px] text-slate-600">Imperial College London</p>
               <p className="text-[11px] text-slate-500">United Kingdom</p>
               <div className="pt-3">
-                <button className="px-4 py-1.5 bg-[#1E293B] text-white text-[10px] font-bold rounded uppercase tracking-wider">
+                <button className="px-4 py-1.5 bg-[#1E40AF] hover:bg-blue-800 text-white text-[10px] font-bold rounded uppercase tracking-wider transition">
                   More Info
                 </button>
               </div>
@@ -464,7 +464,7 @@ export default function PublicSummitDetailPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* Left Card: Translucent Box */}
-            <div className="p-8 rounded-3xl bg-blue-900/40 backdrop-blur-md border-2 border-white/30 space-y-6 flex flex-col justify-between shadow-2xl">
+            <div className="p-8 rounded-3xl bg-blue-950/60 backdrop-blur-md border-2 border-[#1E40AF]/40 space-y-6 flex flex-col justify-between shadow-2xl">
               <ul className="space-y-3 text-xs font-semibold text-slate-100">
                 <li className="flex items-center gap-2">➔ Next-Generation Nanomaterials</li>
                 <li className="flex items-center gap-2">➔ 2D Materials and Heterostructures</li>
@@ -478,14 +478,14 @@ export default function PublicSummitDetailPage() {
                 <li className="flex items-center gap-2">➔ Carbon Capture, Utilization & Storage (CCUS)</li>
               </ul>
               <div className="pt-4">
-                <Link href="/submit-abstract" className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-md inline-block shadow-lg">
+                <Link href="/submit-abstract" className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-lg inline-block shadow-lg">
                   SUBMIT ABSTRACT
                 </Link>
               </div>
             </div>
 
             {/* Right Card: White Box */}
-            <div className="p-8 rounded-3xl bg-white text-slate-900 space-y-6 flex flex-col justify-between shadow-2xl">
+            <div className="p-8 rounded-3xl bg-white text-slate-900 space-y-6 flex flex-col justify-between shadow-2xl border border-[#1E40AF]/15">
               <ul className="space-y-3 text-xs font-semibold text-slate-800">
                 <li className="flex items-center gap-2">➔ Materials for Quantum, AI & Neuromorphic Devices</li>
                 <li className="flex items-center gap-2">➔ Bioinspired & Biomimetic Materials</li>
@@ -498,7 +498,7 @@ export default function PublicSummitDetailPage() {
                 <li className="flex items-center gap-2">➔ Metamaterials & Plasmonic Structures</li>
               </ul>
               <div className="pt-4">
-                <Link href="/submit-abstract" className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-md inline-block shadow-lg">
+                <Link href="/submit-abstract" className="px-8 py-3.5 bg-[#1E40AF] hover:bg-blue-800 text-white font-extrabold text-xs uppercase tracking-wider rounded-lg inline-block shadow-lg">
                   SUBMIT ABSTRACT
                 </Link>
               </div>
@@ -523,7 +523,7 @@ export default function PublicSummitDetailPage() {
               onClick={() => setSelectedScheduleDay("day1")}
               className={`py-3 rounded-xl text-xs font-black uppercase tracking-wider transition ${
                 selectedScheduleDay === "day1"
-                  ? "bg-amber-500 text-slate-950 shadow-md"
+                  ? "bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-md"
                   : "text-slate-700 hover:text-slate-900 hover:bg-slate-100"
               }`}
             >
@@ -533,7 +533,7 @@ export default function PublicSummitDetailPage() {
               onClick={() => setSelectedScheduleDay("day2")}
               className={`py-3 rounded-xl text-xs font-black uppercase tracking-wider transition ${
                 selectedScheduleDay === "day2"
-                  ? "bg-amber-500 text-slate-950 shadow-md"
+                  ? "bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-md"
                   : "text-[#D4AF37] hover:text-amber-600 hover:bg-slate-100"
               }`}
             >
@@ -543,7 +543,7 @@ export default function PublicSummitDetailPage() {
               onClick={() => setSelectedScheduleDay("day3")}
               className={`py-3 rounded-xl text-xs font-black uppercase tracking-wider transition ${
                 selectedScheduleDay === "day3"
-                  ? "bg-amber-500 text-slate-950 shadow-md"
+                  ? "bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 shadow-md"
                   : "text-[#D4AF37] hover:text-amber-600 hover:bg-slate-100"
               }`}
             >
@@ -593,7 +593,7 @@ export default function PublicSummitDetailPage() {
               />
               <button
                 type="submit"
-                className="w-full sm:w-auto px-10 py-4 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs uppercase tracking-wider transition cursor-pointer"
+                className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 text-slate-950 font-extrabold text-xs uppercase tracking-wider transition cursor-pointer"
               >
                 SUBSCRIBE
               </button>
