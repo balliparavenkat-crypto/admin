@@ -695,6 +695,8 @@ export default function UnifiedRegisterPage() {
             </div>
           </div>
         </div>
+      )}
+
       {/* ── Submit Abstract Modal ─────────────────────────────────────────── */}
       {isAbstractModalOpen && (
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
